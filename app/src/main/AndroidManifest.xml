@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Smartmed1"
         tools:targetApi="31">
         <activity
+            android:name=".activity_user_home"
+            android:exported="false" />
+        <activity
             android:name=".DoctorHome"
             android:exported="false" />
         <activity

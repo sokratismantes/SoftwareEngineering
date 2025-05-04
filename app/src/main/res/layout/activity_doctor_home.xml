@@ -5,6 +5,18 @@
     android:padding="24dp"
     android:background="@drawable/background_gradient">
 
+    <!-- Εικονίδιο ειδοποιήσεων -->
+    <ImageView
+        android:id="@+id/notificationsIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/bell"
+        android:contentDescription="Notifications" />
+
     <!-- Scrollable περιεχόμενο (κουμπιά) -->
     <ScrollView
         android:id="@+id/scrollArea"
