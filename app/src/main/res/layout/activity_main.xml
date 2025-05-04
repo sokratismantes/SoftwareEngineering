@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/background_gradient">
+
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="284dp"
+        android:layout_height="160dp"
+        android:contentDescription="App Logo"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:layout_marginTop="12dp"
+        android:text="SmartMed\nThe Digital Medical Care App"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Καλώς Ήρθες !"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="36dp" />
+
+    <ImageView
+        android:id="@+id/arrowIcon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@android:drawable/ic_media_play"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log In"
+        android:textAllCaps="false"
+        android:layout_marginTop="36dp"
+        android:backgroundTint="#CDE4F0" />
+
+    <Button
+        android:id="@+id/signupButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:textAllCaps="false"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#DDE8F8" />
+
+</LinearLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="@drawable/background_gradient">
+
+    <!-- Scrollable περιεχόμενο (κουμπιά) -->
+    <ScrollView
+        android:id="@+id/scrollArea"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomBar"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <!-- Logo -->
+            <ImageView
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:src="@drawable/logo"
+                android:contentDescription="App Logo" />
+
+            <!-- Buttons -->
+            <Button
+                android:id="@+id/btnPrescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Δημιουργία Συνταγής"
+                android:layout_marginTop="16dp" />
+
+            <Button
+                android:id="@+id/btnReferral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Δημιουργία Παραπεμπτικού"
+                android:layout_marginTop="12dp" />
+
+            <Button
+                android:id="@+id/btnAvailability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Διαχείριση Διαθεσιμότητας"
+                android:layout_marginTop="12dp" />
+
+            <Button
+                android:id="@+id/btnAppointments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Τα Ραντεβού Μου"
+                android:layout_marginTop="12dp" />
+
+            <Button
+                android:id="@+id/btnPrescriptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Οι Συνταγές Μου"
+                android:layout_marginTop="12dp" />
+
+            <Button
+                android:id="@+id/btnHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Το Ιστορικό Μου"
+                android:layout_marginTop="12dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Κάτω μπάρα -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="32dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:background="@android:color/transparent">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/home"
+            android:contentDescription="Home Icon" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/info"
+            android:contentDescription="Info Icon"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/user"
+            android:contentDescription="User Icon" />
+    </LinearLayout>
+</RelativeLayout>
