@@ -17,12 +17,12 @@
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
-        android:layout_height="52dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="wrap_content"
         android:text="SmartMed\nThe Digital Medical Care App"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:layout_marginTop="12dp" />
 
     <TextView
         android:id="@+id/welcomeText"
@@ -34,12 +34,27 @@
         android:textColor="#FFFFFF"
         android:layout_marginTop="36dp" />
 
-    <ImageView
-        android:id="@+id/arrowIcon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@android:drawable/ic_media_play"
-        android:layout_marginTop="16dp" />
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Όνομα χρήστη"
+        android:inputType="text"
+        android:layout_marginTop="36dp"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#DDDDDD" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Κωδικός"
+        android:inputType="textPassword"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#DDDDDD" />
 
     <Button
         android:id="@+id/loginButton"
@@ -47,7 +62,7 @@
         android:layout_height="wrap_content"
         android:text="Log In"
         android:textAllCaps="false"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="#CDE4F0" />
 
     <Button
@@ -56,7 +71,6 @@
         android:layout_height="wrap_content"
         android:text="Sign Up"
         android:textAllCaps="false"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:backgroundTint="#DDE8F8" />
-
 </LinearLayout>
