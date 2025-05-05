@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    tools:context=".PrescriptionDetailsActivity">
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/logo"
+        android:contentDescription="App Logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Prescription Code -->
+    <TextView
+        android:id="@+id/tvCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#1230099"
+        android:textColor="#fff"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Card with diagnosis, medicines, instructions, doctor -->
+    <LinearLayout
+        android:id="@+id/cardDetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#80FFFFFF"
+        android:padding="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:elevation="4dp"
+        app:layout_constraintTop_toBottomOf="@id/tvCode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:clipToPadding="false"
+        android:radius="16dp">
+
+        <TextView
+            android:id="@+id/tvDiagnosis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Διάγνωση : Λοιμώδης Φαρυγγίτιδα"
+            android:textColor="#037988"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvMedicinesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Φάρμακα :"
+            android:textColor="#444"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvMedicines"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1. Αμοξικιλλίνη 500mg – 1 κάψουλα κάθε 8 ώρες για 7 ημέρες\n2. Ιβουπροφαίνη 400mg – 1 δισκίο κάθε 8 ώρες, εφόσον υπάρχει πόνος ή πυρετός\n3. Αντισηπτικό στοματικό διάλυμα – Γαργάρες 3 φορές την ημέρα μετά τα γεύματα"
+            android:textColor="#222"
+            android:textSize="15sp"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/tvInstructionsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Οδηγίες :"
+            android:textColor="#444"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvInstructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="• Λήψη φαρμάκων με ένα ποτήρι νερό.\n• Αποφυγή αλκοόλ και ερεθιστικών τροφών.\n• Επανεξέταση σε 7 ημέρες, εάν τα συμπτώματα επιμένουν."
+            android:textColor="#222"
+            android:textSize="15sp"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/tvDoctor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ιατρός: Δημήτριος Αντωνίου"
+            android:textColor="#444"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="end" />
+    </LinearLayout>
+
+    <!-- Compliance Label -->
+    <TextView
+        android:id="@+id/tvComplianceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Καταγράψτε την συνέπεια σας στη λήψη φαρμάκων."
+        android:textColor="#fff"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@id/cardDetails"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Compliance Checkboxes -->
+    <LinearLayout
+        android:id="@+id/complianceCheckboxes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tvComplianceLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp">
+        <CheckBox android:id="@+id/checkbox1" android:layout_width="40dp" android:layout_height="40dp" android:buttonTint="#037988" />
+        <CheckBox android:id="@+id/checkbox2" android:layout_width="40dp" android:layout_height="40dp" android:buttonTint="#037988" />
+        <CheckBox android:id="@+id/checkbox3" android:layout_width="40dp" android:layout_height="40dp" android:buttonTint="#037988" />
+        <CheckBox android:id="@+id/checkbox4" android:layout_width="40dp" android:layout_height="40dp" android:buttonTint="#037988" />
+        <CheckBox android:id="@+id/checkbox5" android:layout_width="40dp" android:layout_height="40dp" android:buttonTint="#037988" />
+    </LinearLayout>
+
+    <!-- Action Buttons -->
+    <LinearLayout
+        android:id="@+id/actionButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/complianceCheckboxes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp">
+        <Button
+            android:id="@+id/btnGetDocument"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Λήψη Εγγράφου"
+            android:textAllCaps="false"
+            android:backgroundTint="#B2E6F7"
+            android:textColor="#037988"
+            android:textStyle="bold"
+            android:layout_marginEnd="8dp" />
+        <Button
+            android:id="@+id/btnRenew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ανανέωση Συνταγής"
+            android:textAllCaps="false"
+            android:backgroundTint="#B2E6F7"
+            android:textColor="#037988"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Feedback Label -->
+    <TextView
+        android:id="@+id/tvFeedbackLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Αναφέρετε παρενέργειες που προκλήθηκαν κατά την χορήγηση."
+        android:textColor="#fff"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@id/actionButtons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:textAlignment="center" />
+
+    <!-- Feedback Field -->
+    <EditText
+        android:id="@+id/etFeedback"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#fff"
+        android:textColor="#000"
+        android:hint=""
+        app:layout_constraintTop_toBottomOf="@id/tvFeedbackLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="top|start"
+        app:layout_constraintEnd_toStartOf="@id/btnSubmitFeedback" />
+
+    <Button
+        android:id="@+id/btnSubmitFeedback"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="Υποβολή"
+        android:textAllCaps="false"
+        android:backgroundTint="#B2E6F7"
+        android:textColor="#037988"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/etFeedback"
+        app:layout_constraintBottom_toBottomOf="@id/etFeedback"
+        app:layout_constraintStart_toEndOf="@id/etFeedback"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="0dp" />
+
+    <!-- Contact Doctor below -->
+    <LinearLayout
+        android:id="@+id/contactDoctor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/etFeedback"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@android:drawable/ic_dialog_email"
+            android:contentDescription="Contact Icon" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Επικοινωνία"
+            android:textColor="#fff"
+            android:textSize="11sp"
+            android:layout_marginStart="2dp"
+            android:gravity="center_vertical" />
+    </LinearLayout>
+
+    <!-- Bottom Bar -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/home"
+            android:contentDescription="Home Icon" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/info"
+            android:contentDescription="Info Icon"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/user"
+            android:contentDescription="User Icon" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout> 

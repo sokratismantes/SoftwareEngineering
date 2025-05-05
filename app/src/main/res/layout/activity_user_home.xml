@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserHome"
+    android:background="@drawable/background_gradient">
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:src="@drawable/logo"
+        android:contentDescription="App Logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp" />
+
+    <!-- Buttons -->
+    <Button
+        android:id="@+id/btnNewAppointment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Προγραμματίστε Νέο Ραντεβού"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
+
+    <Button
+        android:id="@+id/btnMyAppointments"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Τα Ραντεβού Μου"
+        app:layout_constraintTop_toBottomOf="@id/btnNewAppointment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
+
+    <Button
+        android:id="@+id/btnMyPrescriptions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Οι Συνταγές Μου"
+        app:layout_constraintTop_toBottomOf="@id/btnMyAppointments"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
+
+    <Button
+        android:id="@+id/btnHealthData"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Δεδομένα Υγείας"
+        app:layout_constraintTop_toBottomOf="@id/btnMyPrescriptions"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
+
+    <Button
+        android:id="@+id/btnMedicalFiles"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Τα Ιατρικά Μου Αρχεία"
+        app:layout_constraintTop_toBottomOf="@id/btnHealthData"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
+
+    <!-- Κάτω Μπάρα -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:layout_marginTop="32dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/home"
+            android:contentDescription="Home Icon" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/info"
+            android:contentDescription="Info Icon"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/user"
+            android:contentDescription="User Icon" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
