@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- your app theme items -->
+    </style>
+
+    <!-- ──────────────────────────────────────────────────────────────────── -->
+    <!-- Parent Style for Question related elements -->
+    <style name="Question">
+        <!-- Define any default attributes for Question elements here -->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!-- Add other default attributes that apply to all questions here -->
+    </style>
+
+    <!-- Style for question prompt TextViews (child of Question) -->
+    <style name="Question.Prompt" parent="Question">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+</resources>
