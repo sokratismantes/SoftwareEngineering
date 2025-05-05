@@ -27,9 +27,9 @@ public class DoctorHome extends AppCompatActivity {
 
         // Προσθήκη listeners (προς το παρόν με TODO)
         btnPrescription.setOnClickListener(v -> {
-            // TODO: Ξεκίνα Activity για δημιουργία συνταγής
-            // startActivity(new Intent(this, CreatePrescriptionActivity.class));
+            startActivity(new Intent(this, DoctorPrescriptionCreate.class));
         });
+
 
         btnReferral.setOnClickListener(v -> {
             // TODO: Ξεκίνα Activity για δημιουργία παραπεμπτικού
