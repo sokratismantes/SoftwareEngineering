@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    android:padding="24dp">
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"
+        android:contentDescription="Logo"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Τίτλος -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_below="@id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Βοήθεια Και Υποστήριξη"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
+    <!-- Περιγραφή -->
+    <TextView
+        android:id="@+id/description"
+        android:layout_below="@id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Εδώ μπορείτε να καταθέσετε ερωτήσεις σχετικά με τις απορίες σας, να αξιολογήσετε τις υπηρεσίες, και να συμπληρώσετε ερωτηματολόγια που αφορούν την ψυχική σας υγεία."
+        android:textColor="#EEEEEE"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp" />
+
+    <!-- Κουμπιά -->
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_below="@id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="24dp">
+
+        <Button
+            android:id="@+id/btnQuestionForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Καταχώρηση Ερωτήματος"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#B2EBF2"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btnFeedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Αξιολόγηση Υπηρεσιών"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#80DEEA"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btnMentalForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ερωτηματολόγιο Ψυχικής Υγείας"
+            android:backgroundTint="#4DD0E1"
+            android:textAllCaps="false" />
+    </LinearLayout>
+</RelativeLayout>
