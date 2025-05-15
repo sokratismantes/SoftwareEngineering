@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "SmartMed.db";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
 
     public static final String TABLE_USERS = "Users";
     public static final String COL_ID = "id";
@@ -53,14 +53,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "answer TEXT NOT NULL)";
         db.execSQL(createFaqTable);
 
-        // Εισαγωγή αρχικών ερωταπαντήσεων
         db.execSQL("INSERT INTO FAQs (question, answer) VALUES " +
                 "('Μπορώ από την εφαρμογή να δω τα παραπεμπτικά μου;', 'Ναι, στην ενότητα ''Τα παραπεμπτικά μου'' από την αρχική οθόνη.')," +
                 "('Πόσο συχνά πρέπει να κάνω εξετάσεις αίματος;', 'Οι συστάσεις ποικίλλουν ανάλογα με το ιστορικό σας. Συμβουλευτείτε τον γιατρό σας.')," +
                 "('Που μπορώ να δω τις συνταγές μου;', 'Στην ενότητα ''Οι Συνταγές Μου'' από το μενού χρήστη.')," +
                 "('Μπορώ να κλείσω ραντεβού μέσω της εφαρμογής;', 'Ναι, στην ενότητα ''Νέο Ραντεβού'' μπορείτε να προγραμματίσετε νέο ραντεβού.')," +
                 "('Μπορώ να αλλάξω τον προσωπικό μου γιατρό;', 'Ναι, μέσω της διαχείρισης προφίλ.');");
+
+        // 🔴 Πίνακας Αιματολογικών Εξετάσεων
+        String createHematologyTable = "CREATE TABLE HematologyExams (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "title TEXT NOT NULL, " +
+                "filepath TEXT NOT NULL)";
+        db.execSQL(createHematologyTable);
+
+        db.execSQL("INSERT INTO HematologyExams (title, filepath) VALUES " +
+                "('ΓΕΝΙΚΗ_ΑΙΜΑΤΟΣ_2023.pdf', 'path/to/geniki.pdf')," +
+                "('Θυρεοειδής.docx', 'path/to/thyreo.docx')," +
+                "('Βιοχημική_Σεπτέμβριος.docx', 'path/to/bioximiki.docx')," +
+                "('TSH.png', 'path/to/tsh.png')");
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
