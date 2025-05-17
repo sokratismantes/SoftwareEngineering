@@ -1,25 +1,31 @@
 package com.example.smartmed1;
 
 import android.content.Context;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Files {
 
-    // Πλέον δεν αποθηκεύουμε λίστα εσωτερικά — τα διαβάζουμε live από SQLite
+    private static final List<String> fileList = new ArrayList<>();
 
+    static {
+        fileList.add("Αιματολογικές.pdf");
+        fileList.add("Ακτινογραφίες.pdf");
+        fileList.add("Συνταγή_Ιανουάριος.pdf");
+    }
+
+    // ✅ Χρησιμοποιείται στο MedicalDocumentsActivity
     public static boolean fileExists(Context context) {
-        DatabaseHelper db = new DatabaseHelper(context);
-        List<String> files = db.getAllMedicalFiles();
-        return !files.isEmpty();
+        return !fileList.isEmpty();
     }
 
     public static List<String> getFiles(Context context) {
-        DatabaseHelper db = new DatabaseHelper(context);
-        return db.getAllMedicalFiles();
+        return new ArrayList<>(fileList); // επιστρέφουμε αντίγραφο
     }
 
+    // Μπορεί να συνδεθεί αργότερα με πραγματικό αρχείο
     public static void openFile(String filename) {
         System.out.println("Άνοιγμα αρχείου: " + filename);
-        // Αν θέλεις στο μέλλον: μπορείς να προσθέσεις άνοιγμα pdf κτλ εδώ
     }
 }

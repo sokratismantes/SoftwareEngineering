@@ -4,14 +4,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "SmartMed.db";
-    public static final int DATABASE_VERSION =6;
+    public static final int DATABASE_VERSION =11; // Αυξήθηκε η έκδοση
 
     public static final String TABLE_USERS = "Users";
     public static final String COL_ID = "id";
@@ -77,7 +76,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "('Βιοχημική_Σεπτέμβριος.docx', 'path/to/bioximiki.docx')," +
                 "('TSH.png', 'path/to/tsh.png')");
 
-        // ✅ Νέος πίνακας MedicalFiles
+        // ✅ Πίνακας Μαγνητικών Εξετάσεων (MRI)
+        String createMRITable = "CREATE TABLE MRIExams (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "title TEXT NOT NULL, " +
+                "filepath TEXT NOT NULL)";
+        db.execSQL(createMRITable);
+
+        db.execSQL("INSERT INTO MRIExams (title, filepath) VALUES " +
+                "('MRI_Εγκεφάλου.pdf', 'path/to/mri1.pdf')," +
+                "('MRI_Σπονδυλικής_Στήλης.docx', 'path/to/mri2.docx')," +
+                "('MRI_Γονάτου.png', 'path/to/mri3.png')");
+
+        // ✅ Πίνακας MedicalFiles
         String createMedicalFiles = "CREATE TABLE IF NOT EXISTS MedicalFiles (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "name TEXT)";
@@ -86,6 +97,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO MedicalFiles (name) VALUES ('Αιματολογικές.pdf')");
         db.execSQL("INSERT INTO MedicalFiles (name) VALUES ('Συνταγή_Μαρτίου.pdf')");
         db.execSQL("INSERT INTO MedicalFiles (name) VALUES ('Παραπεμπτικό_Ακτινογραφίας.pdf')");
+
+        // Πίνακας Μικροβιολογικών Εξετάσεων
+        String createMicrobiologyTable = "CREATE TABLE MicrobiologyExams (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "title TEXT NOT NULL, " +
+                "filepath TEXT NOT NULL)";
+        db.execSQL(createMicrobiologyTable);
+
+        db.execSQL("INSERT INTO MicrobiologyExams (title, filepath) VALUES " +
+                "('Μικροβιολογική_Ούρων.pdf', 'path/to/urine.pdf')," +
+                "('Καλλιέργεια_Λαιμού.docx', 'path/to/throat.docx')," +
+                "('Καλλιέργεια_Ούρων.png', 'path/to/urine2.png')");
+
+        // Καρδιολογικές Εξετάσεις
+        String createCardiologyTable = "CREATE TABLE CardiologyExams (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "title TEXT NOT NULL, " +
+                "filepath TEXT NOT NULL)";
+        db.execSQL(createCardiologyTable);
+
+        db.execSQL("INSERT INTO CardiologyExams (title, filepath) VALUES " +
+                "('ΗΚΓ_Ιανουάριος_2024.pdf', 'path/to/cardio1.pdf')," +
+                "('Triplex_καρδιάς.docx', 'path/to/cardio2.docx')," +
+                "('Πίεση_μετρήσεις.png', 'path/to/cardio3.png')");
+
+        // Πίνακας Μοριακών Εξετάσεων
+        String createMolecularTable = "CREATE TABLE MolecularExams (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "title TEXT NOT NULL, " +
+                "filepath TEXT NOT NULL)";
+        db.execSQL(createMolecularTable);
+
+        db.execSQL("INSERT INTO MolecularExams (title, filepath) VALUES " +
+                "('PCR_COVID19_Αποτελέσματα.pdf', 'path/to/pcr1.pdf')," +
+                "('Μοριακός_Έλεγχος_Ιού.docx', 'path/to/molecular2.docx')," +
+                "('PCR_Γρίπης.png', 'path/to/pcr3.png')");
+
     }
 
     @Override
@@ -93,24 +141,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS FAQs");
         db.execSQL("DROP TABLE IF EXISTS HematologyExams");
+        db.execSQL("DROP TABLE IF EXISTS MRIExams");
         db.execSQL("DROP TABLE IF EXISTS MedicalFiles");
+        db.execSQL("DROP TABLE IF EXISTS MicrobiologyExams");
+        db.execSQL("DROP TABLE IF EXISTS CardiologyExams");
+        db.execSQL("DROP TABLE IF EXISTS MolecularExams"); // ✅ πρόσθεσε αυτό
         onCreate(db);
-    }
-
-    // ✅ Νέα μέθοδος για MedicalDocumentsActivity
-    public List<String> getAllMedicalFiles() {
-        List<String> files = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT name FROM MedicalFiles", null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                files.add(cursor.getString(0));
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-        return files;
     }
 }

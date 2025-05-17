@@ -12,7 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Smartmed1"
         tools:targetApi="31">
-        <activity android:name=".OpenFileScreenActivity" />
+        <activity
+            android:name=".DiagnosticResultsMolecular"
+            android:exported="false" />
+        <activity
+            android:name=".DiagnosticResultsCardiology"
+            android:exported="false" />
+        <activity
+            android:name=".DiagnosticResultsMicrobiology"
+            android:exported="false" />
+        <activity
+            android:name=".DiagnosticResultsMRI"
+            android:exported="false" />
+        <activity
+            android:name=".OpenFileScreenActivity"
+            android:exported="false"/>
         <activity
             android:name=".DiagnosticResultsHematology"
             android:exported="false" />

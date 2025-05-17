@@ -3,14 +3,17 @@ package com.example.smartmed1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
@@ -21,7 +24,6 @@ public class MedicalDocumentsActivity extends AppCompatActivity {
     AutoCompleteTextView searchInput;
     Button btnFilter;
     ImageView imgDiagnostic;
-    LinearLayout folderContainer;
 
     List<String> fileList;
 
@@ -35,28 +37,22 @@ public class MedicalDocumentsActivity extends AppCompatActivity {
         searchInput = findViewById(R.id.searchInput);
         btnFilter = findViewById(R.id.btnFilter);
         imgDiagnostic = findViewById(R.id.imgDiagnostic);
-        folderContainer = findViewById(R.id.folderContainer);
 
+        containerFiles.setVisibility(View.GONE); // Απόκρυψη αρχείων στην αρχή
 
-
-        // Μετάβαση στις διαγνωστικές εξετάσεις
         imgDiagnostic.setOnClickListener(v -> {
             Intent intent = new Intent(MedicalDocumentsActivity.this, DiagnosticExamsActivity.class);
             startActivity(intent);
         });
 
-        // Ανάκτηση αρχείων από SQLite μέσω Files
         if (!Files.fileExists(this)) {
             textNoFiles.setVisibility(View.VISIBLE);
             return;
         }
-        fileList = Files.getFiles(this);
-        if (fileList.isEmpty()) {
-            textNoFiles.setVisibility(View.VISIBLE);
-            return;
-        }
 
-        // Προετοιμασία dropdown autocomplete
+        fileList = Files.getFiles(this);
+
+        // Adapter για το dropdown της αναζήτησης
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_dropdown_item_1line,
@@ -65,23 +61,36 @@ public class MedicalDocumentsActivity extends AppCompatActivity {
         searchInput.setAdapter(adapter);
         searchInput.setThreshold(1);
 
+        // Τι συμβαίνει όταν επιλεγεί κάποιο στοιχείο από τη λίστα
         searchInput.setOnItemClickListener((parent, view, position, id) -> {
             String selected = (String) parent.getItemAtPosition(position);
             showFiles(List.of(selected));
+            containerFiles.setVisibility(View.VISIBLE);
         });
 
-        // Φιλτράρισμα μέσω κουμπιού
+        // Αν σβήσει το κείμενο -> κρύψε τη λίστα
+        searchInput.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) {
+                if (s.toString().trim().isEmpty()) {
+                    containerFiles.setVisibility(View.GONE);
+                    containerFiles.removeAllViews();
+                }
+            }
+        });
+
+        // Φιλτράρισμα με κουμπί
         btnFilter.setOnClickListener(v -> {
             List<String> filtered = FilterManager.arrangeFiles(fileList);
             showFiles(filtered);
+            containerFiles.setVisibility(View.VISIBLE);
         });
-
-        // Φόρτωση φακέλων
-        showFolders();
     }
 
     private void showFiles(List<String> files) {
         containerFiles.removeAllViews();
+
         for (String name : files) {
             TextView tv = new TextView(this);
             tv.setText(name);
@@ -94,26 +103,6 @@ public class MedicalDocumentsActivity extends AppCompatActivity {
                 startActivity(intent);
             });
             containerFiles.addView(tv);
-        }
-    }
-
-    private void showFolders() {
-        List<String> folders = Folders.getFolders();
-        for (String folderName : folders) {
-            Button folderBtn = new Button(this);
-            folderBtn.setText(folderName);
-            folderBtn.setAllCaps(false);
-            folderBtn.setTextSize(14);
-            folderBtn.setPadding(24, 10, 24, 10);
-            folderBtn.setOnClickListener(v -> {
-                List<String> filtered = FilterManager.searchFiles(fileList, folderName);
-                if (filtered.isEmpty()) {
-                    Toast.makeText(this, "Δεν υπάρχουν αρχεία για " + folderName, Toast.LENGTH_SHORT).show();
-                } else {
-                    showFiles(filtered);
-                }
-            });
-            folderContainer.addView(folderBtn);
         }
     }
 }

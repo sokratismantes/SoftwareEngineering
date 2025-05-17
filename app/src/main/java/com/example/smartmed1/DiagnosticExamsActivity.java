@@ -31,6 +31,29 @@ public class DiagnosticExamsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Τα υπόλοιπα θα ενεργοποιηθούν με παρόμοιο τρόπο...
+        btnMRI.setOnClickListener(v -> {
+            Intent intent = new Intent(DiagnosticExamsActivity.this, DiagnosticResultsMRI.class);
+            intent.putExtra("category", "Μαγνητικές");
+            startActivity(intent);
+        });
+
+        btnMicrobiology.setOnClickListener(v -> {
+            Intent intent = new Intent(DiagnosticExamsActivity.this, DiagnosticResultsMicrobiology.class);
+            intent.putExtra("category", "Μικροβιολογικές");
+            startActivity(intent);
+        });
+
+        btnCardiology.setOnClickListener(v -> {
+            Intent intent = new Intent(DiagnosticExamsActivity.this, DiagnosticResultsCardiology.class);
+            intent.putExtra("category", "Καρδιολογικές");
+            startActivity(intent);
+        });
+
+        btnGeneral.setOnClickListener(v -> {
+            Intent intent = new Intent(DiagnosticExamsActivity.this, DiagnosticResultsMolecular.class);
+            intent.putExtra("category", "Μοριακές");
+            startActivity(intent);
+        });
+
     }
 }
