@@ -3,11 +3,15 @@ package com.example.smartmed1;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.Cursor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "SmartMed.db";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION =6;
 
     public static final String TABLE_USERS = "Users";
     public static final String COL_ID = "id";
@@ -53,19 +57,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "answer TEXT NOT NULL)";
         db.execSQL(createFaqTable);
 
-        // Εισαγωγή αρχικών ερωταπαντήσεων
         db.execSQL("INSERT INTO FAQs (question, answer) VALUES " +
                 "('Μπορώ από την εφαρμογή να δω τα παραπεμπτικά μου;', 'Ναι, στην ενότητα ''Τα παραπεμπτικά μου'' από την αρχική οθόνη.')," +
                 "('Πόσο συχνά πρέπει να κάνω εξετάσεις αίματος;', 'Οι συστάσεις ποικίλλουν ανάλογα με το ιστορικό σας. Συμβουλευτείτε τον γιατρό σας.')," +
                 "('Που μπορώ να δω τις συνταγές μου;', 'Στην ενότητα ''Οι Συνταγές Μου'' από το μενού χρήστη.')," +
                 "('Μπορώ να κλείσω ραντεβού μέσω της εφαρμογής;', 'Ναι, στην ενότητα ''Νέο Ραντεβού'' μπορείτε να προγραμματίσετε νέο ραντεβού.')," +
                 "('Μπορώ να αλλάξω τον προσωπικό μου γιατρό;', 'Ναι, μέσω της διαχείρισης προφίλ.');");
+
+        // Πίνακας Αιματολογικών Εξετάσεων
+        String createHematologyTable = "CREATE TABLE HematologyExams (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "title TEXT NOT NULL, " +
+                "filepath TEXT NOT NULL)";
+        db.execSQL(createHematologyTable);
+
+        db.execSQL("INSERT INTO HematologyExams (title, filepath) VALUES " +
+                "('ΓΕΝΙΚΗ_ΑΙΜΑΤΟΣ_2023.pdf', 'path/to/geniki.pdf')," +
+                "('Θυρεοειδής.docx', 'path/to/thyreo.docx')," +
+                "('Βιοχημική_Σεπτέμβριος.docx', 'path/to/bioximiki.docx')," +
+                "('TSH.png', 'path/to/tsh.png')");
+
+        // ✅ Νέος πίνακας MedicalFiles
+        String createMedicalFiles = "CREATE TABLE IF NOT EXISTS MedicalFiles (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "name TEXT)";
+        db.execSQL(createMedicalFiles);
+
+        db.execSQL("INSERT INTO MedicalFiles (name) VALUES ('Αιματολογικές.pdf')");
+        db.execSQL("INSERT INTO MedicalFiles (name) VALUES ('Συνταγή_Μαρτίου.pdf')");
+        db.execSQL("INSERT INTO MedicalFiles (name) VALUES ('Παραπεμπτικό_Ακτινογραφίας.pdf')");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS FAQs");
+        db.execSQL("DROP TABLE IF EXISTS HematologyExams");
+        db.execSQL("DROP TABLE IF EXISTS MedicalFiles");
         onCreate(db);
+    }
+
+    // ✅ Νέα μέθοδος για MedicalDocumentsActivity
+    public List<String> getAllMedicalFiles() {
+        List<String> files = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT name FROM MedicalFiles", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                files.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return files;
     }
 }

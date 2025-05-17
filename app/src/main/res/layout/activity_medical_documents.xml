@@ -1,0 +1,259 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    android:padding="24dp">
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Λογότυπο" />
+
+    <!-- Περιγραφή -->
+    <TextView
+        android:id="@+id/description"
+        android:layout_below="@id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Εδώ μπορείτε να δείτε όλα τα χρήσιμα ιατρικά αρχεία σας."
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Αναζήτηση και φίλτρο μαζί -->
+    <LinearLayout
+        android:id="@+id/searchBarLayout"
+        android:layout_below="@id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <AutoCompleteTextView
+            android:id="@+id/searchInput"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Αναζήτηση αρχείων"
+            android:background="@android:color/white"
+            android:padding="12dp"
+            android:inputType="text"
+            android:dropDownHeight="200dp"
+            android:dropDownVerticalOffset="5dp"
+            android:completionThreshold="1" />
+
+        <Button
+            android:id="@+id/btnFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Φιλτράρισμα"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+
+    <!-- Πλέγμα εγγράφων -->
+    <LinearLayout
+        android:id="@+id/docsGrid"
+        android:layout_below="@id/searchBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Πάνω σειρά -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="24dp">
+
+            <!-- Παραπεμπτικά -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/medical_docs_doc_image"
+                    android:contentDescription="Παραπεμπτικά" />
+
+                <TextView
+                    android:layout_width="104dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Παραπεμπτικά"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+
+            <!-- Διαγνωστικές -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <ImageView
+                    android:id="@+id/imgDiagnostic"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/medical_docs_doc_image"
+                    android:contentDescription="Διαγνωστικές Εξετάσεις" />
+
+
+                <TextView
+                    android:layout_width="104dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Διαγνωστικές Εξετάσεις"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:gravity="center" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Κάτω σειρά -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="141dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <!-- Πιστοποιητικά -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:contentDescription="Πιστοποιητικά Εμβολιασμού"
+                    android:src="@drawable/medical_docs_doc_image" />
+
+                <TextView
+                    android:layout_width="104dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Πιστοποιητικά Εμβολιασμού"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+
+            <!-- Ιατρικό Ιστορικό -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:contentDescription="Ιατρικό Ιστορικό"
+                    android:src="@drawable/medical_docs_doc_image" />
+
+                <TextView
+                    android:layout_width="104dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Ιατρικό Ιστορικό"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Μήνυμα μη διαθέσιμων αρχείων -->
+    <TextView
+        android:id="@+id/textNoFiles"
+        android:layout_below="@id/docsGrid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Δεν υπάρχουν αρχεία"
+        android:textColor="@android:color/holo_red_light"
+        android:visibility="gone"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Λίστα αρχείων -->
+    <LinearLayout
+        android:id="@+id/containerFiles"
+        android:layout_below="@id/textNoFiles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="64dp" />
+
+    <!-- Οριζόντια κύλιση φακέλων -->
+    <HorizontalScrollView
+        android:id="@+id/folderScroll"
+        android:layout_below="@id/containerFiles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:padding="4dp"
+        android:visibility="gone"> <!-- ✅ ΠΡΟΣΘΗΚΗ ΕΔΩ -->
+
+        <LinearLayout
+            android:id="@+id/folderContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
+
+    <!-- Κάτω μπάρα πλοήγησης -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/home"
+            android:contentDescription="Αρχική" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/info"
+            android:contentDescription="Πληροφορίες" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/user"
+            android:contentDescription="Χρήστης" />
+    </LinearLayout>
+</RelativeLayout>
