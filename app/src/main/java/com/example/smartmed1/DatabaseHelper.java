@@ -148,4 +148,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS MolecularExams"); // ✅ πρόσθεσε αυτό
         onCreate(db);
     }
+
+    public boolean verifyPatient(String amka, String name, String surname) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT * FROM " + TABLE_USERS + " WHERE " +
+                        COL_AMKA + " = ? AND " +
+                        "LOWER(" + COL_FULLNAME + ") LIKE ?",
+                new String[]{amka, "%" + name.toLowerCase() + "%" + surname.toLowerCase() + "%"}
+        );
+
+        boolean result = cursor.getCount() > 0;
+        cursor.close();
+        return result;
+    }
 }

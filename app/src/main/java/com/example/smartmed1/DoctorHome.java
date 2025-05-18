@@ -25,10 +25,10 @@ public class DoctorHome extends AppCompatActivity {
         btnPrescriptions = findViewById(R.id.btnPrescriptions);
         btnHistory = findViewById(R.id.btnHistory);
 
-        // Προσθήκη listeners (προς το παρόν με TODO)
         btnPrescription.setOnClickListener(v -> {
-            startActivity(new Intent(this, DoctorPrescriptionCreate.class));
+            startActivity(new Intent(this, PatientAdmissionForm.class));
         });
+
 
 
         btnReferral.setOnClickListener(v -> {
