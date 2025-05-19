@@ -37,6 +37,7 @@ public class UserHome extends AppCompatActivity {
 
         btnMyPrescriptions.setOnClickListener(v -> {
             // ανοιγμα σελιδας με τις συνταγες
+            startActivity(new Intent(this, PrescriptionListActivity.class));
         });
 
         btnHealthData.setOnClickListener(v -> {
