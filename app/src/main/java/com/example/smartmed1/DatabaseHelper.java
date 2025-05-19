@@ -10,7 +10,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "SmartMed.db";
-    public static final int DATABASE_VERSION =11; // Αυξήθηκε η έκδοση
+    public static final int DATABASE_VERSION =13; // Αυξήθηκε η έκδοση
 
     public static final String TABLE_USERS = "Users";
     public static final String COL_ID = "id";
@@ -134,6 +134,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "('Μοριακός_Έλεγχος_Ιού.docx', 'path/to/molecular2.docx')," +
                 "('PCR_Γρίπης.png', 'path/to/pcr3.png')");
 
+        String createPrescriptionsTable = "CREATE TABLE IF NOT EXISTS Prescriptions (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "amka TEXT," +
+                "name TEXT," +
+                "diagnosis TEXT," +
+                "drug TEXT," +
+                "pharma_code TEXT," +
+                "dose TEXT," +
+                "instructions TEXT," +
+                "duration TEXT," +
+                "pharmacy TEXT" +
+                ")";
+        db.execSQL(createPrescriptionsTable);
+
     }
 
     @Override
@@ -145,9 +159,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS MedicalFiles");
         db.execSQL("DROP TABLE IF EXISTS MicrobiologyExams");
         db.execSQL("DROP TABLE IF EXISTS CardiologyExams");
-        db.execSQL("DROP TABLE IF EXISTS MolecularExams"); // ✅ πρόσθεσε αυτό
+        db.execSQL("DROP TABLE IF EXISTS MolecularExams");
+        db.execSQL("DROP TABLE IF EXISTS Prescriptions");
+
         onCreate(db);
     }
+
 
     public boolean verifyPatient(String amka, String name, String surname) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -162,4 +179,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return result;
     }
+    public void insertPrescription(String amka, String name, String diagnosis, String drug,
+                                   String pharmaCode, String dose, String instructions,
+                                   String duration, String pharmacy) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("INSERT INTO Prescriptions (amka, name, diagnosis, drug, pharma_code, dose, instructions, duration, pharmacy) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                new Object[]{amka, name, diagnosis, drug, pharmaCode, dose, instructions, duration, pharmacy});
+    }
+
 }
