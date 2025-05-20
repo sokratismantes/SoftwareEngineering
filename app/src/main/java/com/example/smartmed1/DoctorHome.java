@@ -6,9 +6,10 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+// Αρχική οθόνη για τον γιατρό μετά το login
 public class DoctorHome extends AppCompatActivity {
 
-    // Δήλωση μεταβλητών
+    // Δήλωση κουμπιών για τις διαθέσιμες λειτουργίες του γιατρού
     Button btnPrescription, btnReferral, btnAvailability, btnAppointments, btnPrescriptions, btnHistory;
 
     @Override
@@ -33,6 +34,7 @@ public class DoctorHome extends AppCompatActivity {
         btnHistory.setOnClickListener(v -> GoToHistory());
     }
 
+    // Ενεργοποίηση της σελίδας εισαγωγής ασθενούς για συνταγογράφηση
     private void GoToPatientForm() {
         Intent intent = new Intent(this, PatientAdmissionForm.class);
         startActivity(intent);

@@ -1,5 +1,6 @@
 package com.example.smartmed1;
 
+// Εισαγωγή απαραίτητων Android κλάσεων για UI και πρόσβαση σε βάση
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -15,8 +16,10 @@ import android.graphics.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+// Δραστηριότητα που εμφανίζει τα αποτελέσματα Καρδιολογικών εξετάσεων
 public class DiagnosticResultsCardiology extends AppCompatActivity {
 
+    // Container που θα γεμίσει με δυναμικά views (μία κάρτα ανά εξέταση)
     LinearLayout resultsContainer;
 
     @Override
@@ -32,6 +35,7 @@ public class DiagnosticResultsCardiology extends AppCompatActivity {
         }
     }
 
+    // Δημιουργία δυναμικής "κάρτας" εμφάνισης για μια εξέταση
     private View createCardiologyResultView(String titleText) {
         LinearLayout parentLayout = new LinearLayout(this);
         parentLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -67,6 +71,7 @@ public class DiagnosticResultsCardiology extends AppCompatActivity {
         return parentLayout;
     }
 
+    // Ανάκτηση των τίτλων των καρδιολογικών εξετάσεων από τη βάση
     private List<String> getCardiologyResults() {
         List<String> list = new ArrayList<>();
         DatabaseHelper dbHelper = new DatabaseHelper(this);
@@ -79,6 +84,6 @@ public class DiagnosticResultsCardiology extends AppCompatActivity {
         }
         cursor.close();
         db.close();
-        return list;
+        return list;  // Επιστροφή λίστας εξετάσεων
     }
 }

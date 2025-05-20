@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 
+// Δραστηριότητα όπου ο γιατρός συμπληρώνει νέα συνταγή φαρμάκων
 public class DoctorPrescriptionCreate extends AppCompatActivity {
 
     // Δήλωση πεδίων εισόδου για τη συνταγή

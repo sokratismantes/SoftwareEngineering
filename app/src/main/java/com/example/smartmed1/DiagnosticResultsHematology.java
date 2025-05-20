@@ -1,5 +1,6 @@
 package com.example.smartmed1;
 
+// Εισαγωγή βασικών Android βιβλιοθηκών για UI, βάση και προβολή
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.LinearLayout.LayoutParams;
 import androidx.appcompat.app.AppCompatActivity;
 
+// Δραστηριότητα για εμφάνιση αιματολογικών εξετάσεων
 public class DiagnosticResultsHematology extends AppCompatActivity {
 
     LinearLayout resultsContainer;
