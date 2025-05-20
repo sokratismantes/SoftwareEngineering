@@ -10,7 +10,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "SmartMed.db";
-    public static final int DATABASE_VERSION =13; // Αυξήθηκε η έκδοση
+    public static final int DATABASE_VERSION =15; // Αυξήθηκε η έκδοση
 
     public static final String TABLE_USERS = "Users";
     public static final String COL_ID = "id";
@@ -148,6 +148,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ")";
         db.execSQL(createPrescriptionsTable);
 
+        // Δημιουργία πίνακα φαρμακείων
+        String createPharmacyTable = "CREATE TABLE IF NOT EXISTS Pharmacies (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "address TEXT NOT NULL, " +
+                "available_codes TEXT)";  // κωδικοί φαρμάκων χωρισμένοι με κόμμα
+        db.execSQL(createPharmacyTable);
+
+// Προσθήκη παραδειγμάτων
+        db.execSQL("INSERT INTO Pharmacies (address, available_codes) VALUES " +
+                "('Σταδίου 12', 'A123,B456')," +
+                "('Αχαρνών 99', 'X999,Z777')," +
+                "('Πατησίων 55', '123456,999999')");
+
+
     }
 
     @Override
@@ -188,5 +202,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 new Object[]{amka, name, diagnosis, drug, pharmaCode, dose, instructions, duration, pharmacy});
     }
+
+    public boolean getPharmacyByAddress(String address) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Pharmacies WHERE LOWER(address) = ?", new String[]{address.toLowerCase()});
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        return exists;
+    }
+    public List<Prescription> getAllPrescriptions() {
+        List<Prescription> prescriptions = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Prescriptions", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String code = cursor.getString(cursor.getColumnIndexOrThrow("pharma_code"));
+                String expiry = "31/12/2025"; // Μπορείς αργότερα να το περάσεις σωστά
+                String doctor = "Γιατρός";    // Αν προσθέσεις πεδίο doctor στο μέλλον
+                String status = "Ενεργή";     // Μπορείς να κάνεις έλεγχο με ημερομηνία
+                int compliance = 100;         // Προσωρινή τιμή — αν θες μπορεί να υπολογίζεται
+                boolean expired = false;
+
+                prescriptions.add(new Prescription(
+                        code,
+                        expiry,
+                        doctor,
+                        status,
+                        compliance,
+                        expired,
+                        cursor.getString(cursor.getColumnIndexOrThrow("diagnosis")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("drug")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("instructions"))
+                ));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return prescriptions;
+    }
+
 
 }
