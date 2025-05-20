@@ -7,11 +7,14 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.Date;
 import java.util.Calendar;
+import android.widget.ImageView;
+
 
 public class UserHome extends AppCompatActivity {
 
     // Δήλωση κουμπιών
     Button btnNewAppointment, btnMyAppointments, btnMyPrescriptions, btnHealthData, btnMedicalFiles;
+    ImageView infoIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,21 +48,16 @@ public class UserHome extends AppCompatActivity {
         });
 
         btnMedicalFiles.setOnClickListener(v -> {
-            // TODO: Άνοιγμα σελίδας με τα ιατρικά αρχεία
+            // Άνοιγμα της σελίδας MedicalDocumentsActivity
+            Intent intent = new Intent(this, MedicalDocumentsActivity.class);
+            startActivity(intent);
         });
+        infoIcon = findViewById(R.id.infoIcon);  // Υποθέτουμε ότι αυτό είναι το ID της εικόνας σου
+
+        infoIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(UserHome.this, HelpAndSupportUser.class);
+            startActivity(intent);
+        });
+
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
