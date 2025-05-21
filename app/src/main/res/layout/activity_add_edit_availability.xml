@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    tools:context=".AddEditAvailabilityActivity">
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/logo"
+        android:contentDescription="SmartMed Logo" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="ΠΡΟΣΘΗΚΗ ΔΙΑΘΕΣΙΜΟΤΗΤΑΣ"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Description -->
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="Επιλέξτε την ημέρα και το χρονικό διάστημα\nπου θα βρίσκεστε σε διαθεσιμότητα."
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp" />
+
+    <!-- Day, Start Time, End Time Pickers -->
+    <LinearLayout
+        android:id="@+id/timePickersLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="8dp"
+        android:weightSum="3">
+
+        <!-- Day Picker (Placeholder - could be a Spinner or Button) -->
+        <Button
+            android:id="@+id/buttonDay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ημέρα"
+            android:textColor="#000000"
+            android:background="@drawable/rounded_rectangle" />
+
+        <!-- Start Time Picker (Placeholder - could be a Button with TimePickerDialog) -->
+        <Button
+            android:id="@+id/buttonStartTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ώρα Έναρξης"
+            android:textColor="#000000"
+            android:background="@drawable/rounded_rectangle" />
+
+        <!-- End Time Picker (Placeholder - could be a Button with TimePickerDialog) -->
+        <Button
+            android:id="@+id/buttonEndTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ώρα Λήξης"
+            android:textColor="#000000"
+            android:background="@drawable/rounded_rectangle" />
+
+    </LinearLayout>
+
+    <!-- Example Entry (Placeholder for selected times) -->
+    <LinearLayout
+        android:id="@+id/exampleEntryLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timePickersLayout"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="8dp"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/textViewSelectedDay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Τετάρτη"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:background="@android:color/white" />
+
+        <TextView
+            android:id="@+id/textViewSelectedStartTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="17 : 00"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:background="@android:color/white" />
+
+        <TextView
+            android:id="@+id/textViewSelectedEndTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="21 : 00"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:background="@android:color/white" />
+    </LinearLayout>
+
+    <!-- Text above On-call duty dropdown -->
+    <TextView
+        android:id="@+id/textViewOnCallDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/exampleEntryLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Συμπληρώστε το πρότυπο της συγκεκριμένης\nδιαθεσιμότητας."
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp" />
+
+    <!-- On-call duty dropdown -->
+    <Spinner
+        android:id="@+id/spinnerOnCallDuty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewOnCallDescription"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:entries="@array/on_call_options" />
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:id="@+id/buttonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerOnCallDuty"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ΕΠΙΒΕΒΑΙΩΣΗ"
+            android:layout_marginEnd="16dp" />
+
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ΑΚΥΡΩΣΗ" />
+    </LinearLayout>
+
+    <!-- Bottom Navigation Bar (Placeholder) -->
+    <LinearLayout
+        android:id="@+id/bottomNavigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="#FFFFFF">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/home"
+            android:contentDescription="Home Icon" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/info"
+            android:contentDescription="Info Icon" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/user"
+            android:contentDescription="User Icon" />
+    </LinearLayout>
+
+</RelativeLayout> 

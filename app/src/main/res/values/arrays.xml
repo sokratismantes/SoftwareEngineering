@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="on_call_options">
+        <item>Εφημερία</item>
+        <item>Κανονική Διαθεσιμότητα</item>
+        <item>Επείγουσα Διαθεσιμότητα</item>
+        <item>Δεν Είμαι Διαθέσιμος</item>
+    </string-array>
+</resources> 

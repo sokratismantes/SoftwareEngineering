@@ -36,7 +36,7 @@ public class DoctorHome extends AppCompatActivity {
         });
 
         btnAvailability.setOnClickListener(v -> {
-            // TODO: Διαχείριση διαθεσιμότητας
+            startActivity(new Intent(this, DoctorAvailabilityActivity.class));
         });
 
         btnAppointments.setOnClickListener(v -> {
