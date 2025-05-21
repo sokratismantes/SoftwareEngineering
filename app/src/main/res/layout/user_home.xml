@@ -1,0 +1,88 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_light">
+
+    <!-- Περιεχόμενο με κουμπιά -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/nav_view">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="229dp"
+                android:layout_height="216dp"
+                android:layout_marginBottom="24dp"
+                android:src="@drawable/smartmed_logo" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="333dp"
+                android:layout_height="64dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/material_dynamic_primary30"
+                android:text="ΠΡΟΓΡΑΜΜΑΤΙΣΤΕ ΝΕΟ ΡΑΝΤΕΒΟΥ"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="248dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="@color/material_dynamic_primary30"
+                android:text="ΤΑ ΡΑΝΤΕΒΟΥ ΜΟΥ"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="246dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="@color/material_dynamic_primary30"
+                android:text="ΟΙ ΣΥΝΤΑΓΕΣ ΜΟΥ"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="246dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="@color/material_dynamic_primary30"
+                android:text="ΔΕΔΟΜΕΝΑ ΥΓΕΙΑΣ"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="247dp"
+                android:layout_height="52dp"
+                android:backgroundTint="@color/material_dynamic_primary30"
+                android:text="ΤΑ ΙΑΤΡΙΚΑ ΜΟΥ ΑΡΧΕΙΑ"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Κολλημένο κάτω -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#C5F1FF"
+        app:menu="@menu/bottom_nav_menu" />
+
+</RelativeLayout>

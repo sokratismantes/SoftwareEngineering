@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.smartmed2">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="SmartMed"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SmartMed2">
+        <activity
+            android:name=".ui.ProcessAppointments"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ActiveAppointments"
+            android:exported="false" />
+        <activity
+            android:name=".ui.PaymentMethods"
+            android:exported="false" />
+        <activity
+            android:name=".ui.AvailableTimeSlots"
+            android:exported="false" />
+        <activity android:name=".ui.AppointmentPreview" />
+        <activity android:name=".ui.CreateAppointment" />
+        <activity android:name=".ui.AvailabilityForm" /> <!-- ✅ Η αρχική activity -->
+        <activity
+            android:name=".ui.UserHome"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

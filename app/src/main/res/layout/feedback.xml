@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tint"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_light">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_above="@+id/nav_view">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <ImageView
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/smartmed_logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Εδώ μπορείτε να αξιολογήσετε την εμπειρία σας από το ραντεβού."
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"/>
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/ic_chat_review" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Αναφέρετε την ημερομηνία χρήσης της υπηρεσίας."
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginBottom="6dp"/>
+
+            <EditText
+                android:id="@+id/editFeedbackDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="--/--/----"
+                android:background="@drawable/rounded_edittext"
+                android:focusable="false"
+                android:padding="12dp"
+                android:textColorHint="#66000000"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Γράψτε εδώ την κριτική σας."
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginBottom="6dp"/>
+
+            <EditText
+                android:id="@+id/editFeedbackText"
+                android:layout_width="364dp"
+                android:layout_height="107dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_edittext"
+                android:gravity="top|start"
+                android:hint="..."
+                android:inputType="textMultiLine"
+                android:maxLines="6"
+                android:minLines="3"
+                android:textColor="@android:color/black"
+                android:textColorHint="#66000000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Βαθμολογείστε την εμπειρία σας από το ραντεβού."
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:id="@+id/starRatingLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="24dp">
+
+                <ImageView
+                    android:id="@+id/star1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/star_empty"
+                    android:layout_margin="4dp" />
+
+                <ImageView
+                    android:id="@+id/star2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/star_empty"
+                    android:layout_margin="4dp" />
+
+                <ImageView
+                    android:id="@+id/star3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/star_empty"
+                    android:layout_margin="4dp" />
+
+                <ImageView
+                    android:id="@+id/star4"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/star_empty"
+                    android:layout_margin="4dp" />
+
+                <ImageView
+                    android:id="@+id/star5"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/star_empty"
+                    android:layout_margin="4dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/material_dynamic_primary30"
+                android:elevation="6dp"
+                android:text="ΥΠΟΒΟΛΗ"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Κάτω μενού (αν χρειάζεται) -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#C5F1FF"
+        app:menu="@menu/bottom_nav_menu" />
+</RelativeLayout>
