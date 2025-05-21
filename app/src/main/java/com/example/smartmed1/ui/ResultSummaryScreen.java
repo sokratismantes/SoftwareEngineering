@@ -1,9 +1,8 @@
 package com.example.smartmed1.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -11,14 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smartmed1.R;
 import com.example.smartmed1.model.ScoreResult;
-import com.example.smartmed1.service.PDFExporter;
 import com.example.smartmed1.service.QuizEngine;
 
-import java.io.File;
+import java.util.List;
 
 public class ResultSummaryScreen extends AppCompatActivity {
-    private ProgressBar anxietyBar, depressionBar;
-    private TextView tvAnxietyLabel, tvMoodLabel;
+    private ProgressBar anxietyBar, depressionBar, wellbeingBar;
+    private TextView tvAnxietyScore, tvDepressionScore, tvWellbeingScore;
+    private LinearLayout warningsContainer;
     private Button btnShare, btnExport;
     private QuizEngine quizEngine;
 
@@ -27,50 +26,73 @@ public class ResultSummaryScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_summary_screen);
 
-        // 1) Initialize engine & compute
-        quizEngine = new QuizEngine();
+        // ensure we'll return RESULT_OK when this finishes
+        setResult(RESULT_OK);
+
+        quizEngine = QuizEngine.getInstance();
         ScoreResult result = quizEngine.calculateScore();
 
-        // 2) Find views
-        ImageView ivIcon           = findViewById(R.id.ivSummaryIcon);
-        TextView tvTitle           = findViewById(R.id.tvSummaryTitle);
-        anxietyBar                 = findViewById(R.id.progressAnxiety);
-        depressionBar              = findViewById(R.id.progressDepression);
-        TextView tvWarningsHeader  = findViewById(R.id.tvWarningsHeader);
-        TextView tvWarn1           = findViewById(R.id.tvWarn1);
-        TextView tvWarn2           = findViewById(R.id.tvWarn2);
-        TextView tvMoreInfo        = findViewById(R.id.tvMoreInfo);
-        btnShare                   = findViewById(R.id.btnShareResults);
-        btnExport                  = findViewById(R.id.btnExportPdf);
+        // bind views
+        anxietyBar      = findViewById(R.id.progressAnxiety);
+        depressionBar   = findViewById(R.id.progressDepression);
+        wellbeingBar    = findViewById(R.id.progressWellbeing);
 
-        // after fetching result in onCreate()
-        anxietyBar.setProgress(result.getAnxietyScore());
-        depressionBar.setProgress(result.getDepressionScore());
+        tvAnxietyScore    = findViewById(R.id.tvAnxietyScore);
+        tvDepressionScore = findViewById(R.id.tvMoodScore);
+        tvWellbeingScore  = findViewById(R.id.tvWellbeingScore);
 
-        // 4) Populate warnings text
-        tvWarn1.setText("• Οι απαντήσεις σας υποδεικνύουν ότι ενδέχεται να αντιμετωπίζετε συμπτώματα μέτριου άγχους.");
-        tvWarn2.setText("• Οι απαντήσεις σας υποδεικνύουν ότι ενδέχεται να αντιμετωπίζετε συμπτώματα ήπιας κατάθλιψης.");
+        warningsContainer = findViewById(R.id.warningsContainer);
 
-        // 5) Info link listener
-        tvMoreInfo.setOnClickListener(v -> {
-            // TODO: launch an info screen or webview
+        btnShare         = findViewById(R.id.btnShareResults);
+        btnExport        = findViewById(R.id.btnExportPdf);
+
+        // populate bars & labels
+        int a = result.getAnxietyScore();
+        int d = result.getDepressionScore();
+        int w = result.getWellbeingScore();
+
+        anxietyBar.setProgress(a);
+        depressionBar.setProgress(d);
+        wellbeingBar.setProgress(w);
+
+        tvAnxietyScore.setText(a + "/100");
+        tvDepressionScore.setText(d + "/100");
+        tvWellbeingScore.setText(w + "/100");
+
+        // dynamic warnings
+        warningsContainer.removeAllViews();
+        List<String> warnings = result.getWarnings();
+        for (String warn : warnings) {
+            TextView tv = new TextView(this);
+            tv.setText("• " + warn);
+            tv.setTextColor(getColor(android.R.color.white));
+            tv.setTextSize(14f);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(0, 8, 0, 0);
+            tv.setLayoutParams(lp);
+            warningsContainer.addView(tv);
+        }
+
+        // optional “More info” link
+        findViewById(R.id.tvMoreInfo).setOnClickListener(v -> {
+            // TODO
         });
 
-        // 6) Button listeners
+        // share/export listeners…
         btnShare.setOnClickListener(v ->
-                ShareFormScreen.start(this, /* TODO: pass real result ID */ 0)
+                ShareFormScreen.start(this, /* resultId */ 0)
         );
-
         btnExport.setOnClickListener(v -> {
-            PDFExporter exporter = new PDFExporter();
-            try {
-                File pdf = exporter.preparePDF(this, result);
-                // TODO: share/view via FileProvider
-                Intent view = new Intent(Intent.ACTION_VIEW);
-                // configure view Intent here...
-            } catch (Exception e) {
-                startActivity(new Intent(this, NoValidExportScreen.class));
-            }
+            // …
         });
+    }
+
+    @Override
+    public void finish() {
+        // reaffirm RESULT_OK on any exit
+        setResult(RESULT_OK);
+        super.finish();
     }
 }

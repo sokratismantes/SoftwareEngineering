@@ -33,7 +33,7 @@ public class ShareFormScreen extends AppCompatActivity {
         setContentView(R.layout.activity_share_form_screen);
 
         resultId   = getIntent().getIntExtra(EXTRA_RESULT_ID, -1);
-        quizEngine = new QuizEngine();
+        quizEngine = QuizEngine.getInstance();
 
         edtAmka  = findViewById(R.id.edtDoctorAmka);
         rgPerms  = findViewById(R.id.rgPermissions);

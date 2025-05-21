@@ -1,16 +1,20 @@
-// com/example/smartmed1/ui/QuestionScreen.java
 package com.example.smartmed1.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smartmed1.R;
@@ -25,19 +29,77 @@ public class QuestionScreen extends AppCompatActivity {
     private QuizEngine quizEngine;
     private LinearLayout questionsContainer;
 
+    private final ActivityResultLauncher<Intent> resultsLauncher =
+            registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        // no automatic clear here—we let the user explicitly restart if desired
+                    }
+            );
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_screen);
 
-        quizEngine = new QuizEngine();
+        quizEngine = QuizEngine.getInstance();
         questionsContainer = findViewById(R.id.questionsContainer);
 
-        // 1) Fetch questions
+        inflateQuestions();
+
+        findViewById(R.id.btnViewResults).setOnClickListener(v -> {
+            // 0) First, pull in any live text answers that haven't yet lost focus:
+            for (int i = 0; i < questionsContainer.getChildCount(); i++) {
+                View questionItem = questionsContainer.getChildAt(i);
+
+                // TEXT questions
+                EditText et = questionItem.findViewById(R.id.etAnswerText);
+                if (et != null) {
+                    String answer = et.getText().toString().trim();
+                    int qid = (int) et.getTag();            // assume you tagged it with question ID
+                    quizEngine.recordAnswer(new Answer(qid, answer));
+                }
+
+                // SPINNER questions (optional: force-read current selection)
+                Spinner spinner = questionItem.findViewById(R.id.spinnerAnswer);
+                if (spinner != null) {
+                    int qid = (int) spinner.getTag();
+                    String val = spinner.getSelectedItem().toString();
+                    quizEngine.recordAnswer(new Answer(qid, val));
+                }
+
+                // STAR questions (optional: force-read current rating)
+                RatingBar rb = questionItem.findViewById(R.id.ratingAnswer);
+                if (rb != null) {
+                    int qid = (int) rb.getTag();
+                    int rating = (int) rb.getRating();
+                    quizEngine.recordAnswer(new Answer(qid, String.valueOf(rating)));
+                }
+            }
+
+            // 1) Now you can safely validate that *all* questions have an answer:
+            if (!quizEngine.validateAllAnswered()) {
+                startActivity(new Intent(this, NoAnswerErrorScreen.class));
+                return;
+            }
+
+            // 2) Launch results
+            Intent i = new Intent(this, ResultSummaryScreen.class);
+            resultsLauncher.launch(i);
+        });
+
+        // Example of a "Restart Quiz" button (must exist in your layout):
+        findViewById(R.id.btnRestartQuiz).setOnClickListener(v -> {
+            quizEngine.clearAnswers();
+            questionsContainer.removeAllViews();
+            inflateQuestions();
+        });
+    }
+
+    private void inflateQuestions() {
+        LayoutInflater inflater = LayoutInflater.from(this);
         List<Question> questions = quizEngine.fetchQuestions();
 
-        // 2) Inflate a view for each question
-        LayoutInflater inflater = LayoutInflater.from(this);
         for (Question q : questions) {
             View itemView;
             switch (q.getType()) {
@@ -57,32 +119,21 @@ public class QuestionScreen extends AppCompatActivity {
             }
             questionsContainer.addView(itemView);
         }
-
-        // 3) View Results button
-        findViewById(R.id.btnViewResults).setOnClickListener(v -> {
-            if (!quizEngine.validateAllAnswered()) {
-                startActivity(new Intent(this, NoAnswerErrorScreen.class));
-                return;
-            }
-            startActivity(new Intent(this, ResultSummaryScreen.class));
-        });
     }
 
     private void bindTextQuestion(View view, Question q) {
         TextView tv = view.findViewById(R.id.tvQuestionText);
         EditText et = view.findViewById(R.id.etAnswerText);
         tv.setText(q.getText());
+        et.setTag(q.getId());
 
-        // 1) Pre‐record a default (empty) answer so it counts as answered
-        quizEngine.recordAnswer(new Answer(q.getId(), ""));
-
-        // 2) Replace focus listener with a TextWatcher to capture text changes
-        et.addTextChangedListener(new android.text.TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+        et.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int st, int c, int a) {}
+            @Override
+            public void onTextChanged(CharSequence s, int st, int b, int c) {
                 quizEngine.recordAnswer(new Answer(q.getId(), s.toString().trim()));
             }
-            @Override public void afterTextChanged(android.text.Editable s) {}
+            @Override public void afterTextChanged(Editable s) {}
         });
     }
 
@@ -90,23 +141,25 @@ public class QuestionScreen extends AppCompatActivity {
         TextView tv = view.findViewById(R.id.tvQuestionText);
         Spinner sp = view.findViewById(R.id.spinnerAnswer);
         tv.setText(q.getText());
+        sp.setTag(q.getId());
 
-        // 1) Default answer = 0
-        quizEngine.recordAnswer(new Answer(q.getId(), "0"));
-
-        // 2) Populate spinner
         Integer[] vals = new Integer[11];
         for (int i = 0; i <= 10; i++) vals[i] = i;
-        sp.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item,
-                vals));
+        sp.setAdapter(new android.widget.ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, vals));
 
-        // 3) Record selections
-        sp.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
-            @Override public void onItemSelected(android.widget.AdapterView<?> parent, View v, int pos, long id) {
+        final boolean[] userTouched = { false };
+        sp.setOnTouchListener((v, e) -> {
+            userTouched[0] = true;
+            return false;
+        });
+        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
+                if (!userTouched[0]) return;  // skip the initial set
                 quizEngine.recordAnswer(new Answer(q.getId(), String.valueOf(vals[pos])));
             }
-            @Override public void onNothingSelected(android.widget.AdapterView<?> parent) {}
+            @Override public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
 
@@ -114,16 +167,15 @@ public class QuestionScreen extends AppCompatActivity {
         TextView tv = view.findViewById(R.id.tvQuestionText);
         RatingBar rb = view.findViewById(R.id.ratingAnswer);
         tv.setText(q.getText());
+        rb.setTag(q.getId());
 
-        // 1) Pre-record a default of 0 stars so it counts as answered
-        quizEngine.recordAnswer(new Answer(q.getId(), "0"));
-
-        // 2) Now listen for changes
         rb.setNumStars(5);
         rb.setStepSize(1f);
         rb.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
-            // overwrite with the new value
-            quizEngine.recordAnswer(new Answer(q.getId(), String.valueOf((int)rating)));
+            if (!fromUser) return;            // ← ignore the initial system callback
+            quizEngine.recordAnswer(
+                    new Answer(q.getId(), String.valueOf((int) rating))
+            );
         });
     }
 }

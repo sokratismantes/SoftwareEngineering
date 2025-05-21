@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient">
 
-    <!-- Main scrollable content, sits above the bottom bar -->
     <ScrollView
         android:id="@+id/scrollContent"
         android:layout_width="match_parent"
@@ -13,32 +12,13 @@
         android:layout_above="@+id/bottomBar"
         android:padding="24dp">
 
-        <!-- Your existing summary UI… -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
-            <!-- Logo -->
-            <ImageView
-                android:id="@+id/ivSummaryIcon"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/logo"
-                android:contentDescription="@string/app_name"
-                android:layout_marginBottom="16dp" />
-
-            <!-- Title -->
-            <TextView
-                android:id="@+id/tvSummaryTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Τα Αποτελέσματά Σας"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:layout_marginBottom="24dp"/>
+            <!-- Logo, Title omitted for brevity… -->
 
             <!-- Anxiety -->
             <TextView
@@ -56,7 +36,12 @@
                 android:layout_marginTop="4dp"
                 android:max="100"
                 android:progressTint="#FF0000"
-                android:progress="0"
+                android:layout_marginBottom="8dp"/>
+            <TextView
+                android:id="@+id/tvAnxietyScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
                 android:layout_marginBottom="16dp"/>
 
             <!-- Depression -->
@@ -75,7 +60,36 @@
                 android:layout_marginTop="4dp"
                 android:max="100"
                 android:progressTint="#FF0000"
-                android:progress="0"
+                android:layout_marginBottom="8dp"/>
+            <TextView
+                android:id="@+id/tvMoodScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Well-being -->
+            <TextView
+                android:id="@+id/tvWellbeingLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ευεξία"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"/>
+            <ProgressBar
+                android:id="@+id/progressWellbeing"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:layout_marginTop="4dp"
+                android:max="100"
+                android:progressTint="#4CAF50"
+                android:layout_marginBottom="8dp"/>
+            <TextView
+                android:id="@+id/tvWellbeingScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
                 android:layout_marginBottom="24dp"/>
 
             <!-- Warnings header -->
@@ -89,23 +103,12 @@
                 android:textColor="#FF0000"
                 android:layout_marginBottom="8dp"/>
 
-            <!-- Warning bullets -->
-            <TextView
-                android:id="@+id/tvWarn1"
+            <!-- Dynamic warnings container -->
+            <LinearLayout
+                android:id="@+id/warningsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="• Oι απαντήσεις σας υποδεικνύουν ότι ενδέχεται να αντιμετωπίζετε συμπτώματα μέτριου άγχους."
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:id="@+id/tvWarn2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="• Oι απαντήσεις σας υποδεικνύουν ότι ενδέχεται να αντιμετωπίζετε συμπτώματα ήπιας κατάθλιψης."
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
+                android:orientation="vertical"
                 android:layout_marginBottom="24dp"/>
 
             <!-- More info link -->

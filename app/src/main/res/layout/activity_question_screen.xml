@@ -50,6 +50,20 @@
             android:orientation="vertical"/>
     </ScrollView>
 
+    <!-- Restart Quiz: sits directly above View Results -->
+    <Button
+        android:id="@+id/btnRestartQuiz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Επανεκκίνηση Κουίζ"
+        android:backgroundTint="#FF8A65"
+        android:textAllCaps="false"
+        android:layout_above="@id/btnViewResults"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- View Results: pinned to parent bottom -->
     <Button
         android:id="@+id/btnViewResults"
         android:layout_width="match_parent"
