@@ -1,11 +1,13 @@
 package com.example.smartmed1;
 
+// Εισαγωγή απαραίτητων Android κλάσεων για τη διαχείριση UI και intents
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+// Κλάση για την οθόνη επιλογής κατηγορίας διαγνωστικών εξετάσεων
 public class DiagnosticExamsActivity extends AppCompatActivity {
 
     EditText searchField;

@@ -48,7 +48,9 @@ public class PatientAdmissionForm extends AppCompatActivity {
                         intent.putExtra("surname", surname);
                         startActivity(intent);
                     } else {
-                        Toast.makeText(PatientAdmissionForm.this, "❌ Τα στοιχεία δεν είναι σωστά", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(PatientAdmissionForm.this, InvalidDataActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                 }
             }

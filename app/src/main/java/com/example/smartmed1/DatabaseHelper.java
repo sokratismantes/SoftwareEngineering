@@ -1,5 +1,6 @@
 package com.example.smartmed1;
 
+// Εισαγωγή απαραίτητων κλάσεων για χρήση SQLite και συλλογών
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -7,11 +8,15 @@ import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 
+// Κλάση βοηθού βάσης δεδομένων που επεκτείνει τη SQLiteOpenHelper
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "SmartMed.db";
-    public static final int DATABASE_VERSION =13; // Αυξήθηκε η έκδοση
 
+    // Σταθερές για όνομα και έκδοση βάσης δεδομένων
+    public static final String DATABASE_NAME = "SmartMed.db";
+    public static final int DATABASE_VERSION =16; // Αυξήθηκε η έκδοση
+
+    // Ορισμός στηλών πίνακα χρηστών
     public static final String TABLE_USERS = "Users";
     public static final String COL_ID = "id";
     public static final String COL_USERNAME = "username";
@@ -21,12 +26,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_AMKA = "amka";
     public static final String COL_EMAIL = "email";
 
+    // Πίνακας FAQs
     public static final String TABLE_FAQ = "FAQs";
 
+    // Κατασκευαστής που αρχικοποιεί τη βάση δεδομένων
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    // Δημιουργία πινάκων κατά την αρχικοποίηση της βάσης
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Πίνακας χρηστών
@@ -40,7 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_EMAIL + " TEXT)";
         db.execSQL(createUserTable);
 
-        // Εισαγωγή αρχικών χρηστών
+        // Δημιουργία πίνακα χρηστών
         db.execSQL("INSERT INTO " + TABLE_USERS + " (" +
                 COL_USERNAME + ", " + COL_PASSWORD + ", " + COL_ROLE + ", " +
                 COL_FULLNAME + ", " + COL_AMKA + ", " + COL_EMAIL + ") VALUES " +
@@ -148,8 +156,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ")";
         db.execSQL(createPrescriptionsTable);
 
+        // Δημιουργία πίνακα φαρμακείων
+        String createPharmacyTable = "CREATE TABLE IF NOT EXISTS Pharmacies (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "address TEXT NOT NULL, " +
+                "available_codes TEXT)";  // κωδικοί φαρμάκων χωρισμένοι με κόμμα
+        db.execSQL(createPharmacyTable);
+
+// Προσθήκη παραδειγμάτων
+        db.execSQL("INSERT INTO Pharmacies (address, available_codes) VALUES " +
+                "('Σταδίου 12', 'A123,B456')," +
+                "('Αχαρνών 99', 'X999,Z777')," +
+                "('Πατησίων 55', '123456,999999')");
+
+
     }
 
+    // Σε περίπτωση αναβάθμισης της βάσης, γίνεται εκ νέου δημιουργία όλων των πινάκων
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
@@ -162,10 +185,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS MolecularExams");
         db.execSQL("DROP TABLE IF EXISTS Prescriptions");
 
+        // Κλήση δημιουργίας πινάκων ξανά
         onCreate(db);
     }
 
 
+    // Μέθοδος για επαλήθευση ασθενούς με βάση ΑΜΚΑ και όνομα
     public boolean verifyPatient(String amka, String name, String surname) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(
@@ -179,6 +204,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return result;
     }
+
+    // Εισαγωγή νέας συνταγής στη βάση δεδομένων
     public void insertPrescription(String amka, String name, String diagnosis, String drug,
                                    String pharmaCode, String dose, String instructions,
                                    String duration, String pharmacy) {
@@ -188,5 +215,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 new Object[]{amka, name, diagnosis, drug, pharmaCode, dose, instructions, duration, pharmacy});
     }
+
+    // Έλεγχος αν υπάρχει φαρμακείο με τη δοθείσα διεύθυνση
+    public boolean getPharmacyByAddress(String address) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Pharmacies WHERE LOWER(address) = ?", new String[]{address.toLowerCase()});
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        return exists;
+    }
+
+    // Επιστροφή όλων των αποθηκευμένων συνταγών για εμφάνιση
+    public List<Prescription> getAllPrescriptions() {
+        List<Prescription> prescriptions = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Prescriptions", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                // Δημιουργία αντικειμένου Prescription με παραμετρικά/στατικά πεδία
+                String code = cursor.getString(cursor.getColumnIndexOrThrow("pharma_code"));
+                String expiry = "31/12/2025"; // Μπορείς αργότερα να το περάσεις σωστά
+                String doctor = "Γιατρός";    // Αν προσθέσεις πεδίο doctor στο μέλλον
+                String status = "Ενεργή";     // Μπορείς να κάνεις έλεγχο με ημερομηνία
+                int compliance = 100;         // Προσωρινή τιμή — αν θες μπορεί να υπολογίζεται
+                boolean expired = false;
+
+                prescriptions.add(new Prescription(
+                        code,
+                        expiry,
+                        doctor,
+                        status,
+                        compliance,
+                        expired,
+                        cursor.getString(cursor.getColumnIndexOrThrow("diagnosis")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("drug")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("instructions"))
+                ));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return prescriptions;
+    }
+
 
 }
