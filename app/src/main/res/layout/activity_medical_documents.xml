@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,21 +26,42 @@
         android:layout_marginTop="12dp"
         android:layout_centerHorizontal="true" />
 
-    <!-- Μεγαλύτερο ιατρικό σύμβολο -->
-    <ImageView
-        android:id="@+id/medicalSymbol"
-        android:layout_width="95dp"
-        android:layout_height="67dp"
+    <!-- Αναζήτηση και φίλτρο μαζί -->
+    <LinearLayout
+        android:id="@+id/searchBarLayout"
         android:layout_below="@id/description"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="1dp"
-        android:contentDescription="Ιατρικό σύμβολο"
-        android:src="@drawable/medical_docs_image" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <AutoCompleteTextView
+            android:id="@+id/searchInput"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Αναζήτηση αρχείων"
+            android:background="@android:color/white"
+            android:padding="12dp"
+            android:inputType="text"
+            android:dropDownHeight="200dp"
+            android:dropDownVerticalOffset="5dp"
+            android:completionThreshold="1" />
+
+        <Button
+            android:id="@+id/btnFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Φιλτράρισμα"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
 
     <!-- Πλέγμα εγγράφων -->
     <LinearLayout
         android:id="@+id/docsGrid"
-        android:layout_below="@id/medicalSymbol"
+        android:layout_below="@id/searchBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -161,36 +181,15 @@
                     android:text="Ιατρικό Ιστορικό"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp" />
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Αναζήτηση -->
-    <EditText
-        android:id="@+id/searchInput"
-        android:layout_below="@id/docsGrid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Αναζήτηση αρχείων"
-        android:background="@android:color/white"
-        android:layout_marginTop="16dp"
-        android:padding="12dp"
-        android:inputType="text" />
-
-    <!-- Κουμπί φίλτρου -->
-    <Button
-        android:id="@+id/btnFilter"
-        android:layout_below="@id/searchInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Φιλτράρισμα"
-        android:layout_marginTop="8dp"
-        android:layout_centerHorizontal="true" />
+    </LinearLayout>
 
     <!-- Μήνυμα μη διαθέσιμων αρχείων -->
     <TextView
         android:id="@+id/textNoFiles"
-        android:layout_below="@id/btnFilter"
+        android:layout_below="@id/docsGrid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Δεν υπάρχουν αρχεία"
@@ -208,6 +207,24 @@
         android:orientation="vertical"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="64dp" />
+
+    <!-- Οριζόντια κύλιση φακέλων -->
+    <HorizontalScrollView
+        android:id="@+id/folderScroll"
+        android:layout_below="@id/containerFiles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:padding="4dp"
+        android:visibility="gone"> <!-- ✅ ΠΡΟΣΘΗΚΗ ΕΔΩ -->
+
+        <LinearLayout
+            android:id="@+id/folderContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
 
     <!-- Κάτω μπάρα πλοήγησης -->
     <LinearLayout

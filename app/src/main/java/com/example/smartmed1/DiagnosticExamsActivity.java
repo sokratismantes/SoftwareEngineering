@@ -1,11 +1,13 @@
 package com.example.smartmed1;
 
+// Εισαγωγή απαραίτητων Android κλάσεων για τη διαχείριση UI και intents
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+// Κλάση για την οθόνη επιλογής κατηγορίας διαγνωστικών εξετάσεων
 public class DiagnosticExamsActivity extends AppCompatActivity {
 
     EditText searchField;
@@ -31,6 +33,29 @@ public class DiagnosticExamsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Τα υπόλοιπα θα ενεργοποιηθούν με παρόμοιο τρόπο...
+        btnMRI.setOnClickListener(v -> {
+            Intent intent = new Intent(DiagnosticExamsActivity.this, DiagnosticResultsMRI.class);
+            intent.putExtra("category", "Μαγνητικές");
+            startActivity(intent);
+        });
+
+        btnMicrobiology.setOnClickListener(v -> {
+            Intent intent = new Intent(DiagnosticExamsActivity.this, DiagnosticResultsMicrobiology.class);
+            intent.putExtra("category", "Μικροβιολογικές");
+            startActivity(intent);
+        });
+
+        btnCardiology.setOnClickListener(v -> {
+            Intent intent = new Intent(DiagnosticExamsActivity.this, DiagnosticResultsCardiology.class);
+            intent.putExtra("category", "Καρδιολογικές");
+            startActivity(intent);
+        });
+
+        btnGeneral.setOnClickListener(v -> {
+            Intent intent = new Intent(DiagnosticExamsActivity.this, DiagnosticResultsMolecular.class);
+            intent.putExtra("category", "Μοριακές");
+            startActivity(intent);
+        });
+
     }
 }

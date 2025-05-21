@@ -11,8 +11,10 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
+// Δραστηριότητα εμφάνισης των Συχνών Ερωτήσεων (FAQs)
 public class FAQsActivity extends AppCompatActivity {
 
+    // Στοιχείο λίστας και δομές αποθήκευσης ερωτήσεων/απαντήσεων
     ListView listView;
     ArrayList<String> questions = new ArrayList<>();
     ArrayList<String> answers = new ArrayList<>();
@@ -35,6 +37,7 @@ public class FAQsActivity extends AppCompatActivity {
         );
         listView.setAdapter(adapter);
 
+        // Όταν ο χρήστης πατήσει σε μια ερώτηση → εμφάνιση διαλόγου με την απάντηση
         listView.setOnItemClickListener((parent, view, position, id) -> {
             String question = questions.get(position);
             String answer = answers.get(position);
@@ -42,6 +45,7 @@ public class FAQsActivity extends AppCompatActivity {
         });
     }
 
+    // Μέθοδος ανάκτησης των ερωταπαντήσεων από τη βάση
     private void loadFAQs() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT question, answer FROM FAQs", null);
@@ -57,6 +61,7 @@ public class FAQsActivity extends AppCompatActivity {
         db.close();
     }
 
+    // Εμφάνιση pop-up διαλόγου με την απάντηση στην ερώτηση
     private void showAnswerDialog(String question, String answer) {
         new AlertDialog.Builder(this)
                 .setTitle(question)

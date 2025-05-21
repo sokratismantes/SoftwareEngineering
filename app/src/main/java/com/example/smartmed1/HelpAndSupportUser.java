@@ -15,7 +15,6 @@ public class HelpAndSupportUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_and_support_user);
-
         btnQuestionForm = findViewById(R.id.btnQuestionForm);
         btnFeedback = findViewById(R.id.btnFeedback);
         btnMentalForm = findViewById(R.id.btnMentalForm);

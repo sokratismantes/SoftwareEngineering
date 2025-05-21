@@ -2,14 +2,14 @@ package com.example.smartmed1;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+// Αρχική οθόνη για τον γιατρό μετά το login
 public class DoctorHome extends AppCompatActivity {
 
-    // Δήλωση μεταβλητών
+    // Δήλωση κουμπιών για τις διαθέσιμες λειτουργίες του γιατρού
     Button btnPrescription, btnReferral, btnAvailability, btnAppointments, btnPrescriptions, btnHistory;
 
     @Override
@@ -25,30 +25,44 @@ public class DoctorHome extends AppCompatActivity {
         btnPrescriptions = findViewById(R.id.btnPrescriptions);
         btnHistory = findViewById(R.id.btnHistory);
 
-        // Προσθήκη listeners (προς το παρόν με TODO)
-        btnPrescription.setOnClickListener(v -> {
-            startActivity(new Intent(this, DoctorPrescriptionCreate.class));
-        });
-
-
-        btnReferral.setOnClickListener(v -> {
-            // TODO: Ξεκίνα Activity για δημιουργία παραπεμπτικού
-        });
-
+        // Ρητές μέθοδοι μετάβασης
+        btnPrescription.setOnClickListener(v -> GoToPatientForm());
+        btnReferral.setOnClickListener(v -> GoToReferralForm());
         btnAvailability.setOnClickListener(v -> {
-            // TODO: Διαχείριση διαθεσιμότητας
+            startActivity(new Intent(this, DoctorAvailabilityActivity.class));
         });
+        btnAppointments.setOnClickListener(v -> GoToAppointments());
+        btnPrescriptions.setOnClickListener(v -> GoToPrescriptions());
+        btnHistory.setOnClickListener(v -> GoToHistory());
+    }
 
-        btnAppointments.setOnClickListener(v -> {
-            // TODO: Προβολή ραντεβού
-        });
+    // Ενεργοποίηση της σελίδας εισαγωγής ασθενούς για συνταγογράφηση
+    private void GoToPatientForm() {
+        Intent intent = new Intent(this, PatientAdmissionForm.class);
+        startActivity(intent);
+    }
 
-        btnPrescriptions.setOnClickListener(v -> {
-            // TODO: Προβολή συνταγών
-        });
+    private void GoToReferralForm() {
+        // TODO: Αντικατάστησε με το αντίστοιχο Activity όταν υλοποιηθεί
+        // Intent intent = new Intent(this, ReferralForm.class);
+        // startActivity(intent);
+    }
 
-        btnHistory.setOnClickListener(v -> {
-            // TODO: Ιστορικό
-        });
+    private void GoToAppointments() {
+        // TODO: Αντικατάστησε με το αντίστοιχο Activity όταν υλοποιηθεί
+        // Intent intent = new Intent(this, AppointmentsActivity.class);
+        // startActivity(intent);
+    }
+
+    private void GoToPrescriptions() {
+        // TODO: Αντικατάστησε με το αντίστοιχο Activity όταν υλοποιηθεί
+        // Intent intent = new Intent(this, PrescriptionsList.class);
+        // startActivity(intent);
+    }
+
+    private void GoToHistory() {
+        // TODO: Αντικατάστησε με το αντίστοιχο Activity όταν υλοποιηθεί
+        // Intent intent = new Intent(this, PrescriptionHistory.class);
+        // startActivity(intent);
     }
 }

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="#E0F2F7">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Prescription Code -->
+        <TextView
+            android:id="@+id/textViewPrescriptionCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Κωδικός Συνταγής: #1230099"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewHeart"/>
+
+        <!-- Heart Icon -->
+        <ImageView
+            android:id="@+id/imageViewHeart"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/heart_outline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="Favorite Icon" />
+
+        <!-- Expiration Date -->
+        <TextView
+            android:id="@+id/textViewExpirationDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Ημερομηνία Λήξης : 31/12/2025"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPrescriptionCode"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Doctor Name -->
+        <TextView
+            android:id="@+id/textViewDoctorName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Γιατρός : Δημήτριος Αντωνίου"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewExpirationDate"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Status -->
+        <TextView
+            android:id="@+id/textViewStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Κατάσταση: Ενεργή"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDoctorName"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Adherence Percentage Label -->
+        <TextView
+            android:id="@+id/textViewAdherenceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Συνέπεια :"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewStatus" />
+
+        <!-- Adherence Percentage (Placeholder for Progress Circle) -->
+        <!-- To match the mockup accurately, a custom view or a library for a circular progress indicator with text inside is needed here. -->
+        <TextView
+            android:id="@+id/textViewAdherencePercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="75%"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/textViewAdherenceLabel"
+            app:layout_constraintTop_toTopOf="@+id/textViewAdherenceLabel"
+             />
+
+        <!-- View Details Button -->
+        <Button
+            android:id="@+id/buttonViewDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Προβολή\nΛεπτομερειών"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rounded_button_gradient"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAdherenceLabel"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView> 
