@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    android:padding="24dp">
+
+    <!-- Λογότυπο -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/logo"
+        android:contentDescription="Λογότυπο" />
+
+    <!-- Τίτλος -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_below="@id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ΔΙΑΓΝΩΣΤΙΚΕΣ ΕΞΕΤΑΣΕΙΣ"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="4dp"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Πεδίο αναζήτησης -->
+    <EditText
+        android:id="@+id/searchField"
+        android:layout_below="@id/title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="Αναζήτηση"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:padding="8dp"
+        android:textColor="#000000"
+        android:textColorHint="#666666" />
+
+    <!-- Κουμπιά κατηγοριών -->
+    <LinearLayout
+        android:id="@+id/categoriesContainer"
+        android:layout_below="@id/searchField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="24dp">
+
+        <!-- Επαναλαμβανόμενα κουμπιά -->
+        <!-- Για κάθε κατηγορία: -->
+        <LinearLayout
+            android:id="@+id/btnHematology"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/rounded_button"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Αιματολογικές"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Προβολή"
+                android:src="@drawable/eye_diagnostic_exams" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="Λήψη"
+                android:src="@drawable/download_image" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnMRI"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/rounded_button"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Μαγνητικές"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Προβολή"
+                android:src="@drawable/eye_diagnostic_exams" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="Λήψη"
+                android:src="@drawable/download_image" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnMicrobiology"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/rounded_button"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Μικροβιολογικές"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Προβολή"
+                android:src="@drawable/eye_diagnostic_exams" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="Λήψη"
+                android:src="@drawable/download_image" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnCardiology"
+            android:layout_width="match_parent"
+            android:layout_height="69dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/rounded_button"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Καρδιολογικές"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Προβολή"
+                android:src="@drawable/eye_diagnostic_exams" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="Λήψη"
+                android:src="@drawable/download_image" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnGeneral"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/rounded_button"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Μοριακές"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Προβολή"
+                android:src="@drawable/eye_diagnostic_exams" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="Λήψη"
+                android:src="@drawable/download_image" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Κάτω navigation bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/home"
+            android:contentDescription="Αρχική" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/info"
+            android:contentDescription="Πληροφορίες" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/user"
+            android:contentDescription="Χρήστης" />
+    </LinearLayout>
+</RelativeLayout>

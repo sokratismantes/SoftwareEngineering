@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">smartmed1</string>
+<string name="app_name">smartmed1</string>
+<string name="info">Πληροφορίες</string>
+<string name="home">Αρχική</string>
+<string name="user">Χρήστης</string>
+<string name="share_results">Κοινοποίηση Αποτελεσμάτων</string>
+<string name="export_pdf">Εξαγωγή σε PDF</string>
+<!-- Add any other labels you need... -->
 </resources>

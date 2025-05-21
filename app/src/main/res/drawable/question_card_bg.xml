@@ -1,0 +1,6 @@
+<!-- res/drawable/question_card_bg.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#80FFFFFF"/>  <!-- white @ 50% opacity -->
+    <corners android:radius="16dp"/>
+</shape>

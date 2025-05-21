@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient">
+
+    <!-- Main scrollable content, sits above the bottom bar -->
+    <ScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomBar"
+        android:padding="24dp">
+
+        <!-- Your existing summary UI… -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <!-- Logo -->
+            <ImageView
+                android:id="@+id/ivSummaryIcon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/logo"
+                android:contentDescription="@string/app_name"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/tvSummaryTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Τα Αποτελέσματά Σας"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Anxiety -->
+            <TextView
+                android:id="@+id/tvAnxietyLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Κίνδυνος άγχους"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"/>
+            <ProgressBar
+                android:id="@+id/progressAnxiety"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:layout_marginTop="4dp"
+                android:max="100"
+                android:progressTint="#FF0000"
+                android:progress="0"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Depression -->
+            <TextView
+                android:id="@+id/tvMoodLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Κίνδυνος κατάθλιψης"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"/>
+            <ProgressBar
+                android:id="@+id/progressDepression"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:layout_marginTop="4dp"
+                android:max="100"
+                android:progressTint="#FF0000"
+                android:progress="0"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Warnings header -->
+            <TextView
+                android:id="@+id/tvWarningsHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ΕΠΙΣΗΜΑΝΣΕΙΣ"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#FF0000"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Warning bullets -->
+            <TextView
+                android:id="@+id/tvWarn1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Oι απαντήσεις σας υποδεικνύουν ότι ενδέχεται να αντιμετωπίζετε συμπτώματα μέτριου άγχους."
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/tvWarn2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Oι απαντήσεις σας υποδεικνύουν ότι ενδέχεται να αντιμετωπίζετε συμπτώματα ήπιας κατάθλιψης."
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- More info link -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="32dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/info"
+                    android:contentDescription="@string/info"/>
+
+                <TextView
+                    android:id="@+id/tvMoreInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Δείτε περισσότερες πληροφορίες για τα αποτελέσματά σας"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+
+            <!-- Action buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="32dp">
+
+                <Button
+                    android:id="@+id/btnShareResults"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Κοινοποίηση"
+                    android:backgroundTint="#B2EBF2"
+                    android:textAllCaps="false"
+                    android:layout_marginEnd="8dp"/>
+
+                <Button
+                    android:id="@+id/btnExportPdf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="PDF"
+                    android:backgroundTint="#4DD0E1"
+                    android:textAllCaps="false"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom icon bar -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/home"
+            android:contentDescription="@string/home" />
+
+        <ImageView
+            android:id="@+id/infoIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/info"
+            android:contentDescription="@string/info"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/user"
+            android:contentDescription="@string/user" />
+    </LinearLayout>
+
+</RelativeLayout>

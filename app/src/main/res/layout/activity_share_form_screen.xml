@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    android:padding="24dp">
+
+    <!-- Header: Logo + Title -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="24dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/logo"
+            android:contentDescription="@string/app_name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Κοινοποίηση Αποτελεσμάτων"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+    <!-- Form Card -->
+    <ScrollView
+        android:id="@+id/scrollForm"
+        android:layout_below="@id/header"
+        android:layout_above="@+id/btnSendShare"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/formContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- AMKA Input Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/question_card_bg"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ΑΜΚΑ Γιατρού"
+                    android:textSize="16sp"
+                    android:textColor="#000000"/>
+
+                <EditText
+                    android:id="@+id/edtDoctorAmka"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="π.χ. 12345678901"
+                    android:inputType="number"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
+            <!-- Permissions Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/question_card_bg"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Δικαιώματα Πρόσβασης"
+                    android:textSize="16sp"
+                    android:textColor="#000000"/>
+
+                <RadioGroup
+                    android:id="@+id/rgPermissions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp">
+
+                    <RadioButton
+                        android:id="@+id/rbReadOnly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Μόνο προβολή" />
+
+                    <RadioButton
+                        android:id="@+id/rbReadWrite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Προβολή και επεξεργασία" />
+                </RadioGroup>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Send Button -->
+    <Button
+        android:id="@+id/btnSendShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Αποστολή"
+        android:backgroundTint="?attr/colorPrimary"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
