@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.smartmed1.R;
 import com.example.smartmed1.model.Doctor;
 import com.example.smartmed1.service.QuizEngine;
-import com.example.smartmed1.service.NotificationService;
+import com.example.smartmed1.Files;
+import com.example.smartmed1.model.ScoreResult;
 
 public class ShareFormScreen extends AppCompatActivity {
     private static final String EXTRA_RESULT_ID = "extra_result_id";
@@ -45,9 +48,12 @@ public class ShareFormScreen extends AppCompatActivity {
                 startActivity(new Intent(this, InvalidAMKAScreen.class));
                 return;
             }
-            new NotificationService()
-                    .sendAccessLink(resultId, doc.getId(), doc.getEmail());
-            // TODO: show success UI (Toast or finish())
+            ScoreResult result = quizEngine.getResultById(resultId);
+            Files.exportAndShareResults(this, result, doc.getEmail());
+
+            Toast.makeText(this,
+          "Ετοιμάζεται το e-mail με τα αποτελέσματα…",
+            Toast.LENGTH_SHORT).show();
         });
     }
 }

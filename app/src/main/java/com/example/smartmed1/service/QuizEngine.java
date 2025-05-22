@@ -49,6 +49,11 @@ public class QuizEngine {
         // clear on-disk answers
         dbh.clearAllSavedAnswers();
     }
+    public ScoreResult getResultById(int resultId) {
+        // you could look up past ScoreResults here by ID,
+        // but for now we just recalc the current one:
+        return calculateScore();
+    }
 
     public ScoreResult calculateScore() {
         // 1) load every answer back from the table
