@@ -40,9 +40,11 @@ public class QuestionScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        quizEngine = new QuizEngine(this);
+
         setContentView(R.layout.activity_question_screen);
 
-        quizEngine = QuizEngine.getInstance();
         questionsContainer = findViewById(R.id.questionsContainer);
 
         inflateQuestions();

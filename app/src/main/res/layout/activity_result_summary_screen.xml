@@ -92,6 +92,65 @@
                 android:textColor="#FFFFFF"
                 android:layout_marginBottom="24dp"/>
 
+            <!-- Level summary -->
+            <TextView
+                android:id="@+id/tvLevelSummary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Επίπεδα: —"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="16dp"/>
+            <LinearLayout
+                android:id="@+id/dateFilterContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    android:id="@+id/btnPickStart"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Από …" />
+
+                <Button
+                    android:id="@+id/btnPickEnd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Έως …"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnApplyFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Εμφάνιση Τάσης"
+                android:layout_marginBottom="24dp" />
+
+            <TextView
+                android:id="@+id/tvTrend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Advice -->
+            <TextView
+                android:id="@+id/tvAdvice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Συμβουλή: —"
+                android:textSize="14sp"
+                android:textColor="#B3E5FC"
+                android:layout_marginBottom="24dp"/>
+
             <!-- Warnings header -->
             <TextView
                 android:id="@+id/tvWarningsHeader"

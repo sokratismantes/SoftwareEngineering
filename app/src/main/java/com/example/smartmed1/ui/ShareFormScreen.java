@@ -31,9 +31,8 @@ public class ShareFormScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_form_screen);
-
+        quizEngine = new QuizEngine(this);
         resultId   = getIntent().getIntExtra(EXTRA_RESULT_ID, -1);
-        quizEngine = QuizEngine.getInstance();
 
         edtAmka  = findViewById(R.id.edtDoctorAmka);
         rgPerms  = findViewById(R.id.rgPermissions);

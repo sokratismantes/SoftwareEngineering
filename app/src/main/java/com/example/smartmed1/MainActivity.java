@@ -11,6 +11,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.smartmed1.service.QuizEngine;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText etUsername, etPassword;
