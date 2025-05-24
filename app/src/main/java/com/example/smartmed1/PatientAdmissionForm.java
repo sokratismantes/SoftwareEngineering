@@ -12,7 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class PatientAdmissionForm extends AppCompatActivity {
 
     EditText editAmka, editName, editSurname;
-    Button btnVerify;
+    Button btnVerifyPrescription, btnVerifyReferral;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +24,14 @@ public class PatientAdmissionForm extends AppCompatActivity {
         editAmka = findViewById(R.id.editAmka);
         editName = findViewById(R.id.editName);
         editSurname = findViewById(R.id.editSurname);
-        btnVerify = findViewById(R.id.btnVerify);
+        btnVerifyPrescription = findViewById(R.id.btnVerifyPrescription);
+        btnVerifyReferral = findViewById(R.id.btnVerifyReferral);
+
 
         // Όταν πατηθεί "Επαλήθευση"
         DatabaseHelper dbHelper = new DatabaseHelper(PatientAdmissionForm.this);
 
-        btnVerify.setOnClickListener(new View.OnClickListener() {
+        btnVerifyPrescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String amka = editAmka.getText().toString().trim();
@@ -55,5 +58,31 @@ public class PatientAdmissionForm extends AppCompatActivity {
                 }
             }
         });
-    }
-}
+
+        btnVerifyReferral.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String amka = editAmka.getText().toString().trim();
+                String name = editName.getText().toString().trim();
+                String surname = editSurname.getText().toString().trim();
+
+                if (amka.isEmpty() || name.isEmpty() || surname.isEmpty()) {
+                    Toast.makeText(PatientAdmissionForm.this, "❌ Συμπλήρωσε όλα τα πεδία", Toast.LENGTH_SHORT).show();
+                } else {
+                    boolean isValid = dbHelper.verifyPatient(amka, name, surname);
+
+                    if (isValid) {
+                        Toast.makeText(PatientAdmissionForm.this, "✅ Επαλήθευση επιτυχής", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(PatientAdmissionForm.this, DoctorReferralCreate.class);
+                        intent.putExtra("amka", amka);
+                        intent.putExtra("name", name);
+                        intent.putExtra("surname", surname);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(PatientAdmissionForm.this, InvalidDataActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            }
+        });

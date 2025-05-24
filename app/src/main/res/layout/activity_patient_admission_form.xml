@@ -50,11 +50,22 @@
         android:layout_marginBottom="24dp" />
 
     <Button
-        android:id="@+id/btnVerify"
-        android:text="Επαλήθευση"
+        android:id="@+id/btnVerifyPrescription"
+        android:text="Επαλήθευση προς Δημιουργία Συνταγής"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
         android:backgroundTint="@android:color/holo_blue_dark"
         android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/btnVerifyReferral"
+        android:text="Επαλήθευση προς Δημιουργία Παραπεμπτικού"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="16dp"/>
+
 </LinearLayout>
