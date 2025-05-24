@@ -28,7 +28,9 @@ public class DoctorHome extends AppCompatActivity {
         // Ρητές μέθοδοι μετάβασης
         btnPrescription.setOnClickListener(v -> GoToPatientForm());
         btnReferral.setOnClickListener(v -> GoToReferralForm());
-        btnAvailability.setOnClickListener(v -> GoToAvailability());
+        btnAvailability.setOnClickListener(v -> {
+            startActivity(new Intent(this, DoctorAvailabilityActivity.class));
+        });
         btnAppointments.setOnClickListener(v -> GoToAppointments());
         btnPrescriptions.setOnClickListener(v -> GoToPrescriptions());
         btnHistory.setOnClickListener(v -> GoToHistory());
@@ -43,12 +45,6 @@ public class DoctorHome extends AppCompatActivity {
     private void GoToReferralForm() {
         // TODO: Αντικατάστησε με το αντίστοιχο Activity όταν υλοποιηθεί
         // Intent intent = new Intent(this, ReferralForm.class);
-        // startActivity(intent);
-    }
-
-    private void GoToAvailability() {
-        // TODO: Αντικατάστησε με το αντίστοιχο Activity όταν υλοποιηθεί
-        // Intent intent = new Intent(this, AvailabilityActivity.class);
         // startActivity(intent);
     }
 

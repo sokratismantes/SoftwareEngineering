@@ -71,6 +71,10 @@
             android:name=".DoctorHome"
             android:exported="false" />
         <activity
+            android:name=".DoctorAvailabilityActivity"
+            android:exported="false" />
+        <activity android:name=".AddEditAvailabilityActivity"></activity>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
