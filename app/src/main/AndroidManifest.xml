@@ -19,6 +19,23 @@
         android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.Smartmed1"
         tools:targetApi="31">
+        <activity android:name=".ui.NoValidExportScreen" android:exported="false" />
+        <activity android:name=".ui.InvalidAMKAScreen"   android:exported="false" />
+        <activity android:name=".ui.NoAnswerErrorScreen" android:exported="false" />
+        <activity android:name=".ui.ShareFormScreen"     android:exported="false" />
+        <activity android:name=".ui.ResultSummaryScreen" android:exported="false" />
+        <activity android:name=".ui.QuestionScreen"      android:exported="false" />
+        <activity android:name=".QuestionActivity"       android:exported="false" />
+        <activity android:name=".OpenFileScreenActivity" android:exported="false" />
+        <activity android:name=".DiagnosticResultsHematology" android:exported="false" />
+        <activity android:name=".DiagnosticExamsActivity"      android:exported="false" />
+        <activity android:name=".MedicalDocumentsActivity"     android:exported="false" />
+        <activity android:name=".FAQsActivity"                 android:exported="false" />
+        <activity android:name=".HelpAndSupportUser"           android:exported="false" />
+        <activity android:name=".QuestionFormScreen"           android:exported="false" />
+        <activity android:name=".DoctorPrescriptionCreate"     android:exported="false" />
+        <activity android:name=".UserHome"                     android:exported="false" />
+        <activity android:name=".DoctorHome"                   android:exported="false" />
 
         <activity
             android:name=".DoctorReferralCreate"
@@ -90,6 +107,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- FileProvider for serving the PDF -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
     </application>
 
 </manifest>

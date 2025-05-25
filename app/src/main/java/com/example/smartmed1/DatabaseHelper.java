@@ -1,20 +1,27 @@
 package com.example.smartmed1;
 
 // Εισαγωγή απαραίτητων κλάσεων για χρήση SQLite και συλλογών
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
+
+import com.example.smartmed1.model.Answer;
+import com.example.smartmed1.model.Doctor;
+import com.example.smartmed1.model.Question;
+import com.example.smartmed1.model.Question.QuestionType;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 // Κλάση βοηθού βάσης δεδομένων που επεκτείνει τη SQLiteOpenHelper
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-
     // Σταθερές για όνομα και έκδοση βάσης δεδομένων
     public static final String DATABASE_NAME = "SmartMed.db";
-    public static final int DATABASE_VERSION =16; // Αυξήθηκε η έκδοση
+    public static final int DATABASE_VERSION =23; // Αυξήθηκε η έκδοση
 
     // Ορισμός στηλών πίνακα χρηστών
     public static final String TABLE_USERS = "Users";
@@ -26,10 +33,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_AMKA = "amka";
     public static final String COL_EMAIL = "email";
 
+    // ─────── NEW HISTORY TABLE ───────
+    public static final String TABLE_ANSWERS     = "Answers";
+    private static final String TABLE_HISTORY      = "QuizHistory";
+    private static final String COL_HIST_ID        = "id";
+    private static final String COL_HIST_TS        = "timestamp";
+    private static final String COL_HIST_ANXIETY   = "anxiety";
+    private static final String COL_HIST_DEPRESS   = "depression";
+    private static final String COL_HIST_WELLBEING = "wellbeing";
     // Πίνακας FAQs
     public static final String TABLE_FAQ = "FAQs";
 
-    // Κατασκευαστής που αρχικοποιεί τη βάση δεδομένων
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -191,7 +205,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "('Αμερικης 13')," +
                 "('Πλακας 108')," +
                 "('Επαναστασεως 78')");
+        String createHistory =
+                "CREATE TABLE IF NOT EXISTS " + TABLE_HISTORY + " (" +
+                        COL_HIST_ID        + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        COL_HIST_TS        + " INTEGER NOT NULL, " +
+                        COL_HIST_ANXIETY   + " INTEGER NOT NULL, " +
+                        COL_HIST_DEPRESS   + " INTEGER NOT NULL, " +
+                        COL_HIST_WELLBEING + " INTEGER NOT NULL" +
+                        ");";
+        db.execSQL(createHistory);
 
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_ANSWERS + "(" +
+                "question_id INTEGER PRIMARY KEY, " + // <--- MODIFIED HERE
+                "value TEXT, " +
+                "timestamp INTEGER)");
     }
 
     // Σε περίπτωση αναβάθμισης της βάσης, γίνεται εκ νέου δημιουργία όλων των πινάκων
@@ -206,12 +233,152 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS CardiologyExams");
         db.execSQL("DROP TABLE IF EXISTS MolecularExams");
         db.execSQL("DROP TABLE IF EXISTS Prescriptions");
-
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ANSWERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HISTORY);
         // Κλήση δημιουργίας πινάκων ξανά
         onCreate(db);
     }
 
+    // ─────── Public API: save a quiz result ───────
+    public void saveQuizResult(int anxiety, int depression, int wellbeing) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COL_HIST_TS,        System.currentTimeMillis());
+        cv.put(COL_HIST_ANXIETY,   anxiety);
+        cv.put(COL_HIST_DEPRESS,   depression);
+        cv.put(COL_HIST_WELLBEING, wellbeing);
+        db.insert(TABLE_HISTORY, null, cv);
+    }
 
+    public List<QuizResultRecord> getQuizHistory(long startTs, long endTs) {
+        List<QuizResultRecord> out = new ArrayList<>();
+
+        // 1) get a readable database
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // 2) build your selection and args
+        String selection = COL_HIST_TS + " >= ? AND " + COL_HIST_TS + " <= ?";
+        String[] selectionArgs = {
+                String.valueOf(startTs),
+                String.valueOf(endTs)
+        };
+
+        // 3) run the query
+        Cursor c = db.query(
+                TABLE_HISTORY,                                   // table
+                new String[]{                                  // columns
+                        COL_HIST_TS,
+                        COL_HIST_ANXIETY,
+                        COL_HIST_DEPRESS,
+                        COL_HIST_WELLBEING
+                },
+                selection,                                      // WHERE ts>=? AND ts<=?
+                selectionArgs,                                  // the “?” values
+                null, null,                                     // no GROUP BY or HAVING
+                COL_HIST_TS + " DESC"                           // ORDER BY ts DESC
+        );
+
+        // 4) iterate the results
+        while (c.moveToNext()) {
+            long ts = c.getLong(c.getColumnIndexOrThrow(COL_HIST_TS));
+            int  a  = c.getInt(c.getColumnIndexOrThrow(COL_HIST_ANXIETY));
+            int  d  = c.getInt(c.getColumnIndexOrThrow(COL_HIST_DEPRESS));
+            int  w  = c.getInt(c.getColumnIndexOrThrow(COL_HIST_WELLBEING));
+            out.add(new QuizResultRecord(ts, a, d, w));
+        }
+        c.close();
+
+        return out;
+    }
+    public static class QuizResultRecord {
+        public final long   timestamp;
+        public final int    anxiety, depression, wellbeing;
+        public QuizResultRecord(long ts, int a, int d, int w) {
+            timestamp = ts;
+            anxiety   = a;
+            depression= d;
+            wellbeing = w;
+        }
+    }
+    /** In-memory stub for questions */
+    private static final Question[] STUB_QUESTIONS = new Question[] {
+            new Question(1, "Πόσο συχνά νιώθετε άγχος;", Question.QuestionType.SPINNER),
+            new Question(2, "Πόσο έντονο είναι το στρες σας;", Question.QuestionType.STAR),
+            new Question(3, "Περιγράψτε την διάθεσή σας σήμερα.", Question.QuestionType.TEXT),
+            new Question(4, "Πόσες ώρες κοιμηθήκατε εχθές το βράδυ;", Question.QuestionType.SPINNER),
+            new Question(5, "Σε ποιο βαθμό δυσκολεύεστε να συγκεντρωθείτε;", Question.QuestionType.STAR),
+            new Question(6, "Αναφέρετε κάτι που σας έκανε να χαμογελάσετε σήμερα.", Question.QuestionType.TEXT),
+            new Question(7, "Πόσο συχνά αισθάνεστε κόπωση χωρίς λόγο;", Question.QuestionType.SPINNER),
+            new Question(8, "Βαθμολογήστε την ποιότητα της διατροφής σας σήμερα.", Question.QuestionType.STAR),
+            new Question(9, "Υπάρχει κάτι συγκεκριμένο που σας προκαλεί άγχος αυτή την περίοδο;", Question.QuestionType.TEXT),
+            new Question(10, "Πόσο ικανοποιημένοι είστε με τον ύπνο σας την τελευταία εβδομάδα;", Question.QuestionType.STAR)
+    };
+
+    // ───── QUIZ QUESTIONS ─────
+    public List<Question> getMentalHealthQuestions() {
+        return Arrays.asList(STUB_QUESTIONS);
+    }
+
+    // ───── SAVE ONE ANSWER ─────
+    public void saveAnswer(Answer a) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("question_id", a.getQuestionId());
+        values.put("value", a.getValue());
+        values.put("timestamp", System.currentTimeMillis());
+
+        // This will INSERT if question_id doesn't exist,
+        // or UPDATE the existing row if question_id (being PRIMARY KEY) already exists.
+        db.replace(TABLE_ANSWERS, null, values);
+    }
+
+    // ───── FIND DOCTOR BY AMKA ─────
+    public Doctor findDoctorByAMKA(String amka) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(
+                "SELECT id, fullname, amka, email FROM " + TABLE_USERS +
+                        " WHERE " + COL_AMKA + " = ?", new String[]{ amka }
+        );
+        Doctor doc = null;
+        if (c.moveToFirst()) {
+            doc = new Doctor(
+                    c.getInt(0),
+                    c.getString(1),
+                    c.getString(2),
+                    c.getString(3)
+            );
+        }
+        c.close();
+        return doc;
+    }
+    /**
+     * Fetch quiz‐history records whose timestamp is between startTs and endTs (inclusive),
+     * ordered newest first.
+     */
+
+    /** Read back every saved answer row. */
+    public List<Answer> getAllSavedAnswers() {
+        List<Answer> out = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.query(
+                TABLE_ANSWERS,
+                new String[]{"question_id","value"},
+                null, null, null, null, null
+        );
+        while(c.moveToNext()) {
+            int qid = c.getInt(0);
+            String val = c.getString(1);
+            out.add(new Answer(qid, val));
+        }
+        c.close();
+        return out;
+    }
+
+    /** Wipe out the in-progress answers (e.g. on “Restart Quiz”). */
+    public void clearAllSavedAnswers() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(TABLE_ANSWERS, null, null);
+    }
     // Μέθοδος για επαλήθευση ασθενούς με βάση ΑΜΚΑ και όνομα
     public boolean verifyPatient(String amka, String name, String surname) {
         SQLiteDatabase db = this.getReadableDatabase();

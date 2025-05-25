@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.smartmed1.ui.QuestionScreen;
+
 public class HelpAndSupportUser extends AppCompatActivity {
 
     Button btnQuestionForm, btnFeedback, btnMentalForm;
@@ -27,7 +29,8 @@ public class HelpAndSupportUser extends AppCompatActivity {
         });
 
         btnMentalForm.setOnClickListener(v -> {
-            // startActivity(new Intent(this, MentalHealthForm.class));
+            startActivity(new Intent(HelpAndSupportUser.this, QuestionScreen.class));
         });
+
     }
 }

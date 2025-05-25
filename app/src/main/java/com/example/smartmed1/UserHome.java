@@ -59,5 +59,14 @@ public class UserHome extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // Προσωρινά listeners
+        btnNewAppointment.setOnClickListener(v -> {});
+        btnMyAppointments.setOnClickListener(v -> {});
+        btnMyPrescriptions.setOnClickListener(v -> {});
+        btnHealthData.setOnClickListener(v -> {});
+
+        btnMedicalFiles.setOnClickListener(v -> {
+            startActivity(new Intent(this, MedicalDocumentsActivity.class));
+        });
     }
 }

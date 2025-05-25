@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient">
+
+    <ScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomBar"
+        android:padding="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <!-- Logo, Title omitted for brevity… -->
+
+            <!-- Anxiety -->
+            <TextView
+                android:id="@+id/tvAnxietyLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Κίνδυνος άγχους"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"/>
+            <ProgressBar
+                android:id="@+id/progressAnxiety"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:layout_marginTop="4dp"
+                android:max="100"
+                android:progressTint="#FF0000"
+                android:layout_marginBottom="8dp"/>
+            <TextView
+                android:id="@+id/tvAnxietyScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Depression -->
+            <TextView
+                android:id="@+id/tvMoodLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Κίνδυνος κατάθλιψης"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"/>
+            <ProgressBar
+                android:id="@+id/progressDepression"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:layout_marginTop="4dp"
+                android:max="100"
+                android:progressTint="#FF0000"
+                android:layout_marginBottom="8dp"/>
+            <TextView
+                android:id="@+id/tvMoodScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Well-being -->
+            <TextView
+                android:id="@+id/tvWellbeingLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ευεξία"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"/>
+            <ProgressBar
+                android:id="@+id/progressWellbeing"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:layout_marginTop="4dp"
+                android:max="100"
+                android:progressTint="#4CAF50"
+                android:layout_marginBottom="8dp"/>
+            <TextView
+                android:id="@+id/tvWellbeingScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Level summary -->
+            <TextView
+                android:id="@+id/tvLevelSummary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Επίπεδα: —"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Date filter -->
+            <LinearLayout
+                android:id="@+id/dateFilterContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    android:id="@+id/btnPickStart"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Από …" />
+
+                <Button
+                    android:id="@+id/btnPickEnd"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Έως …"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnApplyFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Εμφάνιση Τάσης"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Trend Chart -->
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chartTrends"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Fallback trend text (hidden when chart is shown) -->
+            <TextView
+                android:id="@+id/tvTrend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:layout_marginBottom="24dp"
+                android:visibility="gone"/>
+
+            <!-- Advice -->
+            <TextView
+                android:id="@+id/tvAdvice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Συμβουλή: —"
+                android:textSize="14sp"
+                android:textColor="#B3E5FC"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Warnings header -->
+            <TextView
+                android:id="@+id/tvWarningsHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ΕΠΙΣΗΜΑΝΣΕΙΣ"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#FF0000"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Dynamic warnings container -->
+            <LinearLayout
+                android:id="@+id/warningsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- More info link -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="32dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/info"
+                    android:contentDescription="@string/info"/>
+
+                <TextView
+                    android:id="@+id/tvMoreInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Δείτε περισσότερες πληροφορίες για τα αποτελέσματά σας"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+
+            <!-- Action buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="32dp">
+
+                <Button
+                    android:id="@+id/btnShareResults"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Κοινοποίηση"
+                    android:backgroundTint="#B2EBF2"
+                    android:textAllCaps="false"
+                    android:layout_marginEnd="8dp"/>
+
+                <Button
+                    android:id="@+id/btnExportPdf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="PDF"
+                    android:backgroundTint="#4DD0E1"
+                    android:textAllCaps="false"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom icon bar -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/home"
+            android:contentDescription="@string/home" />
+
+        <ImageView
+            android:id="@+id/infoIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/info"
+            android:contentDescription="@string/info"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/user"
+            android:contentDescription="@string/user" />
+    </LinearLayout>
+
+</RelativeLayout>
