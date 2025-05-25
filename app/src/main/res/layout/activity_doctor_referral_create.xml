@@ -1,6 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Logo -->
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/logo"
+                android:contentDescription="Logo"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Τίτλος -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ΣΤΟΙΧΕΙΑ ΠΑΡΑΠΕΜΤΙΚΟΥ"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Πεδία -->
+            <EditText android:id="@+id/etDiagnosis" android:hint="Διάγνωση"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="12dp" android:backgroundTint="#FFFFFF"
+                android:textColor="#FFFFFF" android:textColorHint="#CCCCCC" />
+
+
+            <EditText android:id="@+id/etExamtype" android:hint="Τύπος Εξέτασης"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="12dp" android:backgroundTint="#FFFFFF"
+                android:textColor="#FFFFFF" android:textColorHint="#CCCCCC" />
+
+
+            <EditText android:id="@+id/etSignature" android:hint="Ψηφιακή Υπογραφή"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="12dp" android:backgroundTint="#FFFFFF"
+                android:textColor="#FFFFFF" android:textColorHint="#CCCCCC" />
+
+            <EditText android:id="@+id/etDuration" android:hint="Ημέρες ισχύος (1-100)"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="12dp" android:backgroundTint="#FFFFFF"
+                android:textColor="#FFFFFF" android:textColorHint="#CCCCCC"
+                android:inputType="number" />
+
+            <!-- Κουμπιά -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="24dp">
+
+                <Button
+                    android:id="@+id/btnDownload"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Λήψη"
+                    android:backgroundTint="#B2EBF2"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/btnConfirm"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Επιβεβαίωση"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="#4DD0E1"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Κάτω navbar με εικόνες -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/home"
+            android:contentDescription="Αρχική" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/info"
+            android:contentDescription="Πληροφορίες" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/user"
+            android:contentDescription="Χρήστης" />
+    </LinearLayout>
+</RelativeLayout>

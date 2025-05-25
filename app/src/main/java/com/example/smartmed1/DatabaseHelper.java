@@ -156,6 +156,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ")";
         db.execSQL(createPrescriptionsTable);
 
+        String createReferralTable = "CREATE TABLE IF NOT EXISTS Referrals (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "amka TEXT," +
+                "name TEXT," +
+                "diagnosis TEXT," +
+                "examination_type TEXT," +
+                "duration TEXT," +
+                "diagnostic_center TEXT" +
+                ")";
+        db.execSQL(createReferralTable);
+
         // Δημιουργία πίνακα φαρμακείων
         String createPharmacyTable = "CREATE TABLE IF NOT EXISTS Pharmacies (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -169,6 +180,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "('Αχαρνών 99', 'X999,Z777')," +
                 "('Πατησίων 55', '123456,999999')");
 
+        // Δημιουργία πίνακα διαγνωστικων κεντρων
+        String createDiagTable = "CREATE TABLE IF NOT EXISTS Diag_centers (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "address TEXT NOT NULL)";  //
+        db.execSQL(createDiagTable);
+
+// Προσθήκη παραδειγμάτων
+        db.execSQL("INSERT INTO Diag_centers (address) VALUES " +
+                "('Αμερικης 13')," +
+                "('Πλακας 108')," +
+                "('Επαναστασεως 78')");
 
     }
 
@@ -216,10 +238,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new Object[]{amka, name, diagnosis, drug, pharmaCode, dose, instructions, duration, pharmacy});
     }
 
+    public void insertReferral(String amka, String name, String diagnosis,
+                               String examination_type, String duration, String diagnostic_center) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("INSERT INTO Referrals (amka, name, diagnosis, examination_type, duration, diagnostic_center) " +
+                        "VALUES (?, ?, ?, ?, ?, ?)",
+                new Object[]{amka, name, diagnosis, examination_type, duration, diagnostic_center});
+    }
+
     // Έλεγχος αν υπάρχει φαρμακείο με τη δοθείσα διεύθυνση
     public boolean getPharmacyByAddress(String address) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Pharmacies WHERE LOWER(address) = ?", new String[]{address.toLowerCase()});
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        return exists;
+    }
+
+    // Έλεγχος αν υπάρχει Διαγνωστικο κεντρο με τη δοθείσα διεύθυνση
+    public boolean getDiagnosticCenterByAddress(String address) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Diag_centers WHERE LOWER(address) = ?", new String[]{address.toLowerCase()});
         boolean exists = cursor.getCount() > 0;
         cursor.close();
         return exists;
@@ -258,6 +298,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return prescriptions;
     }
+
 
 
 }

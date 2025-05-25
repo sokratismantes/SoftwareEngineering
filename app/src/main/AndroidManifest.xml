@@ -19,6 +19,13 @@
         android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.Smartmed1"
         tools:targetApi="31">
+
+        <activity
+            android:name=".DoctorReferralCreate"
+            android:exported="false" />
+        <activity
+            android:name=".ConfirmReferral"
+            android:exported="false" />
         <activity
             android:name=".ConfirmPrescription"
             android:exported="false" />

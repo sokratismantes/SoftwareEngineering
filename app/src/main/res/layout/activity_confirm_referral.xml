@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#33B5E5">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/title"
+            android:text="ΠΡΟΕΠΙΣΚΟΠΗΣΗ ΠΑΡΑΠΕΜΤΙΚΟΥ"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txtAmka"
+            android:text="ΑΜΚΑ Ασθενούς :"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txtName"
+            android:text="Ονοματεπώνυμο :"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txtDiagnosis"
+            android:text="Διάγνωση :"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txtExamtype"
+            android:text="Τύπος Εξέτασης :"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+        <!-- Μήνυμα Ενεργού Πιστοποιητικού -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/checkbox_on_background"
+                android:tint="#00C853"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/txtValidity"
+                android:text="Το παραπεμτικό θα είναι ενεργό για 15 ημέρες."
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Επιλογή Διαγνοστικού Κέντρου -->
+        <TextView
+            android:text="Επιλέξτε διαγνωστικό κέντρο"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/editDiagnostic_Center"
+            android:hint="π.χ. Σταδίου 12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="@android:color/white"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/btnComplete"
+            android:text="ΟΛΟΚΛΗΡΩΣΗ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:backgroundTint="#0277BD"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="12dp"
+            android:minHeight="48dp" />
+    </LinearLayout>
+</ScrollView>
