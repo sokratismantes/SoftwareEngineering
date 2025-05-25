@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.smartmed2">
+    package="com.example.smartmed">
 
     <application
         android:allowBackup="true"
@@ -8,7 +8,28 @@
         android:label="SmartMed"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SmartMed2">
+        android:theme="@style/Theme.SmartMed">
+        <activity
+            android:name=".ui.HealthWarningScreen"
+            android:exported="false" />
+        <activity
+            android:name=".ui.UserComments"
+            android:exported="false" />
+        <activity
+            android:name=".ui.HealthAnalysisScreen"
+            android:exported="false" />
+        <activity
+            android:name=".ui.HealthTrendsScreen"
+            android:exported="false" />
+        <activity
+            android:name=".ui.UserChoices"
+            android:exported="false" />
+        <activity
+            android:name=".ui.AddHealthData"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Feedback"
+            android:exported="false" />
         <activity
             android:name=".ui.ProcessAppointments"
             android:exported="false" />
