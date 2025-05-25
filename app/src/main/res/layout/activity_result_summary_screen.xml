@@ -102,6 +102,8 @@
                 android:textStyle="italic"
                 android:textColor="#FFFFFF"
                 android:layout_marginBottom="16dp"/>
+
+            <!-- Date filter -->
             <LinearLayout
                 android:id="@+id/dateFilterContainer"
                 android:layout_width="match_parent"
@@ -113,15 +115,15 @@
                 <Button
                     android:id="@+id/btnPickStart"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:text="Από …" />
 
                 <Button
                     android:id="@+id/btnPickEnd"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:text="Έως …"
                     android:layout_marginStart="8dp" />
             </LinearLayout>
@@ -133,13 +135,22 @@
                 android:text="Εμφάνιση Τάσης"
                 android:layout_marginBottom="24dp" />
 
+            <!-- Trend Chart -->
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chartTrends"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Fallback trend text (hidden when chart is shown) -->
             <TextView
                 android:id="@+id/tvTrend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="24dp"
+                android:visibility="gone"/>
 
             <!-- Advice -->
             <TextView

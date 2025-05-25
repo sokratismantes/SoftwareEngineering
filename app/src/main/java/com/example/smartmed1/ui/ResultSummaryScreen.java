@@ -2,131 +2,170 @@ package com.example.smartmed1.ui;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.graphics.Color;
-import android.widget.LinearLayout.LayoutParams;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smartmed1.DatabaseHelper;
+import com.example.smartmed1.Files;
 import com.example.smartmed1.R;
 import com.example.smartmed1.model.ScoreResult;
 import com.example.smartmed1.service.QuizEngine;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class ResultSummaryScreen extends AppCompatActivity {
+    private static final String EXTRA_RESULT_ID = "extra_result_id";
+
+    private QuizEngine quizEngine;
+    private DatabaseHelper dbh;
+    private int resultId;
+
     private ProgressBar anxietyBar, depressionBar, wellbeingBar;
     private TextView tvAnxietyScore, tvDepressionScore, tvWellbeingScore;
+    private TextView tvLevelSummary, tvAdvice, tvTrend;
     private LinearLayout warningsContainer;
-    private Button btnShare, btnExport;
-    private QuizEngine quizEngine;
-    private TextView tvLevelSummary, tvAdvice;
-    private DatabaseHelper dbh;
     private Button btnPickStart, btnPickEnd, btnApplyFilter;
-    private TextView tvTrend;
+    private Button btnShare, btnExport;
+
+    private LineChart chartTrends;
+
     private long startTimestamp, endTimestamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // at top of onCreate()
-        quizEngine = new QuizEngine(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_summary_screen);
-        setResult(RESULT_OK);
 
-// 0) get your helper
+        quizEngine = new QuizEngine(this);
         dbh = new DatabaseHelper(this);
 
+        // Read the resultId if you need it for "Share" flow
+        resultId = getIntent().getIntExtra(EXTRA_RESULT_ID, -1);
 
-        // 1) score & persist
-        ScoreResult result = quizEngine.calculateScore();
+        // 1) compute & persist this run
+        ScoreResult initial = quizEngine.calculateScore();
         dbh.saveQuizResult(
-                result.getAnxietyScore(),
-                result.getDepressionScore(),
-                result.getWellbeingScore()
+                initial.getAnxietyScore(),
+                initial.getDepressionScore(),
+                initial.getWellbeingScore()
         );
 
-        // 2) find all views
+        // 2) find views
         anxietyBar      = findViewById(R.id.progressAnxiety);
         depressionBar   = findViewById(R.id.progressDepression);
         wellbeingBar    = findViewById(R.id.progressWellbeing);
         tvAnxietyScore    = findViewById(R.id.tvAnxietyScore);
         tvDepressionScore = findViewById(R.id.tvMoodScore);
         tvWellbeingScore  = findViewById(R.id.tvWellbeingScore);
-        tvLevelSummary    = findViewById(R.id.tvLevelSummary);
-        tvAdvice          = findViewById(R.id.tvAdvice);
+        tvLevelSummary  = findViewById(R.id.tvLevelSummary);
+        tvAdvice        = findViewById(R.id.tvAdvice);
+        tvTrend         = findViewById(R.id.tvTrend);
         warningsContainer = findViewById(R.id.warningsContainer);
-        btnShare          = findViewById(R.id.btnShareResults);
-        btnExport         = findViewById(R.id.btnExportPdf);
-
-        // 3) populate bars & scores
-        int a = result.getAnxietyScore();
-        int d = result.getDepressionScore();
-        int w = result.getWellbeingScore();
-        anxietyBar.setProgress(a);
-        depressionBar.setProgress(d);
-        wellbeingBar.setProgress(w);
-        tvAnxietyScore.setText(a + "/100");
-        tvDepressionScore.setText(d + "/100");
-        tvWellbeingScore.setText(w + "/100");
-
-        // 4) show the level summary and advice
-        String levels = String.format(
-                "Άγχος: %s, Κατάθλιψη: %s, Ευεξία: %s",
-                result.getAnxietyLevel(),
-                result.getDepressionLevel(),
-                result.getWellbeingLevel()
-        );
-        tvLevelSummary.setText(levels);
-        tvAdvice.setText(result.getAdvice());
 
         btnPickStart   = findViewById(R.id.btnPickStart);
         btnPickEnd     = findViewById(R.id.btnPickEnd);
         btnApplyFilter = findViewById(R.id.btnApplyFilter);
-        tvTrend        = findViewById(R.id.tvTrend);
+        btnShare       = findViewById(R.id.btnShareResults);
+        btnExport      = findViewById(R.id.btnExportPdf);
+        // 6) share/export
+        btnShare.setOnClickListener(v ->
+                ShareFormScreen.start(
+                        ResultSummaryScreen.this,     // or just `this` if in an Activity
+                        resultId,
+                        startTimestamp,
+                        endTimestamp
+                )
+        );
+        btnExport.setOnClickListener(v -> {
+            ScoreResult result = quizEngine.calculateScore();
+            // You’ll need the doctor’s email here — pass `null` or pull it from your flow:
+            String doctorEmail = null;
+            Files.exportAndShareResults(
+                    ResultSummaryScreen.this,
+                    result,
+                    doctorEmail,
+                    startTimestamp,
+                    endTimestamp
+            );
+        });
 
-        // default: show the last 7 days
+        chartTrends    = findViewById(R.id.chartTrends);
+
+        // 3) populate the static bars & labels
+        int a = initial.getAnxietyScore();
+        int d = initial.getDepressionScore();
+        int w = initial.getWellbeingScore();
+        anxietyBar.setProgress(a);
+        depressionBar.setProgress(d);
+        wellbeingBar.setProgress(w);
+        tvAnxietyScore   .setText(a + "/100");
+        tvDepressionScore.setText(d + "/100");
+        tvWellbeingScore .setText(w + "/100");
+
+        String levels = String.format(
+                "Άγχος: %s, Κατάθλιψη: %s, Ευεξία: %s",
+                initial.getAnxietyLevel(),
+                initial.getDepressionLevel(),
+                initial.getWellbeingLevel()
+        );
+        tvLevelSummary.setText(levels);
+        tvAdvice      .setText(initial.getAdvice());
+
+        // 4) default date window = last 7 days
         Calendar cal = Calendar.getInstance();
         endTimestamp   = cal.getTimeInMillis();
         cal.add(Calendar.DAY_OF_MONTH, -7);
         startTimestamp = cal.getTimeInMillis();
         btnPickStart.setText("Από " + dateString(startTimestamp));
-        btnPickEnd.setText("Έως " + dateString(endTimestamp));
+        btnPickEnd  .setText("Έως " + dateString(endTimestamp));
 
-        btnPickStart.setOnClickListener(v -> pickDate(true));
-        btnPickEnd.setOnClickListener(v -> pickDate(false));
+        // 5) wire buttons
+        btnPickStart .setOnClickListener(v -> pickDate(true));
+        btnPickEnd   .setOnClickListener(v -> pickDate(false));
         btnApplyFilter.setOnClickListener(v -> computeAndShowTrend());
 
-        // compute initial trend
+        chartTrends.animate().cancel();
+        chartTrends.getAnimator().setPhaseX(1f);
+        chartTrends.getAnimator().setPhaseY(1f);
+
+        // initial render
         computeAndShowTrend();
     }
 
     private void pickDate(boolean isStart) {
-        // initialize dialog with current selection
         Calendar cur = Calendar.getInstance();
         cur.setTimeInMillis(isStart ? startTimestamp : endTimestamp);
 
         new DatePickerDialog(this,
-                (view, year, month, dayOfMonth) -> {
+                (view, year, month, day) -> {
                     Calendar sel = Calendar.getInstance();
-                    sel.set(year, month, dayOfMonth, 0, 0, 0);
-                    long ts = sel.getTimeInMillis();
+                    sel.set(year, month, day, 0, 0, 0);
                     if (isStart) {
-                        startTimestamp = ts;
-                        btnPickStart.setText("Από " + dateString(ts));
+                        startTimestamp = sel.getTimeInMillis();
+                        btnPickStart.setText("Από " + dateString(startTimestamp));
                     } else {
-                        // set to end-of-day
-                        sel.set(year, month, dayOfMonth, 23,59,59);
+                        sel.set(year, month, day, 23, 59, 59);
                         endTimestamp = sel.getTimeInMillis();
-                        btnPickEnd.setText("Έως " + dateString(ts));
+                        btnPickEnd.setText("Έως " + dateString(endTimestamp));
                     }
                 },
                 cur.get(Calendar.YEAR),
@@ -136,75 +175,93 @@ public class ResultSummaryScreen extends AppCompatActivity {
     }
 
     private String dateString(long ts) {
-        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        return fmt.format(new Date(ts));
+        return new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                .format(new Date(ts));
     }
 
     private void computeAndShowTrend() {
+        // 1) fetch history
         List<DatabaseHelper.QuizResultRecord> hist =
                 dbh.getQuizHistory(startTimestamp, endTimestamp);
 
-        if (hist.isEmpty()) {
-            tvTrend.setText("Δεν βρέθηκαν δεδομένα σε αυτή την περίοδο.");
+        // 2) require at least 2 points
+        if (hist.size() < 2) {
+            chartTrends.clear();
+            chartTrends.setVisibility(View.GONE);
+            tvTrend.setVisibility(View.VISIBLE);
+            tvTrend.setText("Δεν υπάρχουν αρκετά δεδομένα για τον επιλεγμένο χρόνο.");
             return;
         }
-        // latest vs. average of the rest
-        DatabaseHelper.QuizResultRecord latest = hist.get(0);
-        if (hist.size() == 1) {
-            tvTrend.setText("Μόνο ένα αποτέλεσμα στη σε αυτή την περίοδο.");
-            return;
-        }
-        int count = hist.size() - 1;
-        float sumA = 0, sumD = 0, sumW = 0;
-        for (int i = 1; i < hist.size(); i++) {
-            sumA += hist.get(i).anxiety;
-            sumD += hist.get(i).depression;
-            sumW += hist.get(i).wellbeing;
-        }
-        float avgA = sumA / count, avgD = sumD / count, avgW = sumW / count;
 
-        StringBuilder sb = new StringBuilder();
-        // anxiety trend
-        if (latest.anxiety > avgA + 5) {
-            sb.append("Το άγχος έχει αυξηθεί σε σχέση με το μέσο όρο.");
-        } else if (latest.anxiety < avgA - 5) {
-            sb.append("Η ευεξία στο άγχος βελτιώθηκε σε σχέση με το μέσο όρο.");
-        } else {
-            sb.append("Το άγχος παραμένει σταθερό.");
-        }
-        sb.append("\n");
+        // 3) build entries
+        long rawSpanMs = endTimestamp - startTimestamp;
+        float spanDays = Math.max(rawSpanMs / (1000f*60*60*24), 0f);
 
-        // depression trend
-        if (latest.depression > avgD + 5) {
-            sb.append("Η κατάθλιψη έχει αυξηθεί σε σχέση με το μέσο όρο.");
-        } else if (latest.depression < avgD - 5) {
-            sb.append("Βελτίωση στα συμπτώματα κατάθλιψης σε σχέση με το μέσο όρο.");
-        } else {
-            sb.append("Τα συμπτώματα κατάθλιψης παραμένουν σταθερά.");
-        }
-        sb.append("\n");
-
-        // wellbeing trend (inverted logic)
-        if (latest.wellbeing < avgW - 5) {
-            sb.append("Η ευεξία μειώθηκε σημαντικά.");
-        } else if (latest.wellbeing > avgW + 5) {
-            sb.append("Η ευεξία βελτιώθηκε σημαντικά.");
-        } else {
-            sb.append("Η ευεξία παραμένει σταθερή.");
+        List<Entry> anxE = new ArrayList<>(), depE = new ArrayList<>(), welE = new ArrayList<>();
+        for (DatabaseHelper.QuizResultRecord r : hist) {
+            float x = (r.timestamp - startTimestamp) / (1000f*60*60*24);
+            anxE.add(new Entry(x, r.anxiety));
+            depE.add(new Entry(x, r.depression));
+            welE.add(new Entry(x, r.wellbeing));
         }
 
-        tvTrend.setText(sb.toString());
+        LineDataSet sAnx = new LineDataSet(anxE, "Άγχος");
+        LineDataSet sDep = new LineDataSet(depE, "Κατάθλιψη");
+        LineDataSet sWel = new LineDataSet(welE, "Ευεξία");
+        // only cubic if 3+ points
+        LineDataSet.Mode mode = (hist.size() >= 3)
+                ? LineDataSet.Mode.CUBIC_BEZIER
+                : LineDataSet.Mode.LINEAR;
+        sAnx.setMode(mode);
+        sDep.setMode(mode);
+        sWel.setMode(mode);
+        sAnx.setDrawValues(false);
+        sDep.setDrawValues(false);
+        sWel.setDrawValues(false);
 
-        ScoreResult result = quizEngine.calculateScore();
+        // 4) set data
+        chartTrends.setData(new LineData(sAnx, sDep, sWel));
 
-        // 5) warnings as you had them…
+        // 5) configure X axis
+        XAxis xAxis = chartTrends.getXAxis();
+        xAxis.setAxisMinimum(0f);
+        xAxis.setAxisMaximum(spanDays);
+        xAxis.setGranularity(1f);
+        xAxis.setValueFormatter(new ValueFormatter() {
+            private final SimpleDateFormat fmt =
+                    new SimpleDateFormat("dd/MM", Locale.getDefault());
+            @Override
+            public String getFormattedValue(float value) {
+                long millis = startTimestamp + (long)(value * 1000*60*60*24);
+                return fmt.format(new Date(millis));
+            }
+        });
+
+        chartTrends.getDescription().setText(
+                "Τάσεις από " + dateString(startTimestamp) +
+                        " έως " + dateString(endTimestamp)
+        );
+
+        // 6) finally try to draw safely
+        try {
+            chartTrends.invalidate();
+            chartTrends.setVisibility(View.VISIBLE);
+            tvTrend.setVisibility(View.GONE);
+        } catch (NegativeArraySizeException ex) {
+            Log.w("ResultSummary", "Chart draw skipped – invalid data range", ex);
+            chartTrends.clear();
+            chartTrends.setVisibility(View.GONE);
+            tvTrend.setVisibility(View.VISIBLE);
+            tvTrend.setText("Δεν υπάρχουν αρκετά έγκυρα δεδομένα για το διάστημα.");
+        }
+
+        // rest of your warnings + share/export wiring…
         warningsContainer.removeAllViews();
-        for (String warn : result.getWarnings()) {
+        for (String warn : quizEngine.calculateScore().getWarnings()) {
             TextView tv = new TextView(this);
             tv.setText("• " + warn);
             tv.setTextColor(Color.WHITE);
             tv.setTextSize(14f);
-            // Use the fully-qualified LayoutParams constants:
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
@@ -213,12 +270,6 @@ public class ResultSummaryScreen extends AppCompatActivity {
             tv.setLayoutParams(lp);
             warningsContainer.addView(tv);
         }
-
-        // 6) share/export… unchanged
-        btnShare.setOnClickListener(v ->
-                ShareFormScreen.start(this, /* resultId */0)
-        );
-        btnExport.setOnClickListener(v -> { /* … */ });
     }
 
     @Override

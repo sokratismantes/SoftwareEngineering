@@ -21,7 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Σταθερές για όνομα και έκδοση βάσης δεδομένων
     public static final String DATABASE_NAME = "SmartMed.db";
-    public static final int DATABASE_VERSION =18; // Αυξήθηκε η έκδοση
+    public static final int DATABASE_VERSION =23; // Αυξήθηκε η έκδοση
 
     // Ορισμός στηλών πίνακα χρηστών
     public static final String TABLE_USERS = "Users";
@@ -184,16 +184,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "('Πατησίων 55', '123456,999999')");
 
         String createHistory =
-                "CREATE TABLE " + TABLE_HISTORY + " (" +
+                "CREATE TABLE IF NOT EXISTS " + TABLE_HISTORY + " (" +
                         COL_HIST_ID        + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COL_HIST_TS        + " INTEGER NOT NULL, " +
                         COL_HIST_ANXIETY   + " INTEGER NOT NULL, " +
                         COL_HIST_DEPRESS   + " INTEGER NOT NULL, " +
                         COL_HIST_WELLBEING + " INTEGER NOT NULL" +
-                        ")";
+                        ");";
         db.execSQL(createHistory);
 
-        db.execSQL("CREATE TABLE " + TABLE_ANSWERS + "(" +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_ANSWERS + "(" +
                 "question_id INTEGER PRIMARY KEY, " + // <--- MODIFIED HERE
                 "value TEXT, " +
                 "timestamp INTEGER)");
@@ -228,28 +228,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_HISTORY, null, cv);
     }
 
-    // ─────── Public API: fetch history, newest first ───────
-    public List<QuizResultRecord> getQuizHistory() {
+    public List<QuizResultRecord> getQuizHistory(long startTs, long endTs) {
         List<QuizResultRecord> out = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
+
+        // 1) get a readable database
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // 2) build your selection and args
+        String selection = COL_HIST_TS + " >= ? AND " + COL_HIST_TS + " <= ?";
+        String[] selectionArgs = {
+                String.valueOf(startTs),
+                String.valueOf(endTs)
+        };
+
+        // 3) run the query
         Cursor c = db.query(
-                TABLE_HISTORY,
-                new String[]{COL_HIST_TS, COL_HIST_ANXIETY, COL_HIST_DEPRESS, COL_HIST_WELLBEING},
-                null, null, null, null,
-                COL_HIST_TS + " DESC"
+                TABLE_HISTORY,                                   // table
+                new String[]{                                  // columns
+                        COL_HIST_TS,
+                        COL_HIST_ANXIETY,
+                        COL_HIST_DEPRESS,
+                        COL_HIST_WELLBEING
+                },
+                selection,                                      // WHERE ts>=? AND ts<=?
+                selectionArgs,                                  // the “?” values
+                null, null,                                     // no GROUP BY or HAVING
+                COL_HIST_TS + " DESC"                           // ORDER BY ts DESC
         );
+
+        // 4) iterate the results
         while (c.moveToNext()) {
-            long   ts = c.getLong(0);
-            int    a  = c.getInt(1);
-            int    d  = c.getInt(2);
-            int    w  = c.getInt(3);
+            long ts = c.getLong(c.getColumnIndexOrThrow(COL_HIST_TS));
+            int  a  = c.getInt(c.getColumnIndexOrThrow(COL_HIST_ANXIETY));
+            int  d  = c.getInt(c.getColumnIndexOrThrow(COL_HIST_DEPRESS));
+            int  w  = c.getInt(c.getColumnIndexOrThrow(COL_HIST_WELLBEING));
             out.add(new QuizResultRecord(ts, a, d, w));
         }
         c.close();
+
         return out;
     }
-
-    /** Simple data holder for one history row */
     public static class QuizResultRecord {
         public final long   timestamp;
         public final int    anxiety, depression, wellbeing;
@@ -260,7 +278,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             wellbeing = w;
         }
     }
-
     /** In-memory stub for questions */
     private static final Question[] STUB_QUESTIONS = new Question[] {
             new Question(1, "Πόσο συχνά νιώθετε άγχος;", Question.QuestionType.SPINNER),
@@ -316,27 +333,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * Fetch quiz‐history records whose timestamp is between startTs and endTs (inclusive),
      * ordered newest first.
      */
-    public List<QuizResultRecord> getQuizHistory(long startTs, long endTs) {
-        List<QuizResultRecord> out = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.query(
-                TABLE_HISTORY,
-                new String[]{COL_HIST_TS, COL_HIST_ANXIETY, COL_HIST_DEPRESS, COL_HIST_WELLBEING},
-                COL_HIST_TS + ">=? AND " + COL_HIST_TS + "<=?",
-                new String[]{String.valueOf(startTs), String.valueOf(endTs)},
-                null, null,
-                COL_HIST_TS + " DESC"
-        );
-        while (c.moveToNext()) {
-            long ts = c.getLong(0);
-            int  a  = c.getInt(1);
-            int  d  = c.getInt(2);
-            int  w  = c.getInt(3);
-            out.add(new QuizResultRecord(ts, a, d, w));
-        }
-        c.close();
-        return out;
-    }
 
     /** Read back every saved answer row. */
     public List<Answer> getAllSavedAnswers() {
