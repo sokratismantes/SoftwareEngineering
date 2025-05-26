@@ -15,13 +15,14 @@ import com.example.smartmed1.model.Question.QuestionType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Calendar;
 
 // Κλάση βοηθού βάσης δεδομένων που επεκτείνει τη SQLiteOpenHelper
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Σταθερές για όνομα και έκδοση βάσης δεδομένων
     public static final String DATABASE_NAME = "SmartMed.db";
-    public static final int DATABASE_VERSION =24; // Αυξήθηκε η έκδοση
+    public static final int DATABASE_VERSION =26; // Αυξήθηκε η έκδοση
 
     // Ορισμός στηλών πίνακα χρηστών
     public static final String TABLE_USERS = "Users";
@@ -242,8 +243,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // ─────── Public API: save a quiz result ───────
     public void saveQuizResult(int anxiety, int depression, int wellbeing) {
         SQLiteDatabase db = getWritableDatabase();
+
+        long now = System.currentTimeMillis();
+
+        // 1) compute the bounds of “today” in local time
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(now);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE,    0);
+        cal.set(Calendar.SECOND,    0);
+        cal.set(Calendar.MILLISECOND, 0);
+        long startOfDay = cal.getTimeInMillis();
+        long endOfDay   = startOfDay + 24*60*60*1000 - 1;
+
+        // 2) delete any existing entry for “today”
+        db.delete(
+                TABLE_HISTORY,
+                COL_HIST_TS + " BETWEEN ? AND ?",
+                new String[]{ String.valueOf(startOfDay), String.valueOf(endOfDay) }
+        );
+
+        // 3) now insert the fresh “today” row
         ContentValues cv = new ContentValues();
-        cv.put(COL_HIST_TS,        System.currentTimeMillis());
+        cv.put(COL_HIST_TS,        now);
         cv.put(COL_HIST_ANXIETY,   anxiety);
         cv.put(COL_HIST_DEPRESS,   depression);
         cv.put(COL_HIST_WELLBEING, wellbeing);
@@ -300,6 +322,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             wellbeing = w;
         }
     }
+
+    // in DatabaseHelper:
+    public void insertQuizHistoryAt(int anxiety, int depression, int wellbeing, long ts) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COL_HIST_TS,        ts);
+        cv.put(COL_HIST_ANXIETY,   anxiety);
+        cv.put(COL_HIST_DEPRESS,   depression);
+        cv.put(COL_HIST_WELLBEING, wellbeing);
+        db.insert(TABLE_HISTORY, null, cv);
+    }
+
     /** In-memory stub for questions */
     private static final Question[] STUB_QUESTIONS = new Question[] {
             new Question(1, "Πόσο συχνά νιώθετε άγχος;", Question.QuestionType.SPINNER),
@@ -379,6 +413,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(TABLE_ANSWERS, null, null);
     }
+    public List<Answer> getAllSavedAnswersInRange(long startTs, long endTs) {
+        List<Answer> out = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.query(
+                TABLE_ANSWERS,
+                new String[]{ "question_id", "value" },
+                "timestamp >= ? AND timestamp <= ?",
+                new String[]{ String.valueOf(startTs), String.valueOf(endTs) },
+                null, null,
+                "timestamp ASC"
+        );
+        while (c.moveToNext()) {
+            out.add(new Answer(c.getInt(0), c.getString(1)));
+        }
+        c.close();
+        return out;
+    }
+
     // Μέθοδος για επαλήθευση ασθενούς με βάση ΑΜΚΑ και όνομα
     public boolean verifyPatient(String amka, String name, String surname) {
         SQLiteDatabase db = this.getReadableDatabase();

@@ -1,6 +1,7 @@
 package com.example.smartmed1.ui;
 
 import android.app.DatePickerDialog;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,27 +11,38 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.graphics.Color;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smartmed1.DatabaseHelper;
 import com.example.smartmed1.Files;
 import com.example.smartmed1.R;
+import com.example.smartmed1.model.Answer;
 import com.example.smartmed1.model.ScoreResult;
 import com.example.smartmed1.service.QuizEngine;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Collections;
+import android.widget.Toast;
+import java.io.File;
+import java.io.IOException;
 
 public class ResultSummaryScreen extends AppCompatActivity {
     private static final String EXTRA_RESULT_ID = "extra_result_id";
@@ -80,35 +92,59 @@ public class ResultSummaryScreen extends AppCompatActivity {
         tvAdvice        = findViewById(R.id.tvAdvice);
         tvTrend         = findViewById(R.id.tvTrend);
         warningsContainer = findViewById(R.id.warningsContainer);
+        chartTrends    = findViewById(R.id.chartTrends);
 
         btnPickStart   = findViewById(R.id.btnPickStart);
         btnPickEnd     = findViewById(R.id.btnPickEnd);
         btnApplyFilter = findViewById(R.id.btnApplyFilter);
-        btnShare       = findViewById(R.id.btnShareResults);
-        btnExport      = findViewById(R.id.btnExportPdf);
+        Button btnShare   = findViewById(R.id.btnShareResults);
+        Button btnExport  = findViewById(R.id.btnExportPdf);
+        ScoreResult result       = quizEngine.calculateScore();       // or quizEngine.getResultById(resultId)
+        long        startTs      = this.startTimestamp;
+        long        endTs        = this.endTimestamp;
+        String      doctorEmail  = null;
+        LineChart   chart        = chartTrends;
+
         // 6) share/export
+        // 1) “Share” just invokes your existing chooser flow:
         btnShare.setOnClickListener(v ->
-                ShareFormScreen.start(
-                        ResultSummaryScreen.this,     // or just `this` if in an Activity
-                        resultId,
-                        startTimestamp,
-                        endTimestamp
+                Files.exportAndShareResults(
+                        /* ctx: */        ResultSummaryScreen.this,
+                        /* result: */     result,
+                        /* doctorEmail: */doctorEmail,
+                        /* startTs: */    startTs,
+                        /* endTs: */      endTs,
+                        /* chart: */      chart
                 )
         );
+
+// 2) “Export” only generates & saves the PDF, then notifies the user:
         btnExport.setOnClickListener(v -> {
-            ScoreResult result = quizEngine.calculateScore();
-            // You’ll need the doctor’s email here — pass `null` or pull it from your flow:
-            String doctorEmail = null;
-            Files.exportAndShareResults(
-                    ResultSummaryScreen.this,
-                    result,
-                    doctorEmail,
-                    startTimestamp,
-                    endTimestamp
-            );
+            try {
+                File pdf = Files.generateResultsPdf(
+                        ResultSummaryScreen.this,
+                        initial,
+                        startTimestamp,
+                        endTimestamp,
+                        chartTrends
+                );
+
+                Toast.makeText(
+                        ResultSummaryScreen.this,
+                        "PDF αποθηκεύτηκε στο: " + pdf.getAbsolutePath(),
+                        Toast.LENGTH_LONG
+                ).show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(
+                        ResultSummaryScreen.this,
+                        "Σφάλμα κατά την αποθήκευση PDF:\n" + e.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+            }
         });
 
-        chartTrends    = findViewById(R.id.chartTrends);
 
         // 3) populate the static bars & labels
         int a = initial.getAnxietyScore();
@@ -147,6 +183,17 @@ public class ResultSummaryScreen extends AppCompatActivity {
         chartTrends.getAnimator().setPhaseX(1f);
         chartTrends.getAnimator().setPhaseY(1f);
 
+        // DEBUG only: ten days of fake history
+        long now = System.currentTimeMillis();
+        long oneDay = 24L*60*60*1000;
+        for (int i = 0; i < 10; i++) {
+            long ts = now - (9 - i)*oneDay;
+            int  anx = 20 + i*5;
+            int  dep = 30 + i*3;
+            int  wel = 100 - Math.round((anx+dep)/2f);
+            dbh.insertQuizHistoryAt(anx, dep, wel, ts);
+        }
+
         // initial render
         computeAndShowTrend();
     }
@@ -180,11 +227,11 @@ public class ResultSummaryScreen extends AppCompatActivity {
     }
 
     private void computeAndShowTrend() {
-        // 1) fetch history
+        // 1) fetch history (newest first)
         List<DatabaseHelper.QuizResultRecord> hist =
                 dbh.getQuizHistory(startTimestamp, endTimestamp);
 
-        // 2) require at least 2 points
+        // 2) need at least 2 points
         if (hist.size() < 2) {
             chartTrends.clear();
             chartTrends.setVisibility(View.GONE);
@@ -193,80 +240,117 @@ public class ResultSummaryScreen extends AppCompatActivity {
             return;
         }
 
-        // 3) build entries
-        long rawSpanMs = endTimestamp - startTimestamp;
-        float spanDays = Math.max(rawSpanMs / (1000f*60*60*24), 0f);
+        // 3) reverse so oldest→newest
+        Collections.reverse(hist);
+
+        // 4) build entries
+        final float msPerDay = 1000f * 60 * 60 * 24;
+        long rawSpan = endTimestamp - startTimestamp;
+        float spanDays = Math.max(rawSpan / msPerDay, 1f);
 
         List<Entry> anxE = new ArrayList<>(), depE = new ArrayList<>(), welE = new ArrayList<>();
         for (DatabaseHelper.QuizResultRecord r : hist) {
-            float x = (r.timestamp - startTimestamp) / (1000f*60*60*24);
+            float x = (r.timestamp - startTimestamp) / msPerDay;
             anxE.add(new Entry(x, r.anxiety));
             depE.add(new Entry(x, r.depression));
             welE.add(new Entry(x, r.wellbeing));
         }
+        // 5) ensure each list is sorted by X
+        Collections.sort(anxE, (a, b) -> Float.compare(a.getX(), b.getX()));
+        Collections.sort(depE, (a, b) -> Float.compare(a.getX(), b.getX()));
+        Collections.sort(welE, (a, b) -> Float.compare(a.getX(), b.getX()));
 
+        // 6) make datasets
         LineDataSet sAnx = new LineDataSet(anxE, "Άγχος");
         LineDataSet sDep = new LineDataSet(depE, "Κατάθλιψη");
         LineDataSet sWel = new LineDataSet(welE, "Ευεξία");
-        // only cubic if 3+ points
-        LineDataSet.Mode mode = (hist.size() >= 3)
+        LineDataSet.Mode mode = hist.size() >= 3
                 ? LineDataSet.Mode.CUBIC_BEZIER
                 : LineDataSet.Mode.LINEAR;
-        sAnx.setMode(mode);
-        sDep.setMode(mode);
-        sWel.setMode(mode);
-        sAnx.setDrawValues(false);
-        sDep.setDrawValues(false);
-        sWel.setDrawValues(false);
 
-        // 4) set data
+        // bright, distinct colors
+        int cAnx = Color.rgb(229, 57,  53);
+        int cDep = Color.rgb(30,  136, 229);
+        int cWel = Color.rgb(67,  160, 71);
+
+        for (LineDataSet set : Arrays.asList(sAnx, sDep, sWel)) {
+            set.setMode(mode);
+            set.setLineWidth(3f);
+            set.setCircleRadius(5f);
+            set.setDrawCircles(true);
+            set.setDrawValues(false);
+        }
+        sAnx.setColor(cAnx); sAnx.setCircleColor(cAnx);
+        sDep.setColor(cDep); sDep.setCircleColor(cDep);
+        sWel.setColor(cWel); sWel.setCircleColor(cWel);
+
+        // 7) reset any zoom/pan
+        chartTrends.fitScreen();
+
+        // 8) feed data
         chartTrends.setData(new LineData(sAnx, sDep, sWel));
 
-        // 5) configure X axis
-        XAxis xAxis = chartTrends.getXAxis();
-        xAxis.setAxisMinimum(0f);
-        xAxis.setAxisMaximum(spanDays);
-        xAxis.setGranularity(1f);
-        xAxis.setValueFormatter(new ValueFormatter() {
+        // 9) style axes & legend
+        chartTrends.getLegend().setTextColor(Color.WHITE);
+        chartTrends.getLegend().setForm(Legend.LegendForm.CIRCLE);
+
+        XAxis x = chartTrends.getXAxis();
+        x.setPosition(XAxis.XAxisPosition.BOTTOM);
+        x.setTextColor(Color.WHITE);
+        x.setAxisLineColor(Color.WHITE);
+        x.setGridColor(Color.argb(60,255,255,255));
+        x.setAxisMinimum(0f);
+        x.setAxisMaximum(spanDays);
+        x.setGranularity(1f);
+        x.setValueFormatter(new ValueFormatter() {
             private final SimpleDateFormat fmt =
                     new SimpleDateFormat("dd/MM", Locale.getDefault());
             @Override
             public String getFormattedValue(float value) {
-                long millis = startTimestamp + (long)(value * 1000*60*60*24);
-                return fmt.format(new Date(millis));
+                long ms = startTimestamp + (long)(value * msPerDay);
+                return fmt.format(new Date(ms));
             }
         });
 
+        YAxis left = chartTrends.getAxisLeft();
+        left.setTextColor(Color.WHITE);
+        left.setAxisLineColor(Color.WHITE);
+        left.setGridColor(Color.argb(60,255,255,255));
+        left.setAxisMinimum(0f);
+        left.setAxisMaximum(100f);
+        chartTrends.getAxisRight().setEnabled(false);
+
         chartTrends.getDescription().setText(
-                "Τάσεις από " + dateString(startTimestamp) +
-                        " έως " + dateString(endTimestamp)
+                "Τάσεις από " + dateString(startTimestamp)
+                        + " έως " + dateString(endTimestamp)
         );
+        chartTrends.getDescription().setTextColor(Color.WHITE);
 
-        // 6) finally try to draw safely
-        try {
-            chartTrends.invalidate();
-            chartTrends.setVisibility(View.VISIBLE);
-            tvTrend.setVisibility(View.GONE);
-        } catch (NegativeArraySizeException ex) {
-            Log.w("ResultSummary", "Chart draw skipped – invalid data range", ex);
-            chartTrends.clear();
-            chartTrends.setVisibility(View.GONE);
-            tvTrend.setVisibility(View.VISIBLE);
-            tvTrend.setText("Δεν υπάρχουν αρκετά έγκυρα δεδομένα για το διάστημα.");
-        }
+        // 10) disable zooming (so no NegativeArray crashes)
+        chartTrends.setScaleXEnabled(false);
+        chartTrends.setScaleYEnabled(false);
+        chartTrends.setPinchZoom(false);
+        chartTrends.setDoubleTapToZoomEnabled(false);
 
-        // rest of your warnings + share/export wiring…
+        // 11) draw it
+        chartTrends.animateX(600);
+        chartTrends.invalidate();
+        chartTrends.setVisibility(View.VISIBLE);
+        tvTrend.setVisibility(View.GONE);
+
+        // 12) warnings (unchanged)
         warningsContainer.removeAllViews();
-        for (String warn : quizEngine.calculateScore().getWarnings()) {
+        for (String w : quizEngine.calculateScore().getWarnings()) {
             TextView tv = new TextView(this);
-            tv.setText("• " + warn);
+            tv.setText("• " + w);
             tv.setTextColor(Color.WHITE);
             tv.setTextSize(14f);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
-            lp.setMargins(0, 8, 0, 0);
+            LinearLayout.LayoutParams lp =
+                    new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+            lp.setMargins(0,8,0,0);
             tv.setLayoutParams(lp);
             warningsContainer.addView(tv);
         }

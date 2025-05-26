@@ -1,5 +1,7 @@
 package com.example.smartmed1.model;
 
+import com.example.smartmed1.DatabaseHelper;
+
 public class Answer {
     private final int questionId;
     private final String value;
@@ -15,5 +17,13 @@ public class Answer {
 
     public String getValue() {
         return value;
+    }
+    public String getQuestionText(DatabaseHelper dbh) {
+        for (Question q : dbh.getMentalHealthQuestions()) {
+            if (q.getId() == questionId) {
+                return q.getText();
+            }
+        }
+        return null;
     }
 }
