@@ -92,6 +92,12 @@ public class MedicalDocumentsActivity extends AppCompatActivity {
             Intent intent = new Intent(MedicalDocumentsActivity.this, HelpAndSupportUser.class);
             startActivity(intent);
         });
+        LinearLayout btnReferrals = findViewById(R.id.btnReferrals);
+
+        btnReferrals.setOnClickListener(v -> {
+            Intent intent = new Intent(MedicalDocumentsActivity.this, ReferralListActivity.class);
+            startActivity(intent);
+        });
 
     }
 

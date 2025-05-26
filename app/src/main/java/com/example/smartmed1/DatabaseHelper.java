@@ -21,7 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Σταθερές για όνομα και έκδοση βάσης δεδομένων
     public static final String DATABASE_NAME = "SmartMed.db";
-    public static final int DATABASE_VERSION =23; // Αυξήθηκε η έκδοση
+    public static final int DATABASE_VERSION =24; // Αυξήθηκε η έκδοση
 
     // Ορισμός στηλών πίνακα χρηστών
     public static final String TABLE_USERS = "Users";
@@ -163,7 +163,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "diagnosis TEXT," +
                 "drug TEXT," +
                 "pharma_code TEXT," +
-                "dose TEXT," +
+                "doκse TEXT," +
                 "instructions TEXT," +
                 "duration TEXT," +
                 "pharmacy TEXT" +
@@ -464,6 +464,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.close();
         return prescriptions;
+    }
+    public List<Referral> getAllReferrals() {
+        List<Referral> referrals = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Referrals", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                referrals.add(new Referral(
+                        cursor.getString(cursor.getColumnIndexOrThrow("amka")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("diagnosis")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("examination_type")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("duration")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("diagnostic_center"))
+                ));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return referrals;
     }
 
 

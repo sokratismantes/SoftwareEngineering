@@ -78,12 +78,14 @@
 
             <!-- Παραπεμπτικά -->
             <LinearLayout
+                android:id="@+id/btnReferrals"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="16dp">
+
 
                 <ImageView
                     android:layout_width="80dp"
