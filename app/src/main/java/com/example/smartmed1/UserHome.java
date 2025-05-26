@@ -39,9 +39,9 @@ public class UserHome extends AppCompatActivity {
         });
 
         btnMyPrescriptions.setOnClickListener(v -> {
-            // ανοιγμα σελιδας με τις συνταγες
-            startActivity(new Intent(this, PrescriptionListActivity.class));
+            startActivity(new Intent(UserHome.this, PrescriptionListActivity.class));
         });
+
 
         btnHealthData.setOnClickListener(v -> {
             // TODO: Άνοιγμα σελίδας με τα δεδομένα υγείας
@@ -59,14 +59,14 @@ public class UserHome extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Προσωρινά listeners
-        btnNewAppointment.setOnClickListener(v -> {});
-        btnMyAppointments.setOnClickListener(v -> {});
-        btnMyPrescriptions.setOnClickListener(v -> {});
-        btnHealthData.setOnClickListener(v -> {});
-
         btnMedicalFiles.setOnClickListener(v -> {
             startActivity(new Intent(this, MedicalDocumentsActivity.class));
         });
+        infoIcon = findViewById(R.id.infoIcon);
+
+        infoIcon.setOnClickListener(v -> {
+            startActivity(new Intent(UserHome.this, HelpAndSupportUser.class));
+        });
+
     }
 }

@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
-        android:backgroundTint="@android:color/holo_blue_dark"
+        android:backgroundTint="#1E88E5"
         android:textColor="@android:color/white" />
 
     <Button
@@ -64,8 +64,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
-        android:backgroundTint="@android:color/holo_green_dark"
+        android:backgroundTint="#42A5F5"
         android:textColor="@android:color/white"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp" />
+
 
 </LinearLayout>

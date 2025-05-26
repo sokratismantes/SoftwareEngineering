@@ -216,7 +216,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:padding="4dp"
-        android:visibility="gone"> <!-- ✅ ΠΡΟΣΘΗΚΗ ΕΔΩ -->
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/folderContainer"
@@ -228,32 +228,36 @@
 
     <!-- Κάτω μπάρα πλοήγησης -->
     <LinearLayout
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
         android:layout_alignParentBottom="true"
-        android:background="#FFFFFF"
-        android:gravity="center">
+        android:background="@android:color/transparent">
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/home"
-            android:contentDescription="Αρχική" />
+            android:contentDescription="Home Icon" />
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:id="@+id/infoIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/info"
-            android:contentDescription="Πληροφορίες" />
+            android:contentDescription="Info Icon"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp" />
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/user"
-            android:contentDescription="Χρήστης" />
+            android:contentDescription="User Icon" />
     </LinearLayout>
+
 </RelativeLayout>

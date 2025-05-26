@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.content.Intent;
+import android.widget.ImageView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +57,12 @@ public class PrescriptionListActivity extends AppCompatActivity {
                 // Not needed for this implementation
             }
         });
+        ImageView infoIcon = findViewById(R.id.infoIcon);
+
+        infoIcon.setOnClickListener(v -> {
+            startActivity(new Intent(PrescriptionListActivity.this, HelpAndSupportUser.class));
+        });
+
     }
 
     private void filterPrescriptions(String text) {

@@ -62,9 +62,15 @@
             android:name=".DiagnosticResultsMRI"
             android:exported="false"/>
 
-         <activity android:name=".PrescriptionListActivity" android:exported="true" />
-        <activity android:name=".PrescriptionDetailsActivity" android:exported="true" />
-        <activity android:name=".RenewPrescriptionActivity" android:exported="false" />
+         <activity
+             android:name=".PrescriptionListActivity"
+             android:exported="false" />
+        <activity
+            android:name=".PrescriptionDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".RenewPrescriptionActivity"
+            android:exported="false" />
 
         <activity
             android:name=".DoctorAvailabilityActivity"

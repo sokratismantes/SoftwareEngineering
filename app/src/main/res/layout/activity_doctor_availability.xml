@@ -7,6 +7,20 @@
     android:background="@drawable/background_gradient"
     tools:context=".DoctorAvailabilityActivity">
 
+    <ScrollView
+        android:id="@+id/scrollableContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavigationBar"
+        android:layout_alignParentTop="true"
+        android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="16dp">
     <!-- Logo -->
     <ImageView
         android:id="@+id/logo"
@@ -437,36 +451,43 @@
             android:textAlignment="center" />
     </LinearLayout>
 
-    <!-- Bottom Navigation Bar (Placeholder based on image) -->
+    </LinearLayout>
+    </ScrollView>
+
+    <!-- Footer -->
     <LinearLayout
         android:id="@+id/bottomNavigationBar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="#FFFFFF">
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:layout_marginTop="32dp"
+        android:background="@android:color/transparent"
+        android:layout_alignParentBottom="true">
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/home"
             android:contentDescription="Home Icon" />
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:id="@+id/infoIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/info"
-            android:contentDescription="Info Icon" />
+            android:contentDescription="Info Icon"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp" />
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/user"
             android:contentDescription="User Icon" />
     </LinearLayout>
 
-</RelativeLayout> 
+
+</RelativeLayout>

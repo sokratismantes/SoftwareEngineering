@@ -43,10 +43,10 @@ public class DoctorHome extends AppCompatActivity {
     }
 
     private void GoToReferralForm() {
-        // TODO: Αντικατάστησε με το αντίστοιχο Activity όταν υλοποιηθεί
-        // Intent intent = new Intent(this, ReferralForm.class);
-        // startActivity(intent);
+        Intent intent = new Intent(this, PatientAdmissionForm.class);
+        startActivity(intent);
     }
+
 
     private void GoToAppointments() {
         // TODO: Αντικατάστησε με το αντίστοιχο Activity όταν υλοποιηθεί

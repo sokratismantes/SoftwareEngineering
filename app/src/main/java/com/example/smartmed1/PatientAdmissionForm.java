@@ -86,3 +86,5 @@ public class PatientAdmissionForm extends AppCompatActivity {
                 }
             }
         });
+    }
+}

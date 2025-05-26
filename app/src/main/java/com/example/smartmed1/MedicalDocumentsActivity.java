@@ -86,6 +86,13 @@ public class MedicalDocumentsActivity extends AppCompatActivity {
             showFiles(filtered);
             containerFiles.setVisibility(View.VISIBLE);
         });
+        ImageView infoIcon = findViewById(R.id.infoIcon);
+
+        infoIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(MedicalDocumentsActivity.this, HelpAndSupportUser.class);
+            startActivity(intent);
+        });
+
     }
 
     private void showFiles(List<String> files) {
