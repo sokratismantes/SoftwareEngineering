@@ -13,7 +13,7 @@ public class InvalidAMKAScreen extends AppCompatActivity {
 
         Button btnRetry = findViewById(R.id.btnRetryAmka);
         btnRetry.setOnClickListener(v -> {
-            // Simply finish to return to ShareFormScreen so the user can re-enter AMKA
+
             finish();
         });
     }

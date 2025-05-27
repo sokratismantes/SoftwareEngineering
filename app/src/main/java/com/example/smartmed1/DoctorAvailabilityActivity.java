@@ -172,8 +172,7 @@ public class DoctorAvailabilityActivity extends AppCompatActivity {
             }
         });
 
-        // Remove OnClickListener for the Modify Availability button (optional, as it won't be used)
-        // modifyButton.setOnClickListener(null);
+
     }
 
     // Helper method to add a TextView for a time entry
@@ -190,8 +189,7 @@ public class DoctorAvailabilityActivity extends AppCompatActivity {
         timeTextView.setPadding(8, 8, 8, 8);
         parentLayout.addView(timeTextView);
 
-        // Remove OnClickListener for direct editing
-        // timeTextView.setOnClickListener(new View.OnClickListener() { ... }); // Remove the previous listener
+
 
         // Add OnClickListener for selection
         timeTextView.setOnClickListener(new View.OnClickListener() {

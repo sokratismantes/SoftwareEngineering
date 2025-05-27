@@ -221,7 +221,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "timestamp INTEGER)");
     }
 
-    // Σε περίπτωση αναβάθμισης της βάσης, γίνεται εκ νέου δημιουργία όλων των πινάκων
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);

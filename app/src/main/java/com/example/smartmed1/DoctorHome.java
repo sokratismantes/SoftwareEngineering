@@ -49,20 +49,17 @@ public class DoctorHome extends AppCompatActivity {
 
 
     private void GoToAppointments() {
-        // TODO: Αντικατάστησε με το αντίστοιχο Activity όταν υλοποιηθεί
-        // Intent intent = new Intent(this, AppointmentsActivity.class);
-        // startActivity(intent);
+
+
     }
 
     private void GoToPrescriptions() {
-        // TODO: Αντικατάστησε με το αντίστοιχο Activity όταν υλοποιηθεί
-        // Intent intent = new Intent(this, PrescriptionsList.class);
-        // startActivity(intent);
+
+
     }
 
     private void GoToHistory() {
-        // TODO: Αντικατάστησε με το αντίστοιχο Activity όταν υλοποιηθεί
-        // Intent intent = new Intent(this, PrescriptionHistory.class);
-        // startActivity(intent);
+
+
     }
 }

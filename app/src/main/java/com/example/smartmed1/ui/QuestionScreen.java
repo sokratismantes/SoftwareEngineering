@@ -50,7 +50,7 @@ public class QuestionScreen extends AppCompatActivity {
         inflateQuestions();
 
         findViewById(R.id.btnViewResults).setOnClickListener(v -> {
-            // 0) First, pull in any live text answers that haven't yet lost focus:
+
             for (int i = 0; i < questionsContainer.getChildCount(); i++) {
                 View questionItem = questionsContainer.getChildAt(i);
 
@@ -62,7 +62,7 @@ public class QuestionScreen extends AppCompatActivity {
                     quizEngine.recordAnswer(new Answer(qid, answer));
                 }
 
-                // SPINNER questions (optional: force-read current selection)
+                // SPINNER questions
                 Spinner spinner = questionItem.findViewById(R.id.spinnerAnswer);
                 if (spinner != null) {
                     int qid = (int) spinner.getTag();
@@ -70,7 +70,7 @@ public class QuestionScreen extends AppCompatActivity {
                     quizEngine.recordAnswer(new Answer(qid, val));
                 }
 
-                // STAR questions (optional: force-read current rating)
+                // STAR questions
                 RatingBar rb = questionItem.findViewById(R.id.ratingAnswer);
                 if (rb != null) {
                     int qid = (int) rb.getTag();
@@ -79,7 +79,7 @@ public class QuestionScreen extends AppCompatActivity {
                 }
             }
 
-            // 1) Now you can safely validate that *all* questions have an answer:
+
             if (!quizEngine.validateAllAnswered()) {
                 startActivity(new Intent(this, NoAnswerErrorScreen.class));
                 return;
@@ -90,7 +90,7 @@ public class QuestionScreen extends AppCompatActivity {
             resultsLauncher.launch(i);
         });
 
-        // Example of a "Restart Quiz" button (must exist in your layout):
+        // Example of a "Restart Quiz" button
         findViewById(R.id.btnRestartQuiz).setOnClickListener(v -> {
             quizEngine.clearAnswers();
             questionsContainer.removeAllViews();

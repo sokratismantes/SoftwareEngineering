@@ -28,14 +28,12 @@ public class UserHome extends AppCompatActivity {
         btnHealthData = findViewById(R.id.btnHealthData);
         btnMedicalFiles = findViewById(R.id.btnMedicalFiles);
 
-        // Προσωρινά listeners με TODO
+
         btnNewAppointment.setOnClickListener(v -> {
-            // TODO: Άνοιγμα σελίδας δημιουργίας νέου ραντεβού
-            // startActivity(new Intent(this, NewAppointmentActivity.class));
+
         });
 
         btnMyAppointments.setOnClickListener(v -> {
-            // TODO: Άνοιγμα σελίδας με τα ραντεβού
         });
 
         btnMyPrescriptions.setOnClickListener(v -> {
@@ -44,7 +42,7 @@ public class UserHome extends AppCompatActivity {
 
 
         btnHealthData.setOnClickListener(v -> {
-            // TODO: Άνοιγμα σελίδας με τα δεδομένα υγείας
+
         });
 
         btnMedicalFiles.setOnClickListener(v -> {
@@ -52,7 +50,7 @@ public class UserHome extends AppCompatActivity {
             Intent intent = new Intent(this, MedicalDocumentsActivity.class);
             startActivity(intent);
         });
-        infoIcon = findViewById(R.id.infoIcon);  // Υποθέτουμε ότι αυτό είναι το ID της εικόνας σου
+        infoIcon = findViewById(R.id.infoIcon);
 
         infoIcon.setOnClickListener(v -> {
             Intent intent = new Intent(UserHome.this, HelpAndSupportUser.class);

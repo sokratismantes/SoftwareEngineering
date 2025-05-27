@@ -27,7 +27,7 @@ public class Files {
         fileList.add("Συνταγή_Ιανουάριος.pdf");
     }
 
-    // ─── Existing methods ─────────────────────────────────────────────────────
+
 
     public static boolean fileExists(Context context) {
         return !fileList.isEmpty();
@@ -41,7 +41,7 @@ public class Files {
         System.out.println("Άνοιγμα αρχείου: " + filename);
     }
 
-    // ─── New combined export & email logic ───────────────────────────────────
+
 
     /**
      * 1) Generates a PDF of the mental‐health questionnaire results.

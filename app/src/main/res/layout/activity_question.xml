@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:padding="24dp">
 
-    <!-- TODO: Replace with your RecyclerView or question UI -->
+
     <TextView
         android:id="@+id/placeholder"
         android:layout_width="wrap_content"

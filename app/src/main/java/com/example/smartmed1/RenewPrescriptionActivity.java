@@ -37,8 +37,7 @@ public class RenewPrescriptionActivity extends AppCompatActivity {
                 return;
             }
 
-            // Here you would typically send the renewal request to your backend
-            // For now, we'll just show a success message
+
             Toast.makeText(this, "Επιτυχής ανανέωση συνταγής", Toast.LENGTH_SHORT).show();
             
             // Close the activity and return to the previous screen

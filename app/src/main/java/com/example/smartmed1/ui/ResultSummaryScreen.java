@@ -61,7 +61,7 @@ public class ResultSummaryScreen extends AppCompatActivity {
         // Read the resultId if you need it for "Share" flow
         resultId = getIntent().getIntExtra(EXTRA_RESULT_ID, -1);
 
-        // 1) compute & persist this run
+
         ScoreResult initial = quizEngine.calculateScore();
         dbh.saveQuizResult(
                 initial.getAnxietyScore(),
@@ -89,7 +89,7 @@ public class ResultSummaryScreen extends AppCompatActivity {
         // 6) share/export
         btnShare.setOnClickListener(v ->
                 ShareFormScreen.start(
-                        ResultSummaryScreen.this,     // or just `this` if in an Activity
+                        ResultSummaryScreen.this,
                         resultId,
                         startTimestamp,
                         endTimestamp
@@ -97,7 +97,7 @@ public class ResultSummaryScreen extends AppCompatActivity {
         );
         btnExport.setOnClickListener(v -> {
             ScoreResult result = quizEngine.calculateScore();
-            // You’ll need the doctor’s email here — pass `null` or pull it from your flow:
+
             String doctorEmail = null;
             Files.exportAndShareResults(
                     ResultSummaryScreen.this,
