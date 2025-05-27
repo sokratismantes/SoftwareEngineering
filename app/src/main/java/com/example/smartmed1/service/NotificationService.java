@@ -44,8 +44,6 @@ public class NotificationService {
             return false;
         }
 
-        // 3) Delegate to Files to build the PDF and open the email chooser
-        Files.exportAndShareResults(ctx, result, doctorEmail, startTs, endTs);
         return true;
     }
 }

@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Σταθερές για όνομα και έκδοση βάσης δεδομένων
     public static final String DATABASE_NAME = "SmartMed.db";
-    public static final int DATABASE_VERSION =26; // Αυξήθηκε η έκδοση
+    public static final int DATABASE_VERSION =27; // Αυξήθηκε η έκδοση
 
     // Ορισμός στηλών πίνακα χρηστών
     public static final String TABLE_USERS = "Users";
@@ -378,8 +378,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             doc = new Doctor(
                     c.getInt(0),
                     c.getString(1),
-                    c.getString(2),
-                    c.getString(3)
+                    c.getString(3),   // email
+                    c.getString(2)    // AMKA
             );
         }
         c.close();

@@ -19,6 +19,7 @@ import com.example.smartmed1.model.ScoreResult;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +32,9 @@ import java.io.FileOutputStream;
 import java.util.Locale;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.LineDataSet;
+import android.os.Environment;
+import android.net.Uri;
+import java.io.*;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -163,16 +167,16 @@ public class Files {
         PdfDocument.Page page = doc.startPage(info);
         Canvas c = page.getCanvas();
 
-        // Background
+        // 1) white background
         c.drawColor(Color.WHITE);
 
-        // Title
+        // 2) Title
         Paint titlePaint = new Paint();
         titlePaint.setTextSize(18f);
         titlePaint.setColor(Color.BLACK);
         c.drawText("Αποτελέσματα Ερωτηματολογίου Ψυχικής Υγείας", 20, 40, titlePaint);
 
-        // Core scores
+        // 3) Core scores
         Paint bodyPaint = new Paint();
         bodyPaint.setTextSize(14f);
         bodyPaint.setColor(Color.DKGRAY);
@@ -184,8 +188,10 @@ public class Files {
         c.drawText("Ευεξία: " + result.getWellbeingScore(), 20, y, bodyPaint);
         y += 40;
 
-        // Chart
+        // 4) Chart snapshot (if provided)
         if (chart != null) {
+            // ensure it's rendered
+            chart.setBackgroundColor(Color.WHITE);
             Bitmap bmp = chart.getChartBitmap();
             float wScale = (info.getPageWidth() - 40f) / bmp.getWidth();
             float hScale = 200f / bmp.getHeight();
@@ -197,44 +203,83 @@ public class Files {
             y += bmpH + 30;
         }
 
-        // Q&A details
+        // 5) Q&A details for the selected range
         DatabaseHelper dbh = new DatabaseHelper(ctx);
         List<Answer> answers = dbh.getAllSavedAnswersInRange(startTs, endTs);
 
-        // Build question‐text map
+        // map question‐text by id
         Map<Integer,String> qMap = new HashMap<>();
         for (Question q : dbh.getMentalHealthQuestions()) {
             qMap.put(q.getId(), q.getText());
         }
 
         for (Answer a : answers) {
-            String qText = qMap.getOrDefault(a.getQuestionId(), "Ερώτηση #" + a.getQuestionId());
+            String qText = qMap.getOrDefault(a.getQuestionId(),
+                    "Ερώτηση #" + a.getQuestionId());
             c.drawText(qText, 20, y, bodyPaint);
             y += 18;
             c.drawText("→ " + a.getValue(), 30, y, bodyPaint);
             y += 28;
-
-            // If you exceed the page height, call doc.finishPage(page),
-            // start a new page, reset y, etc.
+            // if y + 50 > info.getPageHeight() you’d do:
+            //    doc.finishPage(page);
+            //    page = doc.startPage(info);
+            //    c = page.getCanvas();
+            //    y = 40;
         }
 
         doc.finishPage(page);
 
-        // — instead of getExternalFilesDir, write to PUBLIC Downloads folder:
-        File downloads = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOWNLOADS);
-        File folder = new File(downloads, "SmartMed");
-        if (!folder.exists()) folder.mkdirs();
-
-        File out = new File(folder, "mhq_results_" + System.currentTimeMillis() + ".pdf");
-
+        // 6) write into cache
+        File out = new File(ctx.getCacheDir(), "mhq_results.pdf");
         try (FileOutputStream fos = new FileOutputStream(out)) {
             doc.writeTo(fos);
         }
         doc.close();
-
         return out;
     }
+
+    public static File exportPdfToDownloads(Context ctx,
+                                            ScoreResult result,
+                                            long startTs,
+                                            long endTs,
+                                            @Nullable LineChart chart) {
+        try {
+            // generate the full PDF (with chart!)
+            File temp = generateResultsPdf(ctx, result, startTs, endTs, chart);
+
+            // target folder
+            File downloads = Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOWNLOADS);
+            File folder = new File(downloads, "SmartMed");
+            if (!folder.exists() && !folder.mkdirs()) {
+                throw new IOException("Could not create " + folder);
+            }
+
+            // copy
+            File out = new File(folder, temp.getName());
+            try (InputStream in = new FileInputStream(temp);
+                 OutputStream os = new FileOutputStream(out)) {
+                byte[] buf = new byte[8192];
+                int r;
+                while ((r = in.read(buf)) > 0) os.write(buf, 0, r);
+            }
+
+            // notify system
+            Intent scan = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            scan.setData(Uri.fromFile(out));
+            ctx.sendBroadcast(scan);
+
+            return out;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(ctx,
+                    "Σφάλμα κατά την αποθήκευση του PDF στο Downloads.",
+                    Toast.LENGTH_LONG).show();
+            return null;
+        }
+    }
+
+
     private static String fmtDate(long ts) {
         return new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 .format(new Date(ts));

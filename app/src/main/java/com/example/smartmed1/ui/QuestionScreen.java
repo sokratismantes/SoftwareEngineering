@@ -50,45 +50,40 @@ public class QuestionScreen extends AppCompatActivity {
         inflateQuestions();
 
         findViewById(R.id.btnViewResults).setOnClickListener(v -> {
-            // 0) First, pull in any live text answers that haven't yet lost focus:
-            for (int i = 0; i < questionsContainer.getChildCount(); i++) {
-                View questionItem = questionsContainer.getChildAt(i);
+            // 0) First, make sure any in-flight Text/Spinner/Star values get recorded:
+            for (int idx = 0; idx < questionsContainer.getChildCount(); idx++) {
+                View questionItem = questionsContainer.getChildAt(idx);
 
-                // TEXT questions
                 EditText et = questionItem.findViewById(R.id.etAnswerText);
                 if (et != null) {
-                    String answer = et.getText().toString().trim();
-                    int qid = (int) et.getTag();            // assume you tagged it with question ID
-                    quizEngine.recordAnswer(new Answer(qid, answer));
+                    int qid = (int) et.getTag();
+                    quizEngine.recordAnswer(new Answer(qid, et.getText().toString().trim()));
                 }
 
-                // SPINNER questions (optional: force-read current selection)
-                Spinner spinner = questionItem.findViewById(R.id.spinnerAnswer);
-                if (spinner != null) {
-                    int qid = (int) spinner.getTag();
-                    String val = spinner.getSelectedItem().toString();
-                    quizEngine.recordAnswer(new Answer(qid, val));
+                Spinner sp = questionItem.findViewById(R.id.spinnerAnswer);
+                if (sp != null) {
+                    int qid = (int) sp.getTag();
+                    quizEngine.recordAnswer(new Answer(qid, sp.getSelectedItem().toString()));
                 }
 
-                // STAR questions (optional: force-read current rating)
                 RatingBar rb = questionItem.findViewById(R.id.ratingAnswer);
                 if (rb != null) {
                     int qid = (int) rb.getTag();
-                    int rating = (int) rb.getRating();
-                    quizEngine.recordAnswer(new Answer(qid, String.valueOf(rating)));
+                    quizEngine.recordAnswer(new Answer(qid, String.valueOf((int)rb.getRating())));
                 }
             }
 
-            // 1) Now you can safely validate that *all* questions have an answer:
+            // 1) now block if they haven’t answered everything
             if (!quizEngine.validateAllAnswered()) {
                 startActivity(new Intent(this, NoAnswerErrorScreen.class));
                 return;
             }
 
-            // 2) Launch results
+            // 2) otherwise fire off your results screen as before
             Intent i = new Intent(this, ResultSummaryScreen.class);
             resultsLauncher.launch(i);
         });
+
 
         // Example of a "Restart Quiz" button (must exist in your layout):
         findViewById(R.id.btnRestartQuiz).setOnClickListener(v -> {

@@ -1,6 +1,7 @@
 package com.example.smartmed1.ui;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,7 +47,7 @@ import java.io.IOException;
 
 public class ResultSummaryScreen extends AppCompatActivity {
     private static final String EXTRA_RESULT_ID = "extra_result_id";
-
+    private static final String EXTRA_PDF_PATH    = "extra_pdf_path";   // ← add this
     private QuizEngine quizEngine;
     private DatabaseHelper dbh;
     private int resultId;
@@ -106,44 +107,56 @@ public class ResultSummaryScreen extends AppCompatActivity {
         LineChart   chart        = chartTrends;
 
         // 6) share/export
-        // 1) “Share” just invokes your existing chooser flow:
-        btnShare.setOnClickListener(v ->
-                Files.exportAndShareResults(
-                        /* ctx: */        ResultSummaryScreen.this,
-                        /* result: */     result,
-                        /* doctorEmail: */doctorEmail,
-                        /* startTs: */    startTs,
-                        /* endTs: */      endTs,
-                        /* chart: */      chart
-                )
-        );
-
-// 2) “Export” only generates & saves the PDF, then notifies the user:
-        btnExport.setOnClickListener(v -> {
+        // 1) SHARE: always launch the form
+        btnShare.setOnClickListener(v -> {
+            // 1) build the same polished PDF with the chart
+            File pdfFile;
             try {
-                File pdf = Files.generateResultsPdf(
-                        ResultSummaryScreen.this,
-                        initial,
+                pdfFile = Files.generateResultsPdf(
+                        this,
+                        quizEngine.getResultById(resultId),
                         startTimestamp,
                         endTimestamp,
-                        chartTrends
+                        chartTrends   // ← your LineChart instance
                 );
-
-                Toast.makeText(
-                        ResultSummaryScreen.this,
-                        "PDF αποθηκεύτηκε στο: " + pdf.getAbsolutePath(),
-                        Toast.LENGTH_LONG
-                ).show();
-
             } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(
-                        ResultSummaryScreen.this,
-                        "Σφάλμα κατά την αποθήκευση PDF:\n" + e.getMessage(),
+                Toast.makeText(this,
+                        "Αποτυχία δημιουργίας PDF.",
                         Toast.LENGTH_LONG
                 ).show();
+                return;
+            }
+
+            // 2) now launch ShareFormScreen *with* that PDF’s path
+            ShareFormScreen.start(
+                    this,
+                    resultId,
+                    startTimestamp,
+                    endTimestamp,
+                    pdfFile.getAbsolutePath()
+            );
+        });
+
+
+// 2) PDF: just export & save to Downloads/SmartMed
+        btnExport.setOnClickListener(v -> {
+            // 1) Re‐compute the result and pass the visible chart
+            File pdf = Files.exportPdfToDownloads(
+                    ResultSummaryScreen.this,
+                    result,
+                    startTimestamp,
+                    endTimestamp,
+                    chartTrends   // ← your LineChart instance
+            );
+
+            // 2) Let the user know where it went
+            if (pdf != null) {
+                Toast.makeText(this,
+                        "PDF αποθηκεύτηκε στο: " + pdf.getAbsolutePath(),
+                        Toast.LENGTH_LONG).show();
             }
         });
+
 
 
         // 3) populate the static bars & labels
