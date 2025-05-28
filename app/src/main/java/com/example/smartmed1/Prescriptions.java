@@ -1,6 +1,6 @@
 package com.example.smartmed1;
 
-public class Prescription {
+public class Prescriptions {
     private String code;
     private String expirationDate;
     private String doctorName;
@@ -11,7 +11,7 @@ public class Prescription {
     private String medications;
     private String instructions;
 
-    public Prescription(String code, String expirationDate, String doctorName, String status, int adherencePercentage, boolean isFavorite, String diagnosis, String medications, String instructions) {
+    public Prescriptions(String code, String expirationDate, String doctorName, String status, int adherencePercentage, boolean isFavorite, String diagnosis, String medications, String instructions) {
         this.code = code;
         this.expirationDate = expirationDate;
         this.doctorName = doctorName;

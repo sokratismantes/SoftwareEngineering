@@ -20,64 +20,79 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp" />
 
-    <!-- Buttons -->
+    <!-- Κουμπί 1 -->
     <Button
-        android:id="@+id/btnNewAppointment"
+        android:id="@+id/button2"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Προγραμματίστε Νέο Ραντεβού"
-        app:layout_constraintTop_toBottomOf="@id/logo"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:text="ΠΡΟΓΡΑΜΜΑΤΙΣΤΕ ΝΕΟ ΡΑΝΤΕΒΟΥ"
+        android:background="@drawable/rounded_container"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp" />
 
+    <!-- Κουμπί 2 -->
     <Button
-        android:id="@+id/btnMyAppointments"
+        android:id="@+id/button3"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Τα Ραντεβού Μου"
-        app:layout_constraintTop_toBottomOf="@id/btnNewAppointment"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:text="ΤΑ ΡΑΝΤΕΒΟΥ ΜΟΥ"
+        android:background="@drawable/rounded_container"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/button2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp" />
 
+    <!-- Κουμπί 3 -->
     <Button
         android:id="@+id/btnMyPrescriptions"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
         android:text="Οι Συνταγές Μου"
-        app:layout_constraintTop_toBottomOf="@id/btnMyAppointments"
+        android:background="@drawable/rounded_container"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/button3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp" />
 
+    <!-- Κουμπί 4 -->
     <Button
-        android:id="@+id/btnHealthData"
+        android:id="@+id/button5"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Δεδομένα Υγείας"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:text="ΔΕΔΟΜΕΝΑ ΥΓΕΙΑΣ"
+        android:background="@drawable/rounded_container"
+        android:textColor="@android:color/white"
         app:layout_constraintTop_toBottomOf="@id/btnMyPrescriptions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp" />
 
+    <!-- Κουμπί 5 -->
     <Button
         android:id="@+id/btnMedicalFiles"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
         android:text="Τα Ιατρικά Μου Αρχεία"
-        app:layout_constraintTop_toBottomOf="@id/btnHealthData"
+        android:background="@drawable/rounded_container"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/button5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp" />
 

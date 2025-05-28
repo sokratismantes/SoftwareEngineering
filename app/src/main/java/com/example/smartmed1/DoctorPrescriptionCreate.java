@@ -19,7 +19,7 @@ public class DoctorPrescriptionCreate extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_prescription_create);
+        setContentView(R.layout.prescription_creation_form);
 
         // Αντιστοίχιση των views από το XML layout
         etDiagnosis = findViewById(R.id.etDiagnosis);

@@ -19,6 +19,45 @@
         android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.Smartmed1"
         tools:targetApi="31">
+
+        <activity
+            android:name="HealthWarningScreen"
+            android:exported="false" />
+        <activity
+            android:name="UserComments"
+            android:exported="false" />
+        <activity
+            android:name="HealthAnalysisScreen"
+            android:exported="false" />
+        <activity
+            android:name="HealthTrendsScreen"
+            android:exported="false" />
+        <activity
+            android:name="UserChoices"
+            android:exported="false" />
+        <activity
+            android:name="AddHealthData"
+            android:exported="false" />
+        <activity
+            android:name="Feedback"
+            android:exported="false" />
+        <activity
+            android:name="ProcessAppointments"
+            android:exported="false" />
+        <activity
+            android:name="ActiveAppointments"
+            android:exported="false" />
+        <activity
+            android:name="PaymentMethods"
+            android:exported="false" />
+        <activity
+            android:name="AvailableTimeSlots"
+            android:exported="false" />
+        <activity android:name="AppointmentPreview" />
+        <activity android:name="CreateAppointment" />
+        <activity android:name="AvailabilityForm" />
+
+
         <activity android:name=".ui.NoValidExportScreen" android:exported="false" />
         <activity android:name=".ui.InvalidAMKAScreen"   android:exported="false" />
         <activity android:name=".ui.NoAnswerErrorScreen" android:exported="false" />
@@ -32,7 +71,7 @@
         <activity android:name=".MedicalDocumentsActivity"     android:exported="false" />
         <activity android:name=".FAQsActivity"                 android:exported="false" />
         <activity android:name=".HelpAndSupportUser"           android:exported="false" />
-        <activity android:name=".QuestionFormScreen"           android:exported="false" />
+        <activity android:name=".SupportQuestions"           android:exported="false" />
         <activity android:name=".DoctorPrescriptionCreate"     android:exported="false" />
         <activity android:name=".UserHome"                     android:exported="false" />
         <activity android:name=".DoctorHome"                   android:exported="false" />

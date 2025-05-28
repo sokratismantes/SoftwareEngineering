@@ -18,7 +18,7 @@ public class PatientAdmissionForm extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_admission_form);
+        setContentView(R.layout.patient_admission_form);
 
         // Συνδέουμε τα views με το layout
         editAmka = findViewById(R.id.editAmka);

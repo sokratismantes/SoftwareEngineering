@@ -17,9 +17,9 @@ import java.util.List;
 
 public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapter.PrescriptionViewHolder> {
 
-    private List<Prescription> prescriptionList;
+    private List<Prescriptions> prescriptionList;
 
-    public PrescriptionAdapter(List<Prescription> prescriptionList) {
+    public PrescriptionAdapter(List<Prescriptions> prescriptionList) {
         this.prescriptionList = prescriptionList;
     }
 
@@ -32,7 +32,7 @@ public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapte
 
     @Override
     public void onBindViewHolder(@NonNull PrescriptionViewHolder holder, int position) {
-        Prescription prescription = prescriptionList.get(position);
+        Prescriptions prescription = prescriptionList.get(position);
         holder.textViewPrescriptionCode.setText("Κωδικός Συνταγής: " + prescription.getCode());
         holder.textViewExpirationDate.setText("Ημερομηνία Λήξης: " + prescription.getExpirationDate());
         holder.textViewDoctorName.setText("Γιατρός: " + prescription.getDoctorName());
@@ -85,7 +85,7 @@ public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapte
     }
 
     // Method to update the list in the adapter
-    public void updateList(List<Prescription> newList) {
+    public void updateList(List<Prescriptions> newList) {
         prescriptionList = newList;
         notifyDataSetChanged();
     }

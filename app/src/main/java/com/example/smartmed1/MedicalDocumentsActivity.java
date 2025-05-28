@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Button;
-import android.widget.Toast;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
@@ -30,7 +29,7 @@ public class MedicalDocumentsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_medical_documents);
+        setContentView(R.layout.medical_docs);
 
         containerFiles = findViewById(R.id.containerFiles);
         textNoFiles = findViewById(R.id.textNoFiles);

@@ -1,0 +1,207 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_light">
+
+    <!-- ✅ Κάνε πρώτα declare τη BottomNavigationView -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#C5F1FF"
+        app:menu="@menu/bottom_nav_menu"
+        tools:ignore="DuplicateIds" />
+
+    <!-- ✅ Και μετά βάλε το ScrollView, με σωστή σύνδεση -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/nav_view"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="135dp"
+                android:layout_height="135dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/smartmed_logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="ΣΤΟΙΧΕΙΑ ΡΑΝΤΕΒΟΥ"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Αναφέρετε το ονοματεπώνυμό σας."
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/editFullName"
+                android:layout_width="316dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_edittext" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Επιλέξτε τύπο ραντεβού :"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"/>
+
+            <RadioGroup
+                android:id="@+id/radioTypeGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+                <RadioButton android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Check-Up"
+                    android:textColor="@android:color/white"
+                    android:button="@drawable/radio_white_black_selector"
+                    android:buttonTint="@color/white"
+                    android:layout_marginEnd="12dp"
+                    android:clickable="true"
+                    android:focusable="true"/>
+                <RadioButton android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Πρώτη Διάγνωση"
+                    android:textColor="@android:color/white"
+                    android:button="@drawable/radio_white_black_selector"
+                    android:buttonTint="@color/white"
+                    android:layout_marginEnd="12dp"
+                    android:clickable="true"
+                    android:focusable="true"/>
+                <RadioButton android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Επανεξέταση"
+                    android:textColor="@android:color/white"
+                    android:buttonTint="@color/white"
+                    android:button="@drawable/radio_white_black_selector"
+                    android:clickable="true"
+                    android:focusable="true"/>
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Αναφέρετε τον Ασφαλιστικό Φορέα σας."
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/editInsurance"
+                android:layout_width="323dp"
+                android:layout_height="45dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_edittext" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginBottom="8dp"
+                android:text="Αναφέρετε την αιτία επίσκεψης σας."
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/editReason"
+                android:layout_width="330dp"
+                android:layout_height="44dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_edittext"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:maxLines="10"
+                android:minLines="2"
+                android:scrollbars="vertical" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Αναφέρετε προγενέστερο ιστορικό υγείας."
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/editHistory"
+                android:layout_width="326dp"
+                android:layout_height="43dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_edittext"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:maxLines="10"
+                android:minLines="2"
+                android:scrollbars="vertical" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Πρόκειται Για Επείγον Περιστατικό ;"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"/>
+
+            <RadioGroup
+                android:id="@+id/radioUrgencyGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="24dp">
+                <RadioButton android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ΝΑΙ"
+                    android:textColor="@android:color/white"
+                    android:buttonTint="@color/white"
+                    android:button="@drawable/radio_white_black_selector"
+                    android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:focusable="true"/>
+                <RadioButton android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ΟΧΙ"
+                    android:textColor="@android:color/white"
+                    android:buttonTint="@color/white"
+                    android:button="@drawable/radio_white_black_selector"
+                    />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/confirmButton"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="0dp"
+                android:backgroundTint="@color/material_dynamic_primary30"
+                android:text="ΑΛΛΑΓΗ ΣΤΟΙΧΕΙΩΝ"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

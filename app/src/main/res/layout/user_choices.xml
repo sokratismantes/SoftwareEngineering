@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tint"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_light">
+
+    <View
+        android:id="@+id/gradientBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="#33000000" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/smartmed_logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="Εδώ μπορείτε να καταγράψετε και να παρακολουθήσετε την πορεία των δεδομένων υγείας σας."
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <!-- First Button -->
+
+            <ImageView
+                android:layout_width="112dp"
+                android:layout_height="53dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/ic_health" />
+
+            <Button
+                android:id="@+id/btnHealthData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_container"
+                android:text="ΔΙΑΧΕΙΡΙΣΗ ΔΕΔΟΜΕΝΩΝ ΥΓΕΙΑΣ"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <!-- Second Button -->
+            <Button
+                android:id="@+id/btnHealthTrends"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ΤΑΣΕΙΣ ΥΓΕΙΑΣ"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:background="@drawable/rounded_button_gradient"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Third Button -->
+            <Button
+                android:id="@+id/btnHealthGoals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_button_gradient"
+                android:text="ΣΤΟΧΟΙ ΥΓΕΙΑΣ"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav_menu"
+        android:background="#C5F1FF"/>
+</RelativeLayout>

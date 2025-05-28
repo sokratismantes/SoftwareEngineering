@@ -37,7 +37,7 @@ public class DiagnosticResultsMicrobiology extends AppCompatActivity {
         // Γονικό layout
         LinearLayout parentLayout = new LinearLayout(this);
         parentLayout.setOrientation(LinearLayout.HORIZONTAL);
-        parentLayout.setBackgroundResource(R.drawable.rounded_button);
+        parentLayout.setBackgroundResource(R.drawable.rounded_button1);
         parentLayout.setPadding(24, 24, 24, 24);
         parentLayout.setGravity(Gravity.CENTER_VERTICAL);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(

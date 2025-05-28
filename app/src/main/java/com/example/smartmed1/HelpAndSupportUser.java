@@ -20,7 +20,7 @@ public class HelpAndSupportUser extends AppCompatActivity {
         btnMentalForm = findViewById(R.id.btnMentalForm);
 
         btnQuestionForm.setOnClickListener(v -> {
-            startActivity(new Intent(this, QuestionFormScreen.class));
+            startActivity(new Intent(this, SupportQuestions.class));
         });
 
 

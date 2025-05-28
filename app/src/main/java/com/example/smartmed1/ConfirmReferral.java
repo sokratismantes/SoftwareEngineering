@@ -8,7 +8,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ConfirmReferral extends AppCompatActivity {
+public class
+
+ConfirmReferral extends AppCompatActivity {
 
     // Στοιχεία προβολής των πληροφοριών του παραπεμτικού
     TextView txtAmka, txtName, txtDiagnosis,txtExamtype, txtValidity;

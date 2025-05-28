@@ -19,8 +19,8 @@ public class PrescriptionListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewPrescriptions;
     private PrescriptionAdapter prescriptionAdapter;
-    private List<Prescription> prescriptionList;
-    private List<Prescription> originalPrescriptionList;
+    private List<Prescriptions> prescriptionList;
+    private List<Prescriptions> originalPrescriptionList;
     private EditText editTextSearch;
 
     @Override
@@ -66,8 +66,8 @@ public class PrescriptionListActivity extends AppCompatActivity {
     }
 
     private void filterPrescriptions(String text) {
-        List<Prescription> filteredList = new ArrayList<>();
-        for (Prescription prescription : originalPrescriptionList) {
+        List<Prescriptions> filteredList = new ArrayList<>();
+        for (Prescriptions prescription : originalPrescriptionList) {
             if (prescription.getCode().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(prescription);
             }

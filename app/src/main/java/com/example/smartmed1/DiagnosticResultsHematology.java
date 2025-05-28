@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.view.ViewGroup;
-import android.view.View;
 import android.widget.LinearLayout.LayoutParams;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -44,7 +42,7 @@ public class DiagnosticResultsHematology extends AppCompatActivity {
                 // Βήμα 3: Δημιουργία δυναμικής διάταξης
                 LinearLayout itemLayout = new LinearLayout(this);
                 itemLayout.setOrientation(LinearLayout.HORIZONTAL);
-                itemLayout.setBackgroundResource(R.drawable.rounded_button);
+                itemLayout.setBackgroundResource(R.drawable.rounded_button1);
                 itemLayout.setPadding(24, 24, 24, 24);
                 LayoutParams itemParams = new LayoutParams(
                         LayoutParams.MATCH_PARENT,

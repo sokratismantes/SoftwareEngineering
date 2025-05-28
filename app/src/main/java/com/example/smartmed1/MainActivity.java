@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
                 finish();
             } else {
-                cursor.close();
-                Toast.makeText(this, "Λάθος στοιχεία σύνδεσης", Toast.LENGTH_SHORT).show();
+                cursor.close(); // ❗️Χρειαζόταν εδώ
+                Toast.makeText(this, "Λανθασμένα στοιχεία", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -1,6 +1,7 @@
 package com.example.smartmed1;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import android.content.Intent;
@@ -14,6 +15,8 @@ public class UserHome extends AppCompatActivity {
 
     // Δήλωση κουμπιών
     Button btnNewAppointment, btnMyAppointments, btnMyPrescriptions, btnHealthData, btnMedicalFiles;
+
+
     ImageView infoIcon;
 
     @Override
@@ -22,11 +25,12 @@ public class UserHome extends AppCompatActivity {
         setContentView(R.layout.activity_user_home);
 
         // Σύνδεση κουμπιών με τα IDs από το layout
-        btnNewAppointment = findViewById(R.id.btnNewAppointment);
-        btnMyAppointments = findViewById(R.id.btnMyAppointments);
+
         btnMyPrescriptions = findViewById(R.id.btnMyPrescriptions);
-        btnHealthData = findViewById(R.id.btnHealthData);
         btnMedicalFiles = findViewById(R.id.btnMedicalFiles);
+        btnNewAppointment = findViewById(R.id.button2);
+        btnMyAppointments = findViewById(R.id.button3);
+        btnHealthData = findViewById(R.id.button5);
 
 
         btnNewAppointment.setOnClickListener(v -> {
@@ -66,5 +70,42 @@ public class UserHome extends AppCompatActivity {
             startActivity(new Intent(UserHome.this, HelpAndSupportUser.class));
         });
 
+        btnNewAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowAvailabilityForm();  //
+            }
+        });
+
+        btnMyAppointments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GetActiveAppointments(); //
+            }
+        });
+
+        btnHealthData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoadUserChoices(); //
+            }
+        });
+
     }
-}
+    //Ανοίγει τη φόρμα ραντεβού
+    private void ShowAvailabilityForm() {
+        Intent intent = new Intent(UserHome.this, AvailabilityForm.class);
+        startActivity(intent);
+    }
+
+    private void GetActiveAppointments() {
+        Intent intent = new Intent(UserHome.this, ActiveAppointments.class);
+        startActivity(intent);
+    }
+
+    private void LoadUserChoices() {
+        Intent intent = new Intent(UserHome.this, UserChoices.class);
+        startActivity(intent);
+    }
+    }
+

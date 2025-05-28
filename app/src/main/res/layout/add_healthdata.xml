@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_light">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/nav_view"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/material_dynamic_primary50"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <ImageView
+                android:layout_width="135dp"
+                android:layout_height="135dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/smartmed_logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ΔΕΔΟΜΕΝΑ ΥΓΕΙΑΣ"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1">
+
+                <TableRow>
+                    <TextView style="@style/FormLabel" android:text="Ημερομηνία" />
+                    <EditText
+                        android:id="@+id/editDate"
+                        style="@style/FormInput"
+                        android:hint="--/--/--" />
+                </TableRow>
+
+                <TableRow>
+                    <TextView style="@style/FormLabel" android:text="Διάρκεια Ύπνου" />
+                    <EditText
+                        android:id="@+id/editSleepDuration"
+                        style="@style/FormInput"
+                        android:hint="hrs" />
+                </TableRow>
+
+                <TableRow>
+                    <TextView style="@style/FormLabel" android:text="Ποιότητα Ύπνου" />
+                    <EditText
+                        android:id="@+id/editSleepQuality"
+                        style="@style/FormInput"
+                        android:hint="" />
+                </TableRow>
+
+                <TableRow>
+                    <TextView style="@style/FormLabel" android:text="Αρτηριακή Πίεση" />
+                    <EditText
+                        android:id="@+id/editBloodPressure"
+                        style="@style/FormInput"
+                        android:hint="mmHg" />
+                </TableRow>
+
+                <TableRow>
+                    <TextView style="@style/FormLabel" android:text="Καρδιακός Ρυθμός" />
+                    <EditText
+                        android:id="@+id/editHeartRate"
+                        style="@style/FormInput"
+                        android:hint="bpm" />
+                </TableRow>
+
+                <TableRow>
+                    <TextView style="@style/FormLabel" android:text="Πλήθος Βημάτων" />
+                    <EditText
+                        android:id="@+id/editSteps"
+                        style="@style/FormInput"
+                        android:hint="" />
+                </TableRow>
+
+                <TableRow>
+                    <TextView style="@style/FormLabel" android:text="Επίπεδο Άγχους" />
+                    <EditText
+                        android:id="@+id/editStress"
+                        style="@style/FormInput"
+                        android:hint="" />
+                </TableRow>
+
+                <TableRow>
+                    <TextView style="@style/FormLabel" android:text="Διάθεση" />
+                    <EditText
+                        android:id="@+id/editMood"
+                        style="@style/FormInput"
+                        android:hint="" />
+                </TableRow>
+
+                <TableRow>
+                    <TextView style="@style/FormLabel" android:text="Επίπεδο Ενέργειας" />
+                    <EditText
+                        android:id="@+id/editEnergy"
+                        style="@style/FormInput"
+                        android:hint="" />
+                </TableRow>
+
+                <TableRow>
+                    <TextView style="@style/FormLabel" android:text="Βάρος" />
+                    <EditText
+                        android:id="@+id/editWeight"
+                        style="@style/FormInput"
+                        android:hint="kg" />
+                </TableRow>
+            </TableLayout>
+
+            <!-- Κουμπί Υποβολής -->
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ΥΠΟΒΟΛΗ"
+                android:backgroundTint="@color/material_dynamic_primary30"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:layout_marginTop="24dp"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_marginBottom="36dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav_menu"
+        android:background="#C5F1FF" />
+</RelativeLayout>

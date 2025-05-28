@@ -9,7 +9,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class QuestionFormScreen extends AppCompatActivity {
+public class
+SupportQuestions extends AppCompatActivity {
 
     private static final int FILE_PICKER_REQUEST = 1;
 
@@ -21,7 +22,7 @@ public class QuestionFormScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question_form_screen);
+        setContentView(R.layout.question_form_screen);
 
         // Σύνδεση μεταβλητών με τα στοιχεία του layout
         etSubject = findViewById(R.id.etSubject);
@@ -39,7 +40,7 @@ public class QuestionFormScreen extends AppCompatActivity {
 
         // FAQs button
         btnFaq.setOnClickListener(v -> {
-            Intent intent = new Intent(QuestionFormScreen.this, FAQsActivity.class);
+            Intent intent = new Intent(SupportQuestions.this, FAQsActivity.class);
             startActivity(intent);
         });
 
