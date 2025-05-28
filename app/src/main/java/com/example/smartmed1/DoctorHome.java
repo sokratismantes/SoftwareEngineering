@@ -15,7 +15,7 @@ public class DoctorHome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_home);
+        setContentView(R.layout.doctor_home);
 
         // Σύνδεση κουμπιών
         btnPrescription = findViewById(R.id.btnPrescription);

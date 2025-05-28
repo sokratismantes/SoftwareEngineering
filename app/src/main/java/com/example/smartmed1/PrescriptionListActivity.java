@@ -26,7 +26,7 @@ public class PrescriptionListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_prescription_list);
+        setContentView(R.layout.prescription_list);
 
         recyclerViewPrescriptions = findViewById(R.id.recyclerViewPrescriptions);
         recyclerViewPrescriptions.setLayoutManager(new LinearLayoutManager(this));

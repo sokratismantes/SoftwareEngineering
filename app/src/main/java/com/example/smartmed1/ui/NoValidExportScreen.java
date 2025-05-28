@@ -6,7 +6,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.smartmed1.MainActivity;
+import com.example.smartmed1.Login;
 import com.example.smartmed1.R;
 
 public class NoValidExportScreen extends AppCompatActivity {
@@ -24,7 +24,7 @@ public class NoValidExportScreen extends AppCompatActivity {
         // Cancel: go back to the Home (or wherever makes sense)
         btnCancel.setOnClickListener(v -> {
             // If you want to go to MainActivity:
-            Intent i = new Intent(this, MainActivity.class);
+            Intent i = new Intent(this, Login.class);
             // clear the back stack so user can't return here
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(i);

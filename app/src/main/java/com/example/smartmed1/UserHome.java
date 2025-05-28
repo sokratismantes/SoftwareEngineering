@@ -3,11 +3,9 @@ package com.example.smartmed1;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.Date;
-import java.util.Calendar;
+
 import android.widget.ImageView;
 
 
@@ -22,7 +20,7 @@ public class UserHome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_home);
+        setContentView(R.layout.user_home);
 
         // Σύνδεση κουμπιών με τα IDs από το layout
 

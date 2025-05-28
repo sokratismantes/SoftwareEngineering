@@ -11,9 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.smartmed1.service.QuizEngine;
-
-public class MainActivity extends AppCompatActivity {
+public class Login extends AppCompatActivity {
 
     EditText etUsername, etPassword;
     Button loginButton, signupButton;
@@ -22,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login);
 
         // Σύνδεση με τα views
         etUsername = findViewById(R.id.etUsername);
