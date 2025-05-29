@@ -35,14 +35,20 @@ public class QuizEngine {
     }
 
     public boolean validateAllAnswered() {
-        List<Answer> savedAnswersFromDb = dbh.getAllSavedAnswers();
-        List<Question> totalQuestions = fetchQuestions(); // It's good to fetch this once
+        List<Answer> saved = dbh.getAllSavedAnswers();
+        List<Question> allQs = fetchQuestions();
 
-        // Use the standard Android Log
-        Log.d("QuizEngine", "Validating: DB answers count: " + savedAnswersFromDb.size() +
-                ", Total questions: " + totalQuestions.size());
+        // must have exactly one answer per question
+        if (saved.size() != allQs.size()) return false;
 
-        return savedAnswersFromDb.size() == totalQuestions.size();
+        // and each answer must be non-empty and non-zero
+        for (Answer a : saved) {
+            String val = a.getValue();
+            if (val == null || val.trim().isEmpty() || "0".equals(val.trim())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void clearAnswers() {
