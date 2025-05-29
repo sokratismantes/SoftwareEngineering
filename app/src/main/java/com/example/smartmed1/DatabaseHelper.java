@@ -25,12 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Σταθερές για όνομα και έκδοση βάσης δεδομένων
     public static final String DATABASE_NAME = "SmartMed.db";
-    public static final int DATABASE_VERSION =25; // Αυξήθηκε η έκδοση
-
-
-
-
-
+    public static final int DATABASE_VERSION =27; // Αυξήθηκε η έκδοση
 
     // Ορισμός στηλών πίνακα χρηστών
     public static final String TABLE_USERS = "Users";
@@ -255,7 +250,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "diagnosis TEXT," +
                 "drug TEXT," +
                 "pharma_code TEXT," +
-                "doκse TEXT," +
+                "dose TEXT," +
                 "instructions TEXT," +
                 "duration TEXT," +
                 "pharmacy TEXT" +

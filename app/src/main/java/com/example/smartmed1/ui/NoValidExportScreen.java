@@ -13,7 +13,7 @@ public class NoValidExportScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_no_valid_export_screen);
+        setContentView(R.layout.novalidexportscreen);
 
         Button btnRetry = findViewById(R.id.btnRetryExport);
         Button btnCancel = findViewById(R.id.btnCancelExport);

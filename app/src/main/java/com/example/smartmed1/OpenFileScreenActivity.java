@@ -11,7 +11,7 @@ public class OpenFileScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_open_file_screen);
+        setContentView(R.layout.open_file_screen);
 
         fileNameText = findViewById(R.id.fileNameText);
 

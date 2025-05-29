@@ -47,9 +47,9 @@ public class Login extends AppCompatActivity {
                 cursor.close();
 
                 if (role.equals("doctor")) {
-                    startActivity(new Intent(this, DoctorHome.class));
+                    startActivity(new Intent(this, Doctor.class));
                 } else if (role.equals("user")) {
-                    startActivity(new Intent(this, UserHome.class));
+                    startActivity(new Intent(this, User.class));
                 }
 
                 finish();

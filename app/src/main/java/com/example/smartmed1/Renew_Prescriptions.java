@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class RenewPrescriptionActivity extends AppCompatActivity {
+public class Renew_Prescriptions extends AppCompatActivity {
 
     private EditText editTextReason;
     private EditText editTextNotes;

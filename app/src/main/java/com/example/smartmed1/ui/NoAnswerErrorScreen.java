@@ -11,7 +11,7 @@ public class NoAnswerErrorScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_no_answer_error_screen);
+        setContentView(R.layout.noanswererrorscreen);
         Button btnRetry = findViewById(R.id.btnRetryQuiz);
         btnRetry.setOnClickListener(v -> finish());
     }

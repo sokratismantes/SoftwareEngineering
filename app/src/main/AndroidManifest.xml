@@ -24,10 +24,10 @@
             android:name="HealthWarningScreen"
             android:exported="false" />
         <activity
-            android:name="UserComments"
+            android:name=".User_Comments"
             android:exported="false" />
         <activity
-            android:name="HealthAnalysisScreen"
+            android:name=".Health_Analysis"
             android:exported="false" />
         <activity
             android:name="HealthTrendsScreen"
@@ -36,7 +36,7 @@
             android:name="UserChoices"
             android:exported="false" />
         <activity
-            android:name="AddHealthData"
+            android:name=".Health_Data"
             android:exported="false" />
         <activity
             android:name="Feedback"
@@ -51,11 +51,11 @@
             android:name="PaymentMethods"
             android:exported="false" />
         <activity
-            android:name="AvailableTimeSlots"
+            android:name=".Time_Slot"
             android:exported="false" />
         <activity android:name="AppointmentPreview" />
         <activity android:name="CreateAppointment" />
-        <activity android:name="AvailabilityForm" />
+        <activity android:name=".Availability" />
 
 
         <activity android:name=".ui.NoValidExportScreen" android:exported="false" />
@@ -69,12 +69,12 @@
         <activity android:name=".DiagnosticResultsHematology" android:exported="false" />
         <activity android:name=".DiagnosticExamsActivity"      android:exported="false" />
         <activity android:name=".MedicalDocumentsActivity"     android:exported="false" />
-        <activity android:name=".FAQsActivity"                 android:exported="false" />
+        <activity android:name=".FAQs"                 android:exported="false" />
         <activity android:name=".HelpAndSupportUser"           android:exported="false" />
-        <activity android:name=".SupportQuestions"           android:exported="false" />
+        <activity android:name=".Support_Questions"           android:exported="false" />
         <activity android:name=".DoctorPrescriptionCreate"     android:exported="false" />
-        <activity android:name=".UserHome"                     android:exported="false" />
-        <activity android:name=".DoctorHome"                   android:exported="false" />
+        <activity android:name=".User"                     android:exported="false" />
+        <activity android:name=".Doctor"                   android:exported="false" />
 
         <activity
             android:name=".DoctorReferralCreate"
@@ -108,7 +108,7 @@
             android:name=".PrescriptionDetailsActivity"
             android:exported="true" />
         <activity
-            android:name=".RenewPrescriptionActivity"
+            android:name=".Renew_Prescriptions"
             android:exported="false" />
         <activity android:name=".ReferralListActivity" />
 

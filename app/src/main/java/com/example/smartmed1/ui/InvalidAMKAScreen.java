@@ -9,7 +9,7 @@ public class InvalidAMKAScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_invalid_amkascreen);
+        setContentView(R.layout.invalidamkascreen);
 
         Button btnRetry = findViewById(R.id.btnRetryAmka);
         btnRetry.setOnClickListener(v -> {

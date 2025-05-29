@@ -9,7 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-public class UserComments extends AppCompatActivity {
+public class User_Comments extends AppCompatActivity {
 
     private EditText editHealthComment;
     private Button btnSaveNote;
@@ -28,7 +28,7 @@ public class UserComments extends AppCompatActivity {
                 String comment = editHealthComment.getText().toString().trim();
 
                 if (comment.isEmpty()) {
-                    Toast.makeText(UserComments.this, "Παρακαλώ γράψτε κάποιο σχόλιο.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(User_Comments.this, "Παρακαλώ γράψτε κάποιο σχόλιο.", Toast.LENGTH_SHORT).show();
                 } else {
                     SaveNote(comment);
                 }

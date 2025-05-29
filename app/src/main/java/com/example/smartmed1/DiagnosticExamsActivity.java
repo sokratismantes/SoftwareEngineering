@@ -16,7 +16,7 @@ public class DiagnosticExamsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_diagnostic_exams);
+        setContentView(R.layout.show_files);
 
         // Συνδέσεις views
         searchField = findViewById(R.id.searchField);

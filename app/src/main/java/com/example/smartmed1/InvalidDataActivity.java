@@ -12,7 +12,7 @@ public class InvalidDataActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_invalid_data);
+        setContentView(R.layout.invalid_data);
 
         btnReturn = findViewById(R.id.btnReturn);
 

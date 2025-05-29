@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class
-SupportQuestions extends AppCompatActivity {
+Support_Questions extends AppCompatActivity {
 
     private static final int FILE_PICKER_REQUEST = 1;
 
@@ -40,7 +40,7 @@ SupportQuestions extends AppCompatActivity {
 
         // FAQs button
         btnFaq.setOnClickListener(v -> {
-            Intent intent = new Intent(SupportQuestions.this, FAQsActivity.class);
+            Intent intent = new Intent(Support_Questions.this, FAQs.class);
             startActivity(intent);
         });
 

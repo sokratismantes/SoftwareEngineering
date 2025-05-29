@@ -20,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.smartmed1.R;
 import com.example.smartmed1.model.Answer;
 import com.example.smartmed1.model.Question;
-import com.example.smartmed1.model.Question.QuestionType;
 import com.example.smartmed1.service.QuizEngine;
 
 import java.util.List;
@@ -43,7 +42,7 @@ public class QuestionScreen extends AppCompatActivity {
 
         quizEngine = new QuizEngine(this);
 
-        setContentView(R.layout.activity_question_screen);
+        setContentView(R.layout.questionscreen);
 
         questionsContainer = findViewById(R.id.questionsContainer);
 

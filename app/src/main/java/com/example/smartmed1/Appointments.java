@@ -2,11 +2,11 @@ package com.example.smartmed1;
 
 
 public class Appointments {
-    String doctor, specialty, date, time, patientName, type, insurance, reason, history, urgent;
+    String doctor, specialty, date, time, patientName, type, insurance, purpose, history, appointment_id;
 
     public Appointments(String doctor, String specialty, String date, String time,
-                       String patientName, String type, String insurance,
-                       String reason, String history, String urgent) {
+                        String patientName, String type, String insurance,
+                        String purpose, String history, String appointment_id) {
         this.doctor = doctor;
         this.specialty = specialty;
         this.date = date;
@@ -14,10 +14,8 @@ public class Appointments {
         this.patientName = patientName;
         this.type = type;
         this.insurance = insurance;
-        this.reason = reason;
+        this.purpose = purpose;
         this.history = history;
-        this.urgent = urgent;
+        this.appointment_id = appointment_id;
     }
-
-    // Μπορείς να προσθέσεις getters αν θες
 }

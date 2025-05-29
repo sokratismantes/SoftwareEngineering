@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.widget.ImageView;
 
 
-public class UserHome extends AppCompatActivity {
+public class User extends AppCompatActivity {
 
     // Δήλωση κουμπιών
     Button btnNewAppointment, btnMyAppointments, btnMyPrescriptions, btnHealthData, btnMedicalFiles;
@@ -29,6 +29,7 @@ public class UserHome extends AppCompatActivity {
         btnNewAppointment = findViewById(R.id.button2);
         btnMyAppointments = findViewById(R.id.button3);
         btnHealthData = findViewById(R.id.button5);
+        infoIcon = findViewById(R.id.infoIcon);
 
 
         btnNewAppointment.setOnClickListener(v -> {
@@ -39,7 +40,7 @@ public class UserHome extends AppCompatActivity {
         });
 
         btnMyPrescriptions.setOnClickListener(v -> {
-            startActivity(new Intent(UserHome.this, PrescriptionListActivity.class));
+            startActivity(new Intent(User.this, PrescriptionListActivity.class));
         });
 
 
@@ -55,7 +56,7 @@ public class UserHome extends AppCompatActivity {
         infoIcon = findViewById(R.id.infoIcon);
 
         infoIcon.setOnClickListener(v -> {
-            Intent intent = new Intent(UserHome.this, HelpAndSupportUser.class);
+            Intent intent = new Intent(User.this, HelpAndSupportUser.class);
             startActivity(intent);
         });
 
@@ -65,7 +66,7 @@ public class UserHome extends AppCompatActivity {
         infoIcon = findViewById(R.id.infoIcon);
 
         infoIcon.setOnClickListener(v -> {
-            startActivity(new Intent(UserHome.this, HelpAndSupportUser.class));
+            startActivity(new Intent(User.this, HelpAndSupportUser.class));
         });
 
         btnNewAppointment.setOnClickListener(new View.OnClickListener() {
@@ -92,17 +93,17 @@ public class UserHome extends AppCompatActivity {
     }
     //Ανοίγει τη φόρμα ραντεβού
     private void ShowAvailabilityForm() {
-        Intent intent = new Intent(UserHome.this, AvailabilityForm.class);
+        Intent intent = new Intent(User.this, Availability.class);
         startActivity(intent);
     }
 
     private void GetActiveAppointments() {
-        Intent intent = new Intent(UserHome.this, ActiveAppointments.class);
+        Intent intent = new Intent(User.this, ActiveAppointments.class);
         startActivity(intent);
     }
 
     private void LoadUserChoices() {
-        Intent intent = new Intent(UserHome.this, UserChoices.class);
+        Intent intent = new Intent(User.this, UserChoices.class);
         startActivity(intent);
     }
     }

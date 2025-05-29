@@ -24,7 +24,7 @@ ConfirmReferral extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_confirm_referral);  // Σύνδεση με το αντίστοιχο XML layout
+        setContentView(R.layout.confirm_ref_assured);  // Σύνδεση με το αντίστοιχο XML layout
 
         // Αντιστοίχιση στοιχείων UI με μεταβλητές Java μέσω ID
         txtAmka = findViewById(R.id.txtAmka);

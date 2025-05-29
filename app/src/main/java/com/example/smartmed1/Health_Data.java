@@ -10,9 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.smartmed1.R;
-
-public class AddHealthData extends AppCompatActivity {
+public class Health_Data extends AppCompatActivity {
 
     EditText editDate, editSleepDuration, editSleepQuality, editBloodPressure,
             editHeartRate, editSteps, editStress, editMood, editEnergy, editWeight;

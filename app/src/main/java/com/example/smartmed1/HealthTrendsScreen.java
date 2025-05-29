@@ -101,7 +101,7 @@ public class HealthTrendsScreen extends AppCompatActivity {
     }
 
     private void openAnalysis(String category) {
-        Intent intent = new Intent(HealthTrendsScreen.this, HealthAnalysisScreen.class);
+        Intent intent = new Intent(HealthTrendsScreen.this, Health_Analysis.class);
         intent.putExtra("category", category);
         startActivity(intent);
     }

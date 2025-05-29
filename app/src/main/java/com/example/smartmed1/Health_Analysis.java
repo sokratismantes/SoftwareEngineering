@@ -26,7 +26,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HealthAnalysisScreen extends AppCompatActivity {
+public class Health_Analysis extends AppCompatActivity {
 
     BarChart barChart;
     DatabaseHelper dbHelper;
@@ -224,7 +224,7 @@ public class HealthAnalysisScreen extends AppCompatActivity {
     }
 
     private void ShowNotepad() {
-        Intent intent = new Intent(HealthAnalysisScreen.this, UserComments.class);
+        Intent intent = new Intent(Health_Analysis.this, User_Comments.class);
         intent.putExtra("category", category); //
         startActivity(intent);
     }

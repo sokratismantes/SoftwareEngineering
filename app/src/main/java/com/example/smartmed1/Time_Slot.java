@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-public class AvailableTimeSlots extends AppCompatActivity {
+public class Time_Slot extends AppCompatActivity {
 
     LinearLayout doctorInfoBox;
     Button proceedButton;
@@ -62,7 +62,7 @@ public class AvailableTimeSlots extends AppCompatActivity {
     }
 
     private void ShowCreateAppointment() {
-        Intent intent = new Intent(AvailableTimeSlots.this, CreateAppointment.class);
+        Intent intent = new Intent(Time_Slot.this, CreateAppointment.class);
         intent.putExtra("doctorName", doctorName);
         intent.putExtra("specialty", specialty);
         intent.putExtra("date", date);

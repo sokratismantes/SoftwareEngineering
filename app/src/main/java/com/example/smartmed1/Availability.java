@@ -18,7 +18,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class AvailabilityForm extends AppCompatActivity {
+public class Availability extends AppCompatActivity {
 
     EditText editDoctorName, editSpecialty, editDate, editTime;
     Button nextButton;
@@ -61,7 +61,7 @@ public class AvailabilityForm extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AvailabilityForm.this, AvailableTimeSlots.class);
+                Intent intent = new Intent(Availability.this, Time_Slot.class);
                 intent.putExtra("doctorName", editDoctorName.getText().toString());
                 intent.putExtra("specialty", editSpecialty.getText().toString());
                 intent.putExtra("date", editDate.getText().toString());

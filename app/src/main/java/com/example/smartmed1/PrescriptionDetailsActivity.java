@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -105,7 +104,7 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
 
         // Add click listener to renew prescription button
         buttonRenewPrescription.setOnClickListener(v -> {
-            Intent renewIntent = new Intent(PrescriptionDetailsActivity.this, RenewPrescriptionActivity.class);
+            Intent renewIntent = new Intent(PrescriptionDetailsActivity.this, Renew_Prescriptions.class);
             renewIntent.putExtra("prescription_code", prescriptionCodeTextView.getText().toString());
             renewIntent.putExtra("doctor_name", doctorNameTextView.getText().toString().replace("Ιατρός: ", ""));
             startActivity(renewIntent);

@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 // Δραστηριότητα εμφάνισης των Συχνών Ερωτήσεων (FAQs)
-public class FAQsActivity extends AppCompatActivity {
+public class FAQs extends AppCompatActivity {
 
     // Στοιχείο λίστας και δομές αποθήκευσης ερωτήσεων/απαντήσεων
     ListView listView;

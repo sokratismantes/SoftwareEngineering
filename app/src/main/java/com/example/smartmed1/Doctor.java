@@ -7,7 +7,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 // Αρχική οθόνη για τον γιατρό μετά το login
-public class DoctorHome extends AppCompatActivity {
+public class Doctor extends AppCompatActivity {
 
     // Δήλωση κουμπιών για τις διαθέσιμες λειτουργίες του γιατρού
     Button btnPrescription, btnReferral, btnAvailability, btnAppointments, btnPrescriptions, btnHistory;

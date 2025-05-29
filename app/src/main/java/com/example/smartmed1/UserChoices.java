@@ -21,7 +21,7 @@ public class UserChoices extends AppCompatActivity {
         btnHealthGoals = findViewById(R.id.btnHealthGoals);
 
         btnHealthData.setOnClickListener(v -> {
-            Intent intent = new Intent(UserChoices.this, AddHealthData.class);
+            Intent intent = new Intent(UserChoices.this, Health_Data.class);
             startActivity(intent);
         });
 

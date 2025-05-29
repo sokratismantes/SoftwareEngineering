@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -53,7 +52,7 @@ public class ResultSummaryScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_result_summary_screen);
+        setContentView(R.layout.resultsummaryscreen);
 
         quizEngine = new QuizEngine(this);
         dbh = new DatabaseHelper(this);
