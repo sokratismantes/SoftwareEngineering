@@ -42,7 +42,7 @@ public class QuestionScreen extends AppCompatActivity {
 
         quizEngine = new QuizEngine(this);
 
-        setContentView(R.layout.questionscreen);
+        setContentView(R.layout.question_screen);
 
         questionsContainer = findViewById(R.id.questionsContainer);
 
