@@ -10,10 +10,7 @@ import android.database.Cursor;
 import com.example.smartmed1.model.Answer;
 import com.example.smartmed1.model.Doctor;
 import com.example.smartmed1.model.Question;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+
 import android.util.Log;
 
 import java.util.ArrayList;
