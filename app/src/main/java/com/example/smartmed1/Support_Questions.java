@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import android.view.View;
+
 
 public class
 Support_Questions extends AppCompatActivity {
@@ -51,16 +53,18 @@ Support_Questions extends AppCompatActivity {
             String description = etDescription.getText().toString().trim();
 
             if (subject.isEmpty() || description.isEmpty()) {
-                Toast.makeText(this, "Παρακαλώ συμπλήρωσε τα υποχρεωτικά πεδία", Toast.LENGTH_SHORT).show();
+                setContentView(R.layout.no_complete_form);
                 return;
             }
 
-            // TODO: Αποθήκευση δεδομένων και συνημμένου
-            Toast.makeText(this, "Το ερώτημα υποβλήθηκε επιτυχώς", Toast.LENGTH_LONG).show();
 
-            // Μετάβαση στην οθόνη επιβεβαίωσης (form_sent)
-            // startActivity(new Intent(this, FormSentScreen.class));
+            Toast.makeText(this, "Το ερώτημα υποβλήθηκε επιτυχώς", Toast.LENGTH_SHORT).show();
+
+            // Μετάβαση στην οθόνη επιβεβαίωσης
+            Intent intent = new Intent(Support_Questions.this, FormSentActivity.class);
+            startActivity(intent);
         });
+
     }
 
     @Override
@@ -70,5 +74,8 @@ Support_Questions extends AppCompatActivity {
             attachedFileUri = data.getData();
             Toast.makeText(this, "Επισυνάφθηκε αρχείο", Toast.LENGTH_SHORT).show();
         }
+    }
+    public void goBackToForm(View v) {
+        recreate();  // Ξαναφορτώνει το onCreate και άρα τη φόρμα
     }
 }
