@@ -40,7 +40,7 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_prescription_details);
+        setContentView(R.layout.prescription_details);
 
         // Initialize TextViews
         prescriptionCodeTextView = findViewById(R.id.textViewPrescriptionCode);
