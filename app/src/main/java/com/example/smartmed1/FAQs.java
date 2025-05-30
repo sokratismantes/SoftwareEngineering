@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
@@ -35,13 +37,21 @@ public class FAQs extends AppCompatActivity {
         );
         listView.setAdapter(adapter);
 
-        // Όταν ο χρήστης πατήσει σε μια ερώτηση → εμφάνιση διαλόγου με την απάντηση
+        // Όταν ο χρήστης πατήσει σε μια ερώτηση → εμφάνιση σε ξεχωριστή σελίδα
         listView.setOnItemClickListener((parent, view, position, id) -> {
             String question = questions.get(position);
             String answer = answers.get(position);
-            showAnswerDialog(question, answer);
-        });
-    }
+
+            // Εμφάνιση της answer_screen
+            setContentView(R.layout.answer_screen);
+
+            TextView tvQ = findViewById(R.id.tvQuestion);
+            TextView tvA = findViewById(R.id.tvAnswer);
+            tvQ.setText(question);
+            tvA.setText(answer);
+        }); // ✅ Κλείσιμο listener
+
+    } // ✅ Κλείσιμο onCreate()
 
     // Μέθοδος ανάκτησης των ερωταπαντήσεων από τη βάση
     private void loadFAQs() {
@@ -59,7 +69,12 @@ public class FAQs extends AppCompatActivity {
         db.close();
     }
 
-    // Εμφάνιση pop-up διαλόγου με την απάντηση στην ερώτηση
+    // Επιστροφή από τη σελίδα απάντησης πίσω στη λίστα
+    public void returnToFAQs(View view) {
+        recreate(); // Ξαναφορτώνει τη λίστα των FAQs
+    }
+
+    // [Προαιρετικό] Pop-up διάλογος που δεν χρησιμοποιείται πλέον, μπορεί να αφαιρεθεί
     private void showAnswerDialog(String question, String answer) {
         new AlertDialog.Builder(this)
                 .setTitle(question)
