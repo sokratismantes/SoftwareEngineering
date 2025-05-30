@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    android:padding="24dp">
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Λογότυπο" />
+
+    <!-- Περιγραφή -->
+    <TextView
+        android:id="@+id/description"
+        android:layout_below="@id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Εδώ μπορείτε να δείτε όλα τα χρήσιμα ιατρικά αρχεία σας."
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Μήνυμα για φιλτράρισμα -->
+    <TextView
+        android:id="@+id/textNoFilteredFiles"
+        android:layout_below="@id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Δεν βρέθηκαν αρχεία που να ταιριάζουν με τα κριτήρια φιλτραρίσματος."
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Αναζήτηση -->
+    <AutoCompleteTextView
+        android:id="@+id/searchInput"
+        android:layout_below="@id/textNoFilteredFiles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Αναζήτηση αρχείων"
+        android:background="@android:color/white"
+        android:padding="12dp"
+        android:layout_marginTop="16dp"
+        android:inputType="text"
+        android:completionThreshold="1" />
+
+    <!-- Λίστα αρχείων -->
+    <LinearLayout
+        android:id="@+id/containerFiles"
+        android:layout_below="@id/searchInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="32dp" />
+
+    <!-- Κάτω μπάρα πλοήγησης -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:background="@android:color/transparent">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/home"
+            android:contentDescription="Home Icon" />
+
+        <ImageView
+            android:id="@+id/infoIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/info"
+            android:contentDescription="Info Icon"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/user"
+            android:contentDescription="User Icon" />
+    </LinearLayout>
+
+</RelativeLayout>
