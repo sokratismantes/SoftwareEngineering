@@ -66,7 +66,6 @@
         <activity android:name=".ui.QuestionScreen"      android:exported="false" />
         <activity android:name=".QuestionActivity"       android:exported="false" />
         <activity android:name=".OpenFileScreenActivity" android:exported="false" />
-        <activity android:name=".DiagnosticResultsHematology" android:exported="false" />
         <activity android:name=".DiagnosticExamsActivity"      android:exported="false" />
         <activity android:name=".MedicalDocumentsActivity"     android:exported="false" />
         <activity android:name=".FAQs"                 android:exported="false" />
@@ -75,6 +74,14 @@
         <activity android:name=".DoctorPrescriptionCreate"     android:exported="false" />
         <activity android:name=".User"                     android:exported="false" />
         <activity android:name=".Doctor"                   android:exported="false" />
+        <activity android:name=".FormSentActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="com.example.smartmed1.FORM_SENT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".DoctorReferralCreate"
@@ -88,19 +95,6 @@
         <activity
             android:name=".PatientAdmissionForm"
             android:exported="false" />
-        <activity
-            android:name=".DiagnosticResultsMolecular"
-            android:exported="false" />
-        <activity
-            android:name=".DiagnosticResultsCardiology"
-            android:exported="false" />
-        <activity
-            android:name=".DiagnosticResultsMicrobiology"
-            android:exported="false" />
-        <activity
-            android:name=".DiagnosticResultsMRI"
-            android:exported="false"/>
-
          <activity
              android:name=".PrescriptionListActivity"
              android:exported="false" />
@@ -110,7 +104,7 @@
         <activity
             android:name=".Renew_Prescriptions"
             android:exported="false" />
-        <activity android:name=".ReferralListActivity" />
+        <activity android:name=".ReferralList" />
 
         <activity
             android:name=".DoctorAvailabilityActivity"
