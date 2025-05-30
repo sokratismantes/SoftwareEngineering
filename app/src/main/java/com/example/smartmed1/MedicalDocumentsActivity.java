@@ -7,7 +7,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Button;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
@@ -21,7 +20,7 @@ public class MedicalDocumentsActivity extends AppCompatActivity {
     LinearLayout containerFiles;
     TextView textNoFiles;
     AutoCompleteTextView searchInput;
-    Button btnFilter;
+
     ImageView imgDiagnostic;
 
     List<String> fileList;
@@ -34,9 +33,7 @@ public class MedicalDocumentsActivity extends AppCompatActivity {
         containerFiles = findViewById(R.id.containerFiles);
         textNoFiles = findViewById(R.id.textNoFiles);
         searchInput = findViewById(R.id.searchInput);
-        btnFilter = findViewById(R.id.btnFilter);
         imgDiagnostic = findViewById(R.id.imgDiagnostic);
-
         containerFiles.setVisibility(View.GONE); // Απόκρυψη αρχείων στην αρχή
 
         imgDiagnostic.setOnClickListener(v -> {
@@ -79,12 +76,7 @@ public class MedicalDocumentsActivity extends AppCompatActivity {
             }
         });
 
-        // Φιλτράρισμα με κουμπί
-        btnFilter.setOnClickListener(v -> {
-            List<String> filtered = FilterManager.arrangeFiles(fileList);
-            showFiles(filtered);
-            containerFiles.setVisibility(View.VISIBLE);
-        });
+
         ImageView infoIcon = findViewById(R.id.infoIcon);
 
         infoIcon.setOnClickListener(v -> {
@@ -94,7 +86,7 @@ public class MedicalDocumentsActivity extends AppCompatActivity {
         LinearLayout btnReferrals = findViewById(R.id.btnReferrals);
 
         btnReferrals.setOnClickListener(v -> {
-            Intent intent = new Intent(MedicalDocumentsActivity.this, ReferralListActivity.class);
+            Intent intent = new Intent(MedicalDocumentsActivity.this, ReferralList.class);
             startActivity(intent);
         });
 
