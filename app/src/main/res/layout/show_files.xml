@@ -28,24 +28,78 @@
         android:layout_marginTop="4dp"
         android:layout_centerHorizontal="true" />
 
-    <!-- Πεδίο αναζήτησης -->
-    <EditText
-        android:id="@+id/searchField"
+    <ScrollView
+        android:id="@+id/scrollResults"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categoriesContainer"
+        android:layout_above="@id/navigationBar"
+        android:layout_marginTop="8dp">
+
+        <LinearLayout
+            android:id="@+id/resultsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+        </LinearLayout>
+    </ScrollView>
+
+
+
+    <!-- Αναζήτηση και φίλτρο μαζί -->
+    <LinearLayout
+        android:id="@+id/searchBarLayout"
         android:layout_below="@id/title"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="12dp"
-        android:background="@android:drawable/edit_text"
-        android:hint="Αναζήτηση"
-        android:drawableStart="@android:drawable/ic_menu_search"
-        android:padding="8dp"
-        android:textColor="#000000"
-        android:textColorHint="#666666" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/textNoFilteredFiles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Δεν βρέθηκαν αρχεία που να ταιριάζουν με τα κριτήρια φιλτραρίσματος."
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"
+            android:layout_below="@id/searchBarLayout" />
+
+
+        <AutoCompleteTextView
+            android:id="@+id/searchInput"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Αναζήτηση αρχείων"
+            android:background="@android:color/white"
+            android:padding="12dp"
+            android:inputType="text"
+            android:dropDownHeight="200dp"
+            android:dropDownVerticalOffset="5dp"
+            android:completionThreshold="1" />
+
+        <Button
+            android:id="@+id/btnFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Φιλτράρισμα"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="#6200EE"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+
 
     <!-- Κουμπιά κατηγοριών -->
     <LinearLayout
         android:id="@+id/categoriesContainer"
-        android:layout_below="@id/searchField"
+        android:layout_below="@id/searchBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -221,12 +275,14 @@
 
     <!-- Κάτω navigation bar -->
     <LinearLayout
+        android:id="@+id/navigationBar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:background="#FFFFFF"
         android:gravity="center">
+
 
         <ImageView
             android:layout_width="0dp"
