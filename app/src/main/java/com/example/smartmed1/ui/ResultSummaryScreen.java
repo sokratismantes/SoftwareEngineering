@@ -9,6 +9,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.graphics.Color;
+import java.io.File;
+import java.io.IOException;
+import android.widget.Toast;
+
+
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -86,14 +92,31 @@ public class ResultSummaryScreen extends AppCompatActivity {
         btnShare       = findViewById(R.id.btnShareResults);
         btnExport      = findViewById(R.id.btnExportPdf);
         // 6) share/export
-        btnShare.setOnClickListener(v ->
+        btnShare.setOnClickListener(v -> {
+            try {
+                File pdfFile = Files.generateResultsPdf(
+                        this,
+                        quizEngine.calculateScore(),
+                        startTimestamp,
+                        endTimestamp,
+                        null // chartTrends αν θέλεις γράφημα
+                );
+                String pdfPath = pdfFile.getAbsolutePath();
+
                 ShareFormScreen.start(
                         ResultSummaryScreen.this,
                         resultId,
                         startTimestamp,
-                        endTimestamp
-                )
-        );
+                        endTimestamp,
+                        pdfPath
+                );
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Σφάλμα κατά τη δημιουργία PDF", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
         btnExport.setOnClickListener(v -> {
             ScoreResult result = quizEngine.calculateScore();
 
