@@ -26,7 +26,7 @@
         android:layout_marginTop="12dp"
         android:layout_centerHorizontal="true" />
 
-    <!-- Αναζήτηση και φίλτρο μαζί -->
+    <!-- Αναζήτηση -->
     <LinearLayout
         android:id="@+id/searchBarLayout"
         android:layout_below="@id/description"
@@ -48,14 +48,7 @@
             android:dropDownHeight="200dp"
             android:dropDownVerticalOffset="5dp"
             android:completionThreshold="1" />
-
-        <Button
-            android:id="@+id/btnFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Φιλτράρισμα"
-            android:layout_marginStart="8dp" />
-    </LinearLayout>
+    </LinearLayout> <!-- ✅ Αυτό έλειπε -->
 
 
     <!-- Πλέγμα εγγράφων -->
